@@ -1,0 +1,15 @@
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/completion
+tokenizer:
+  pretrained_tokenizer_name_or_path: microsoft/phi-2
+eval_tasks:
+  task_0:
+    task_name: completion
+    task_kwargs:
+      batch_size: 8
+      input_file_path: <input_file_path>
+      temperature: 0.01
+      top_p: 0.95
+      max_new_tokens: 300
+      n_samples: 1
+      output_file_path: completion.json

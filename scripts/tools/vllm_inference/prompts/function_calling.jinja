@@ -1,0 +1,67 @@
+import os
+import sys
+import copy
+import json
+import hashlib
+import inspect
+import importlib
+import subprocess
+
+os.sys.path.append("/mnt")
+
+def install_requirements(class_name):
+    req_path = f"/mnt/data/{class_name}_requirements.txt"
+    if os.path.isfile(req_path):
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", req_path, "-q", "--no-input"])
+        except subprocess.CalledProcessError as e:
+            print(f"Error installing requirements for {class_name}: {e}")
+
+code_block = {{code_block}}
+class_name_to_env_file = {{class_name_to_env_file }}
+stateless_classes = {{stateless_classes}}
+initial_config = {{initial_config}}
+involved_classes = {{involved_classes}}
+long_context = {{long_context}}
+
+if "class_method_name_mapping" not in globals():
+    class_method_name_mapping = {}
+
+for class_name in involved_classes:
+    class_initial_config = {}
+    if class_name not in stateless_classes:
+        class_initial_config = initial_config.get(class_name, {})
+    unique_name = json.dumps(class_initial_config, sort_keys=True) + class_name
+    class_instance_name = f"{hashlib.md5(unique_name.encode()).hexdigest()}_instance"
+    if class_instance_name in globals():
+        class_instance = globals()[class_instance_name]
+    else:
+        env_file = class_name_to_env_file.get(class_name, None)
+        if env_file is None:
+            raise ValueError(f"Environment file for class {class_name} not found in {class_name_to_env_file}")
+        env_file = os.path.basename(env_file)
+        if env_file.endswith(".py"):
+            env_file = env_file[:-3]
+        
+        install_requirements(class_name)
+        module = importlib.import_module(f"data.{env_file}")
+        class_instance = getattr(module, class_name)()
+        if class_name not in stateless_classes:
+            class_instance._load_scenario(copy.deepcopy(class_initial_config), long_context=long_context)
+        globals()[class_instance_name] = class_instance
+
+    # Retrieve all method names and map them to the instance
+    for method_name, method in inspect.getmembers(class_instance, predicate=inspect.ismethod):
+        # Skip private methods
+        if method_name.startswith("_"):
+            continue
+        class_method_name_mapping[method_name] = class_instance_name
+
+# Call the function with the provided code block
+curr_instance_name = class_method_name_mapping.get(code_block["name"])
+curr_instance = globals()[curr_instance_name]
+curr_func = getattr(curr_instance, code_block["name"])
+try:
+    print(curr_func(**code_block["arguments"]))
+except Exception as e:
+    print(f"Error calling function {code_block['name']}: {e}")

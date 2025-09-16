@@ -1,0 +1,51 @@
+# total tokens: 3948019712
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+dataset:
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/oss/openthough_113k/16384     # 356761600 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/acad_cot/filtered/physqa_cot_formatted_x3_gpt-4o_x3_o1-preview_cotseed_filtered/16384    # 376504320 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/acad_cot/filtered/ArxivQA3_cot_formatted_subj_non_phy_math_x3_gpt-4o_x3_o1-preview_cotseed_filtered/16384    # 35422208 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/acad_cot/filtered/ArxivQA3_cot_formatted_subj_phy_math_x3_gpt-4o_x3_o1-preview_cotseed_filtered/16384    # 96960512 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/acad_cot/filtered/arxiv_qa_v2_cot_formatted_nomc_sanity_good_non_phy_math_x3_gpt-4o_x3_o1-preview_cotseed_filtered_batch1/16384    # 145162240 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/acad_cot/filtered/arxiv_qa_v2_cot_formatted_nomc_sanity_good_non_phy_math_x3_gpt-4o_x3_o1-preview_cotseed_filtered_batch2/16384    # 123224064 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/acad_cot/filtered/arxiv_qa_v2_cot_formatted_nomc_sanity_good_phy_math_x3_gpt-4o_x3_o1-preview_cotseed_filtered_batch1/16384    # 585367552 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/acad_cot/filtered/ericlu_SCP-116K_x3_gpt-4o_x3_o1-preview_cotseed_filtered/16384    # 312410112 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/puzzles_brain_teasers/logic_grid_puzzles/16384    # 116768768 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/puzzles_brain_teasers/puzzling_stack_exchange/16384    # 144850944 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/puzzles_brain_teasers/algorithmic_reasoning/16384    # 582303744 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/law/non_mmlu_law_qa/16384    # 421937152 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/law/case_hold_open_ended_rewrite/16384    # 16039936 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/law/bar_principles_rewrites/16384    # 59604992 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/general_knowledge/iter_exercises_web_open_ended_filtered/16384    # 574701568 tokens
+    seq_len: 16384
+    weight: 1.0
+dataset_concat: random
+dataset_provider: lm
+

@@ -1,0 +1,7 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+dataset:
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/misc/regex_rewrites/math_p01_medium_high_regexcleaned/16384    # 1753530368 tokens
+    seq_len: 16384
+    weight: 1.0
+dataset_concat: random
+dataset_provider: lm

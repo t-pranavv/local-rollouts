@@ -1,0 +1,56 @@
+Here is a model's solution to a math problem:
+
+{{student_solution}}
+
+======end of model's solution=======
+
+And the ground truth solution where the ground truth answer is enclosed in \boxed{}: {{correct_solution}}.
+
+## You are given access to the following python function
+```python
+def check(a, b, epsilon=1e-8):
+    # a: extracted model solution, b: ground truth answer, epsilon: tolerance
+    if type(b) == int or type(b) == str or type(b) == set:
+        return a == b
+    return abs(a-b) < epsilon
+```
+
+## Your task: extract the ground truth answer inside the \boxed{} from the ground truth solution. Then Answer in [CHECK], [YES], [NO] or [UNKNOWN],  (keep the '[' and ']') whether the model's answer is equal to the ground truth (up to rounding error if the model rounds up its answer). Answer [YES] or [NO] based on your judgement (expand or simplify expressions when necessary), [UNKNOWN] if the model does not provide an answer. Answer [CHECK] if you can't judge the equivalence and calling provided python function can judge the equivalence. 
+-Output format: (1). Model's answer (extracted) or [UNKNOWN], (2). ground truth answer, (3). [CHECK]|[YES]|[NO]|[UNKNOWN] followed by one line of python code that calls `check` if [CHECK] is chosen.
+
+Some examples how to judge the equivalence correctly by [CHECK]:
+(1) Model's answer: 3312 
+(2) ground truth answer: 3313 
+(3) [CHECK] check(3312, 3313) # if the ground truth is an integer, then they must be exact match
+
+(1) Model's answer: \frac9{12}
+(2) ground truth answer: \frac{3}{4}
+(3) [CHECK] check(9/12, 3/4, epsilon=1e-8) # if answers are fractions or even more complex expressions, you can directly compare them by ``check``
+
+(1) Model's answer: \sqrt{\frac{3}{16}}
+(2) ground truth answer: \frac{\sqrt{3}}{4}
+(3) [CHECK] check(math.sqrt(3/16), math.sqrt(3)/4, epsilon=1e-8) # if answers are complex expressions, you can also utilize ``math`` package
+
+(1) Model's answer: 1.3333
+(2) ground truth answer: \frac{5}{3}
+(3) [CHECK] check(1.3333, 5/3, epsilon=0.0001) # when model rounds up its answer, you *must* specify large epsilon depending on how model rounds up its answer
+
+(1) Model's answer: [3, 4]
+(2) ground truth answer: [4, 3]
+(3) [CHECK] check({3,4}, {4,3}) # if the answer is a list where the order of elements does not matter, you can convert them to set and compare. If the oder of elements matters, see the next example
+
+(1) Model's answer: (3, 4, 0)
+(2) ground truth answer: (3, 5, 0)
+(3) [CHECK] check(3, 3) and check(4, 5) and check(0, 0) # if the answer contains two or more numbers where the order matters (e.g. answer is a coordinate or a range), you **must** use ``check`` multiple times to check corrsponding elements separately and use ``and`` to combine the results. DO NOT directly compare them by feeding tuples or lists to ``check``.
+
+(1) Model's answer: Bob wins
+(2) ground truth answer: Bob
+(3) [CHECK] check('Bob', 'Bob') # if the ground truth is a string, you *must* macth the format of model's answer and ground truth when feeding them to ``check``
+
+(1) Model's answer: n+1
+(2) ground truth answer: n+1
+(3) DON'T use [CHECK] if the answers involve variables
+
+(1) Model's answer: (3,4]  
+(2) ground truth answer: (3,4]  
+(3) DON'T use [CHECK] if the answers involve range of values

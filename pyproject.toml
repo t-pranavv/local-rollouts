@@ -1,0 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
+[tool.black]
+# max line length is 120 (used by black code formatter)
+line-length = 120

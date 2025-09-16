@@ -1,0 +1,23 @@
+# total tokens: 4841701376
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+dataset:
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/synthetic_aime/syn_aime_160k/32768    # 847183872 B tokens
+    seq_len: 32768
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/synthetic_aime/syn_aime_numina_v15_qs_97k_answer_verifiable/32768    # 474349568 B tokens
+    seq_len: 32768
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/oss/openthough_113k/32768 # 333086720 tokens
+    seq_len: 32768
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/math/filtered/difficult_math_v8_Sep25_w_o1-preview_filtered/32768   # 709722112 tokens
+    seq_len: 32768
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/math/filtered/Numerical_CoT_full_priority_filtered/32768    # 1597898752 tokens
+    seq_len: 32768
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/math/numina_v15_aops_olym_verifiable/32768    # 879460352 tokens
+    seq_len: 32768
+    weight: 1.0
+dataset_concat: random
+dataset_provider: lm

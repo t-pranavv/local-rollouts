@@ -1,0 +1,264 @@
+# Phi-2 2.7B pre-training consists of 1 epoch (248.5B x 1 = 248.5B tokens)
+data_root: ${oc.env:AMLT_DATA_DIR, "/mnt/phyagi"}
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/phi2_2.7b
+dataset:
+  # Web
+  - cache_dir: ${data_root}/datasets/fast_datasets/falcon/falcon_v1_04/shard_0/train.npy # 10.1546B
+    seq_len: 2048
+    weight: 1.0
+  - cache_dir: ${data_root}/datasets/fast_datasets/falcon/falcon_v1_04/shard_1/train.npy # 12.2876B
+    seq_len: 2048
+    weight: 1.0
+  - cache_dir: ${data_root}/datasets/fast_datasets/slimpajama/v1_05/shard_0/train.npy # 9.1661B
+    seq_len: 2048
+    weight: 1.0
+  - cache_dir: ${data_root}/datasets/fast_datasets/slimpajama/v1_05/shard_1/train.npy # 9.1403B
+    seq_len: 2048
+    weight: 1.0
+  - cache_dir: ${data_root}/datasets/fast_datasets/slimpajama/v1_05/shard_2/train.npy # 9.1489B
+    seq_len: 2048
+    weight: 1.0
+  - cache_dir: ${data_root}/datasets/fast_datasets/slimpajama/v1_05/shard_3/train.npy # 10.2262B
+    seq_len: 2048
+    weight: 1.0
+  # Synthetic NLP
+  - cache_dir: ${data_root}/datasets/fast_datasets/Synthetic/NLP/0818/LifeMoments_v3/train.npy # 1.3155B x 3.6 = 4.7359B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/textbook_m_v2.txt.npy # 1.0704B x 3.6 = 3.8535B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/winogrande_story_v12.txt.npy # 0.2083B x 3.6 = 0.7498B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/omg_nlp_v1.1_5.txt@omg_nlp_v1.1_4.txt.npy # 0.9729B x 3.6 = 3.5023B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/textbook_m.txt.npy # 1.6334B x 3.6 = 5.8802B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/gsm8k_nlp_merged.txt@textbook_s.txt@textbook_0803.txt.npy # 2.9596B x 3.6 = 10.6547B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/WinoSynthV4.txt@omg_nlp_0803.txt@omg_nlp_v1.1_3.txt@omg_nlp_v1.1_2.txt@seb.txt@seb2.txt@seb3.txt.npy # x 3.6 = 14.0284B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/winostory_0803.txt@mixed_v2_purify.txt@WinoQA_v4.txt@winostory_v10.txt.npy # 2.9520B x 3.6 = 10.6271B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/textbook_s_v3.txt.npy # 0.9352B x 3.6 = 3.3668B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/winostory_v11.txt.npy # 0.1770B x 3.6 = 0.6373B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/instructions_dv-4_alpaca.txt.npy # 0.1941B x 3.6 = 0.7013B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/rewrite1.txt.npy # 0.6111B x 3.6 = 2.1999B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/rewrite2.txt.npy # 0.1391B x 3.6 = 0.5007B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/instruction_v2_vars_gpt3.5.txt.npy # 0.4474B x 3.6 = 1.6107B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/textbook_exercise_1.txt.npy # 2.0911B x 3.6 = 7.5280B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/textbook_exercise_2.txt.npy # 1.3128B x 3.6 = 4.7260B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/seb4.txt.npy # 0.1149B x 3.6 = 0.4138B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/seb5.txt.npy # 0.4004B x 3.6 = 1.4414B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/seb6.txt.npy # 0.4463B x 3.6 = 1.6067B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/confusing_exercise1.txt.npy # 0.5777B x 3.6 = 2.0797B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/textbook_story_1.txt.npy # 1.1715B x 3.6 = 4.2173B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/textbook_story_2.txt.npy # 0.4744B x 3.6 = 1.7080B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/instructions_dv-3_openhermes_v1.txt.npy # 0.6632B x 3.6 = 2.3875B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/fast_datasets/code_conversational_gpt4/train.npy # 0.0429B x 3.6 = 0.1543B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/phi_math/tokenized/gcse_shuffle.npy # 0.0316B x 3.6 = 0.1136B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/phi_math/tokenized/math_school_exam_shuffle.npy # 0.0303B x 3.6 = 0.1090B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/phi_math/tokenized/school_exam_shuffle.npy # 0.0434B x 3.6 = 0.1562B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/phi_math/tokenized/middle_school_math_shuffle.npy # 0.0997B x 3.6 = 0.3589B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/phi_math/tokenized/mathnation_shuffle.npy # 0.2178B x 3.6 = 0.7841B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/phi_math/tokenized/bj_rewrite_book_shuffle.npy # 0.2319B x 3.6 = 0.8349B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/phi_math/tokenized/simple_qa_shuffle.npy # 0.2127B x 3.6 = 0.7656B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/phi_math/tokenized/simple_step_shuffle.npy # 0.1722B x 3.6 = 0.6199B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/logic_puzzles/puzzles.npy # 0.1068B x 3.6 = 0.3846B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/fast_datasets/theory_of_mind/tom.npy # 0.1356B x 3.6 = 0.4883B
+    seq_len: 2048
+    weight: 3.6
+  - cache_dir: ${data_root}/datasets/fast_datasets/middle_school_textbooks/middle_school_textbooks.npy # 0.1122B x 3.6 = 0.4040B
+    seq_len: 2048
+    weight: 3.6
+  # Wiki
+  - cache_dir: ${data_root}/datasets/fast_datasets/wikibook/train.npy # 4.7213B x 3 = 14.1638B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite2.txt.npy # 1.6767B x 3 = 5.0301B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite2_bio.txt.npy # 0.1532B x 3 = 0.4597B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite1.txt.npy # 1.1160B x 3 = 3.3481B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite1_bio.txt.npy # 0.1321B x 3 = 0.3962B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite3.txt.npy # 1.3068B x 3 = 3.9205B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite3_bio.txt.npy # 0.1207B x 3 = 0.3622B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite4_bio.txt.npy # 0.0944B x 3 = 0.2832B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite4.txt.npy # 1.4774B x 3 = 4.4321B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite5_bio.txt.npy # 0.1841B x 3 = 0.5523B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite5.txt.npy # 1.4774B x 3 = 4.4323B
+    seq_len: 2048
+    weight: 1.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite6_bio.txt.npy # 0.0697B x 3 = 0.2009B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wiki_rewrite6.txt.npy # 0.5457B x 3 = 1.6370B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wikiqa1.txt.npy # 1.1159B x 3 = 3.3478B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wikiqa1_bio.txt.npy # 0.2247B x 3 = 0.6740B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/Synthetic/NLP/processed/wikihow_rewrite1.txt.npy # 1.2841B x 3 = 3.8523B
+    seq_len: 2048
+    weight: 3.0
+  - cache_dir: ${data_root}/datasets/fast_datasets/site_dataset/wikihow/wikihow-en/tokenized/train.npy # 0.3050B x 3 = 0.9149B
+    seq_len: 2048
+    weight: 3.0
+  # Code
+  - cache_dir: ${data_root}/datasets/Filtering/stack-dedup-python-llm-filtered/codegen_tokenizer/threshold_5.npy # 5.3632B x 3.5 = 18.7712B
+    seq_len: 2048
+    weight: 3.5
+  - cache_dir: ${data_root}/datasets/fast_datasets/Filtered/stackoverflow/6/train.npy # 0.8469B x 3.5 = 2.9642B
+    seq_len: 2048
+    weight: 3.5
+  - cache_dir: ${data_root}/datasets/fast_datasets/Synthetic/textbook/book_mergedv4/train.npy # 0.7424B x 3.5 = 2.5984B
+    seq_len: 2048
+    weight: 3.5
+  - cache_dir: ${data_root}/datasets/fast_datasets/textbook_mixture_v2/gpt4/train.npy # 0.6852B x 3.5 = 2.3981B
+    seq_len: 2048
+    weight: 3.5
+  - cache_dir: ${data_root}/datasets/fast_datasets/textbook_mixture_v2/textbook_summary/train.npy # 0.2371B x 3.5 = 0.8297B
+    seq_len: 2048
+    weight: 3.5
+  - cache_dir: ${data_root}/datasets/fast_datasets/Synthetic/acronyms/omg_v3/train.npy # 1.5911B x 3.5 = 5.5690B
+    seq_len: 2048
+    weight: 3.5
+  - cache_dir: ${data_root}/datasets/Synthetic/gsm8k/Oct2023_backup/gsm8k_GSM-IC_Oct28_2023.npy # 1.0237B x 3.5 = 3.5818B
+    seq_len: 2048
+    weight: 3.5
+  - cache_dir: ${data_root}/datasets/fast_datasets/p3_tagged/p3_codex_dv3_gpt4.npy # 0.1255B x 3.5 = 0.4393B
+    seq_len: 2048
+    weight: 3.5
+dataset_concat: random
+dataset_provider: lm
+model:
+  model_type: mixformer-sequential
+  architecture:
+    block_cls: parallel
+    mixer:
+      mixer_cls: mha
+      dropout: 0.1
+    mlp:
+      mlp_cls: fused_mlp
+  vocab_size: 50304
+  n_positions: 2048
+  n_embd: 2560
+  n_layer: 32
+  n_head: 32
+  rotary_dim: 32
+  resid_pdrop: 0.1
+  pad_vocab_size_multiple: 64
+training_args:
+  ds_config:
+    fp16:
+      enabled: true
+      initial_scale_power: 12
+    optimizer:
+      type: AdamW
+      params:
+        lr: 6.0e-4
+        betas:
+        - 0.9
+        - 0.95
+        eps: 1.0e-7
+        weight_decay: 0.1
+    scheduler:
+      type: WarmupDecayLR
+      params:
+        warmup_min_lr: 0
+        warmup_max_lr: 6.0e-4
+        warmup_type: linear
+        warmup_num_steps: 1500
+    zero_optimization:
+      stage: 1
+    gradient_clipping: 1.0
+    steps_per_print: 10000000000
+    train_batch_size: 2048
+    train_micro_batch_size_per_gpu: 8
+    wall_clock_breakdown: false
+    zero_allow_untested_optimizer: true
+  do_final_eval: true
+  num_train_epochs: 1
+  logging_steps: 0.0001
+  save_steps: 0.05
+  save_final_checkpoint: true
+  seed: 42
+  eval_steps: 0.1
+  eval_max_steps: 100
+  pipe_parallel_size: 1

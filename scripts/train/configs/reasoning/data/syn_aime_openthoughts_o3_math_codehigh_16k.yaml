@@ -1,0 +1,41 @@
+# total tokens: 5641519104
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+dataset:
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/synthetic_aime/syn_aime_160k/16384    # 674660352 B tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/synthetic_aime/syn_aime_numina_v15_qs_97k_answer_verifiable/16384    # 409583616 B tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/oss/openthough_113k/16384     # 356761600 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/math/filtered/difficult_math_v8_Sep25_w_o1-preview_filtered/16384    # 603373568 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/math/filtered/Numerical_CoT_full_priority_filtered/16384    # 1118257152 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_medium/math/numina_v15_aops_olym_verifiable/16384    # 825196544 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/filtered/code_chats_cot_seeds/16384      # 396001280 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/code_contests_originals/16384      # 84639744 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/code_contests_rewrites/16384      # 121503744 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/filtered/agent_instruct_code_data_filtered/16384      # 856850432 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/github_pull_request_exercises/16384      # 161316864 tokens
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/baai_taco_deduped/16384      # 69402624 tokens
+    seq_len: 16384
+    weight: 1.0
+dataset_concat: random
+dataset_provider: lm

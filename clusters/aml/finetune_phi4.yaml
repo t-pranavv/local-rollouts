@@ -1,0 +1,46 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+compute: /subscriptions/22da88f6-1210-4de2-a5a3-da4c7c2a1213/resourcegroups/gcr-singularity/providers/microsoft.machinelearningservices/virtualclusters/baltic08
+resources:
+  instance_count: 1
+  instance_type: Singularity.ND96r_H100_v5
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ""
+      interactive: false
+      sshPublicKey: ""
+      enableAzmlInt: true
+      priority: Medium
+      slaTier: Premium
+display_name: p1_phi4_ds_sft
+experiment_name: finetune_phi4
+# Copy this YAML to `phyagi-experiments` repository for changes,
+# and remember to change it to your `phyagi-sdk` repository path
+code: <PATH/TO/phyagi-sdk>
+command: |
+  pip install -e .[rl]
+  cd scripts/train
+  python ds_train.py configs/phi4/ds_sft_phi4.yaml --model.pretrained_model_name_or_path ${{inputs.checkpoint_dir}}/phi-4-base/last_0010714_pp0/mixformer-sequential-32k --output_dir ${{outputs.output_dir}}
+environment: azureml:nvidia2503-pytorch271-te24-deepspeed0171-flashattn280post2-vllm091-20250702:1
+environment_variables:
+  JOB_EXECUTION_MODE: Basic
+  AZUREML_COMPUTE_USE_COMMON_RUNTIME: true
+  _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourcegroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  DATA_ROOT: ${{inputs.input}}
+  WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+  WANDB_HOST: https://microsoft-research.wandb.io
+inputs:
+  checkpoint_dir:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/phi4checkpoints/
+    mode: ro_mount
+  input:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/
+    mode: ro_mount
+outputs:
+  output_dir:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/runs/${{name}}/
+    mode: rw_mount

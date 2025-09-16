@@ -1,0 +1,41 @@
+# total tokens: 13815742464 (upweighted)
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+dataset:
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/synthetic_aime/syn_aime_160k/0.95_sysmsg_0.1_cotmix/32768 # 842039296 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/synthetic_aime/syn_aime_numina_v15_qs_97k_answer_verifiable/0.95_sysmsg_0.1_cotmix/32768 # 471531520 tokens 
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/oss/openthough_113k/0.95_sysmsg_0.1_cotmix/32768 # 330072064 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/math/filtered/difficult_math_v8_Sep25_w_o1-preview_filtered/0.95_sysmsg_0.1_cotmix/32768 # 704512000 tokens   
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/math/filtered/Numerical_CoT_full_priority_filtered/0.95_sysmsg_0.1_cotmix/32768 # 1590132736 tokens    
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/math/numina_v15_aops_olym_verifiable/0.95_sysmsg_0.1_cotmix/32768 # 874545152 tokens    
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/filtered/code_chats_cot_seeds/0.95_sysmsg_0.1_cotmix/32768 # 393838592 tokens       
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/code_contests_originals/0.95_sysmsg_0.1_cotmix/32768 # 84475904 tokens      
+    seq_len: 32768
+    weight: 5.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/code_contests_rewrites/0.95_sysmsg_0.1_cotmix/32768 # 121012224 tokens       
+    seq_len: 32768
+    weight: 5.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/filtered/agent_instruct_code_data_filtered/0.95_sysmsg_0.1_cotmix/32768 # 853573632 tokens      
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/github_pull_request_exercises/0.95_sysmsg_0.1_cotmix/32768 # 160727040 tokens      
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/code/baai_taco_deduped/0.95_sysmsg_0.1_cotmix/32768 # 69271552 tokens    
+    seq_len: 32768
+    weight: 5.0
+dataset_concat: random
+dataset_provider: lm

@@ -1,0 +1,44 @@
+# This file is used to subscribe for notifications for PRs
+# related to specific file paths, does not necessarily mean
+# approval is required from these people before merging.
+#
+# Learn more about CODEOWNERS syntax here:
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+
+# `root`
+/.github/ @gugarosa @piero2c @caiom
+/.vscode/ @gugarosa @piero2c @caiom @sytelus
+/clusters/ @gugarosa @piero2c @caiom
+/docker/ @gugarosa
+/docs/ @gugarosa
+/scripts/ @gugarosa @piero2c @caiom
+/tests/ @gugarosa @piero2c @caiom
+
+# `phyagi.cli`
+/phyagi/cli/ @gugarosa @piero2c @caiom
+
+# `phyagi.datasets`
+/phyagi/datasets/ @gugarosa @piero2c @caiom
+/phyagi/datasets/rl/ @piero2c
+/phyagi/datasets/train/stream_lm/ @caiom
+
+# `phyagi.eval`
+/phyagi/eval/ @gugarosa
+/phyagi/eval/tasks/p3.py @sytelus
+
+# `phyagi.models`
+/phyagi/models/ @gugarosa @piero2c @caiom
+
+# `phyagi.optimizers`
+/phyagi/optimizers/ @gugarosa
+
+# `phyagi.rl`
+/phyagi/rl/ @piero2c
+
+# `phyagi.trainers`
+/phyagi/trainers/ @gugarosa @piero2c @caiom
+/phyagi/trainers/pl/ @gugarosa
+
+# `phyagi.utils`
+/phyagi/utils/ @gugarosa

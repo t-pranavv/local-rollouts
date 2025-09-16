@@ -1,0 +1,44 @@
+# az ml job create --file debug_node_gpu.yaml --resource-group ai-frontiers-rg --workspace-name ai-frontiers-sa-ws
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+compute: /subscriptions/5c9e4789-4852-4ffe-8551-d682affcbd74/resourceGroups/ai-frontiers-rg/providers/microsoft.machinelearningservices/virtualclusters/ai-frontiers-sa-vc
+resources:
+  instance_count: 1
+  # instance_type: Singularity.ND12_H100_v5 # 1 GPU
+  # instance_type: Singularity.ND24_H100_v5 # 2 GPUs
+  # instance_type: Singularity.ND48_H100_v5 # 4 GPUs
+  instance_type: Singularity.ND96r_H100_v5 # 8 GPUs
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ''
+      interactive: false
+      sshPublicKey: "[TODO: INSERT SSH PUBLIC KEY]"
+      enableAzmlInt: true
+      # priority: Low
+      priority: Medium
+      # priority: High
+      # slaTier: Standard
+      slaTier: Premium
+experiment_name: debug_node_gpu
+tags:
+  Project_Name: Orca
+  ProjectID: PRJ-0438-A49
+  Experiment: Reasoning_LLM
+code: ../../../../
+command: |
+    # Workaround for windows-sa nvidia driver issue
+    export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | tr ':' '\n' | grep -v "compat/lib" | tr '\n' ':' | sed 's/:$//')
+    
+    echo ${{outputs.blob_mount}} && echo $(pwd) && sleep infinity
+environment: azureml:reasoning-lm-tooluse:220825
+environment_variables:
+    JOB_EXECUTION_MODE: Basic
+    AZUREML_COMPUTE_USE_COMMON_RUNTIME: 'true'
+    AZUREML_COMMON_RUNTIME_USE_SBOM_CAPABILITY: 'false'
+    _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/5c9e4789-4852-4ffe-8551-d682affcbd74/resourcegroups/ai-frontiers-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ai-frontiers-id
+outputs:
+  blob_mount:
+    type: uri_folder
+    path: azureml://datastores/aifrontierssadata/paths/
+    mode: rw_mount

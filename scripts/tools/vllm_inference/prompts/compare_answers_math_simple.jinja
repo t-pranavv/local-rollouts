@@ -1,0 +1,21 @@
+Here is a model's solution to a math problem:
+
+======start of model's solution======
+{{student_solution}}
+======end of model's solution=======
+
+And the ground truth answer: {{correct_solution}}.
+
+## Your task  is as follows: 
+1. First extract the answer from the model's solution, lets call this extracted_answer. Very rarely no resonable answer can be extracted, use "unknown" as the extracted_answer. Use "unknown" very sparingly.
+2. Provide a brief discussion comparing of the extracted_answer with the ground truth correct_answer={{correct_solution}}. 
+3. Finally, provide a boolean value equivalence (1 or 0) indicating whether the extracted_answer is equivalent to the correct_answer={{correct_solution}}; Two answers are equivalent if their responses are equivalent mathematically. For floats the answer should match upto 1e-4 precision. For ints, the answers should match exactly. For string based answers, carefully check the equivalence of the answers.
+
+Compile your analysis into the specified JSON format. Here's a template to guide you:
+{ 
+    "extracted_answer": # extracted answer from the model's solution, 
+    "correct_answer": {{correct_solution}}# copy of ground truth answer provided to you above,
+    "comparison_discussion": string # brief discussion comparing the extracted_answer with the correct_answer,
+    "equivalence": 1 or 0 # whether the extracted_answer is mathematically equivalent (1) to the correct_answer or not (0),
+}
+Replace placeholders with actual data based on your analysis of the question.

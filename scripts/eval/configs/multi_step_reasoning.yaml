@@ -1,0 +1,17 @@
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/multi-step-reasoning
+tokenizer:
+  pretrained_tokenizer_name_or_path: microsoft/phi-2
+eval_tasks:
+  task_0:
+    task_name: human_eval
+    task_kwargs:
+      batch_size: 8
+  task_1:
+    task_name: mbpp
+    task_kwargs:
+      batch_size: 8
+  task_2:
+    task_name: gsm8k
+    task_kwargs:
+      batch_size: 8

@@ -1,0 +1,14 @@
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/common-sense-reasoning
+tokenizer:
+  pretrained_tokenizer_name_or_path: microsoft/phi-2
+eval_tasks:
+  task_0:
+    task_name: lm_eval
+    task_kwargs:
+      tasks: ["winogrande", "arc_easy", "arc_challenge", "boolq"]
+      batch_size: 8
+  task_1:
+    task_name: siqa
+    task_kwargs:
+      batch_size: 8

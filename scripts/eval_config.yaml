@@ -1,0 +1,27 @@
+# model_config: "phi4,/home/user/checkpoints/phi4,/home/user/tokenizer,8192,bfloat16,1,1,my_utils,sysmsg.json"
+# seed: 42
+# temperature: 0.7
+# datasets:
+#   - name: aime_2024
+#     prompt_field: problem
+#     num_samples: 5
+#   - name: gpqa_diamond
+#     prompt_field: prompt
+#     num_samples: 5
+
+# model: microsoft/phi-4   # ckpt path or HF hub id
+# tensor_parallel_size: 1
+# temperature: 0.7
+# datasets:
+#   - name: aime_2024
+#     prompt_field: problem
+#     num_samples: 5
+#   - name: gpqa_diamond
+#     prompt_field: prompt
+#     num_samples: 5
+# output_dir: /home/t-pranavv/phyagi-eval_outputs
+
+model: microsoft/phi-4
+tensor_parallel_size: 1
+temperature: 0.7
+output_dir: /home/t-pranavv/phyagi-eval_outputs

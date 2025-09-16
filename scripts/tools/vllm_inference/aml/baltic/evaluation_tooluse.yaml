@@ -1,0 +1,316 @@
+# az ml job create --file evaluation_tooluse.yaml --resource-group aifrontiers --workspace-name aifrontiers_ws
+$schema: https://azuremlschemas.azureedge.net/latest/sweepJob.schema.json
+type: sweep
+compute: /subscriptions/22da88f6-1210-4de2-a5a3-da4c7c2a1213/resourcegroups/gcr-singularity/providers/microsoft.machinelearningservices/virtualclusters/baltic08
+# compute: /subscriptions/d4404794-ab5b-48de-b7c7-ec1fefb0a04e/resourcegroups/gcr-singularity-octo/providers/microsoft.machinelearningservices/virtualclusters/whitney14
+resources:
+  instance_count: 1
+  # instance_type: Singularity.ND12_H100_v5 # 1 GPU
+  # instance_type: Singularity.ND24_H100_v5 # 2 GPUs
+  # instance_type: Singularity.ND48_H100_v5 # 4 GPUs
+  instance_type: Singularity.ND96r_H100_v5 # 8 GPUs
+  # instance_type: Singularity.ND96isr_MI300X_v5 # 8 AMD GPUs
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ''
+      interactive: false
+      sshPublicKey: ""
+      enableAzmlInt: true
+      # priority: Low
+      priority: Medium
+      # priority: High
+      # slaTier: Standard
+      slaTier: Premium
+experiment_name: model_tooluse_evaluation
+tags:
+  Project_Name: Orca
+  ProjectID: PRJ-0438-A49
+  Experiment: Reasoning_LLM
+trial:
+  code: ../../../../
+  distribution:
+    type: pytorch
+    process_count_per_instance: 1
+  command: |
+    # Print IB topology
+    nvidia-smi topo -m
+    
+    # General Configuration
+    export MODEL_NAME=$(echo ${{search_space.model_config}} | cut -d',' -f1)
+    export MODEL_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f2)
+    export TOKENIZER_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f3)
+    export SERVED_MODEL_NAME=$(echo vllm-local-$MODEL_NAME)
+    export MAX_MODEL_LEN=$(echo ${{search_space.model_config}} | cut -d',' -f4)
+    export DTYPE=$(echo ${{search_space.model_config}} | cut -d',' -f5)
+    export MODEL_UTILS=$(echo ${{search_space.model_config}} | cut -d',' -f8)
+    export SYSMSG=$(echo ${{search_space.model_config}} | cut -d',' -f9)
+
+    export PYBOX_DOCKER_ARCHIVE="${{outputs.local_docker_images}}/python3.12-slim-pybox.tar"
+    export PYBOX_APPTAINER_IMAGE="${{outputs.local_docker_images}}/python3.12-slim-pybox.sif"
+    export PYBOX_WHEELS_DIR="${{inputs.ci_installation_wheels}}"
+    export SEED=${{search_space.seed}}
+    export GENERATION_CONFIG="auto"
+    export OVERRIDE_GENERATION_CONFIG='{"temperature": ${{search_space.temperature}}, "skip_special_tokens": false}'
+    export JUDGE_GENERATION_CONFIG="{}"
+    export JUDGE_MODEL_NAME="gpt-4o-impact"
+
+    # Experiment Configuration
+    export EXPERIMENT_NAME=tooluse_eval_$(date +%Y-%m-%d_%H-%M-%S)
+    export EXPERIMENT_OUTPUT_DIR=$(echo ${{outputs.output_dir}}/$MODEL_NAME/$EXPERIMENT_NAME/seed_${SEED}_temperature_${{search_space.temperature}})
+
+    # GPU Configuration
+    export NODE_RANK=${NODE_RANK:-0}
+    export NODES=${AZUREML_NODE_COUNT:-1}
+    export GPUS=${GPU_PER_NODE_COUNT:-1}
+    export WORLD_SIZE=$(( NODES * GPUS ))
+
+    # Server Configuration
+    export API_KEY="key"
+    export PORT=9000
+    export TENSOR_PARALLEL_SIZE=$(echo ${{search_space.model_config}} | cut -d',' -f6)
+    export PIPELINE_PARALLEL_SIZE=$(echo ${{search_space.model_config}} | cut -d',' -f7)
+    export TPP=$(( TENSOR_PARALLEL_SIZE * PIPELINE_PARALLEL_SIZE ))
+    export TOTAL_GPUS=$(( NODES * GPUS ))
+    export DATA_PARALLEL_SIZE=$(( TOTAL_GPUS / TPP > 0 ? TOTAL_GPUS / TPP : 1 ))
+    export DATA_PARALLEL_SIZE_LOCAL=$(( GPUS / TPP > 0 ? GPUS / TPP : 1 ))
+    export VLLM_DP_MASTER_IP=0.0.0.0
+    export API_SERVER_COUNT=$DATA_PARALLEL_SIZE
+
+    # create the experiment output directory
+    mkdir -p $EXPERIMENT_OUTPUT_DIR
+
+    # cd into vllm inference scripts directory
+    cd tools/vllm_inference
+
+    # get phyagi api key from azure key vault
+    export PHYAGI_API_KEY=$(python keyvault_secrets.py --secret-name phigen-api-key-eval --get --output_only_secret)
+    
+    # model checkpoint conversion
+    if [[ $MODEL_NAME == *-hf ]]; then
+      echo "Skip conversion due to -hf suffix indicating HF model..."
+      if [[ -d ${{outputs.output_ckpt}}/huggingface_models/$MODEL_PATH ]]; then
+        echo "HF model already exists..."
+      else
+        echo "Downloading HF model from Hugging Face..."
+        if [ $NODE_RANK -eq 0 ]; then
+          python download_and_save_hf_models.py -m $MODEL_PATH -t $TOKENIZER_PATH -o ${{outputs.output_ckpt}}/huggingface_models
+          echo "HF model downloaded and saved to ${{outputs.output_ckpt}}/huggingface_models/$MODEL_PATH"
+        else
+          echo "Node $NODE_RANK waiting for HF model to be downloaded on rank 0"
+          while [ ! -d "${{outputs.output_ckpt}}/huggingface_models/$MODEL_PATH" ]; do
+            sleep 5
+          done
+          echo "HF model downloaded, proceeding on node $NODE_RANK..."
+        fi
+      fi
+      export MODEL_PATH=${{outputs.output_ckpt}}/huggingface_models/$MODEL_PATH
+      export TOKENIZER_PATH=$MODEL_PATH
+    elif [[ -d ${{outputs.output_ckpt}}/$MODEL_PATH/phi4 ]]; then
+      echo "Skip conversion, hf in phi4 class model already exists..."
+      export MODEL_PATH=${{outputs.output_ckpt}}/$MODEL_PATH/phi4
+      export TOKENIZER_PATH=${{inputs.tokenizer}}/$TOKENIZER_PATH
+    else
+      echo "Converting model from Zero3 to FP32 and then to HF format..."
+      if [ $NODE_RANK -eq 0 ]; then
+        echo "Node $NODE_RANK starting conversion..."
+        python -m phyagi.cli.interface convert ${{outputs.output_ckpt}}/$MODEL_PATH phi4 -t ${{inputs.tokenizer}}/$TOKENIZER_PATH --dtype=bfloat16 --debug_logit --debug_params --from_deepspeed_zero --save_intermediate_checkpoint # (for saving convertion to fp32)
+        echo "Conversion completed on rank 0"
+      else
+        echo "Node $NODE_RANK waiting for conversion to complete on rank 0..."
+        while [ ! -d "${{outputs.output_ckpt}}/$MODEL_PATH/phi4" ]; do
+          sleep 5
+        done
+        echo "Conversion completed, proceeding on node $NODE_RANK..."
+      fi
+      export MODEL_PATH=${{outputs.output_ckpt}}/$MODEL_PATH/phi4
+      export TOKENIZER_PATH=${{inputs.tokenizer}}/$TOKENIZER_PATH
+    fi
+
+    echo "Starting VLLM servers with the following configuration:"
+    echo "============================ GENERAL CONFIGURATION ============================"
+    echo "MODEL_NAME: $MODEL_NAME"
+    echo "MODEL_PATH: $MODEL_PATH"
+    echo "TOKENIZER_PATH: $TOKENIZER_PATH"
+    echo "SERVED_MODEL_NAME: $SERVED_MODEL_NAME"
+    echo "MAX_MODEL_LEN: $MAX_MODEL_LEN"
+    echo "DTYPE: $DTYPE"
+    echo "SEED: $SEED"
+    echo "GENERATION_CONFIG: $GENERATION_CONFIG"
+    echo "OVERRIDE_GENERATION_CONFIG: $OVERRIDE_GENERATION_CONFIG"
+    echo "JUDGE_GENERATION_CONFIG: $JUDGE_GENERATION_CONFIG"
+    echo "JUDGE_MODEL_NAME: $JUDGE_MODEL_NAME"
+    echo "SYSMSG: $SYSMSG"
+    echo "PYBOX_DOCKER_ARCHIVE: $PYBOX_DOCKER_ARCHIVE"
+    echo "PYBOX_APPTAINER_IMAGE: $PYBOX_APPTAINER_IMAGE"
+    echo "PYBOX_WHEELS_DIR: $PYBOX_WHEELS_DIR"
+    echo "============================ EXPERIMENT CONFIGURATION ============================"
+    echo "EXPERIMENT_NAME: $EXPERIMENT_NAME"
+    echo "EXPERIMENT_OUTPUT_DIR: $EXPERIMENT_OUTPUT_DIR"
+    echo "============================ GPU CONFIGURATION ============================"
+    echo "NODE_RANK: $NODE_RANK"
+    echo "NODES: $NODES"
+    echo "GPUS: $GPUS"
+    echo "WORLD_SIZE: $WORLD_SIZE"
+    echo "============================ SERVER CONFIGURATION ============================"
+    echo "API_SERVER_COUNT: $API_SERVER_COUNT"
+    echo "PORT: $PORT"
+    echo "TENSOR_PARALLEL_SIZE: $TENSOR_PARALLEL_SIZE"
+    echo "PIPELINE_PARALLEL_SIZE: $PIPELINE_PARALLEL_SIZE"
+    echo "TPP: $TPP"
+    echo "TOTAL_GPUS: $TOTAL_GPUS"
+    echo "DATA_PARALLEL_SIZE: $DATA_PARALLEL_SIZE"
+    echo "DATA_PARALLEL_SIZE_LOCAL: $DATA_PARALLEL_SIZE_LOCAL"
+    echo "VLLM_DP_MASTER_IP: $VLLM_DP_MASTER_IP"
+    echo "MASTER_ADDR: $MASTER_ADDR"
+    echo "MASTER_PORT: $MASTER_PORT"
+    echo "============================ PYBOX RUNTIME CONFIGURATION ============================"
+    echo "CODE_INTERPRETER: $CODE_INTERPRETER"
+    echo "CODE_INTERPRETER_MI_CLIENT_ID: $CODE_INTERPRETER_MI_CLIENT_ID"
+    echo "PYBOX_RUNTIME: $PYBOX_RUNTIME"
+    echo "PYBOX_MAX_SESSIONS: $PYBOX_MAX_SESSIONS"
+    echo "PYBOX_APPTAINER_IMAGE: $PYBOX_APPTAINER_IMAGE"
+    echo "PYBOX_DOCKER_ARCHIVE: $PYBOX_DOCKER_ARCHIVE"
+    echo "PYBOX_WHEELS_DIR: $PYBOX_WHEELS_DIR"
+    echo "APPTAINER_FALLBACK_MODE: $APPTAINER_FALLBACK_MODE"
+    echo "PYBOX_COMMON_PIP_PACKAGES: $PYBOX_COMMON_PIP_PACKAGES"
+    echo "PYBOX_OFFLINE: $PYBOX_OFFLINE"
+    echo "==============================================================================="
+
+    # Start VLLM servers
+    bash start_vllm_servers.sh
+
+    if [ $NODE_RANK -eq 0 ]; then
+      benchmarks=("aime_2024" "gpqa_diamond")
+      EVAL_TYPES=("AIME_SIMPLE AIME" "GPQA")
+      for i in "${!benchmarks[@]}"; do
+        benchmark=${benchmarks[i]}
+        if [[ $benchmark == aime_202* ]]; then
+          export PROMPT_COLUMN="problem" 
+          export NUM_SAMPLES_TO_GENERATE=5
+        else
+          export PROMPT_COLUMN="prompt"
+          export NUM_SAMPLES_TO_GENERATE=5
+        fi
+
+        export OUTDIR=$(echo $EXPERIMENT_OUTPUT_DIR/$benchmark/)
+        rm -rf $OUTDIR/*.db*
+        mkdir -p $OUTDIR
+        echo "EVAL_OUTDIR: $OUTDIR"
+        
+        python run_inference_on_vllm_server.py  \
+          --base_ip $VLLM_DP_MASTER_IP \
+          --base_port $PORT \
+          --num_servers $API_SERVER_COUNT \
+          --served_model_name $SERVED_MODEL_NAME \
+          --prompts_file ${{inputs.simpleevalprompts}}/${benchmark}.jsonl \
+          --prompt_field $PROMPT_COLUMN \
+          --output_dir $OUTDIR \
+          --tokenizer_path $TOKENIZER_PATH \
+          --agent_cls "VLLMLocalToolResponseAgent" \
+          --api_type "completion" \
+          --max_tool_call_steps 5 \
+          --tool_call_timeouts '{"code_interpreter": {"python": 200}}' \
+          --model_utils_name $MODEL_UTILS \
+          --max_model_seq_len $MAX_MODEL_LEN \
+          --system_message $SYSMSG \
+          --thinking_model \
+          --num_worker_procs $TOTAL_GPUS \
+          --num_samples_to_generate $NUM_SAMPLES_TO_GENERATE \
+          --generation_config "$OVERRIDE_GENERATION_CONFIG"
+
+        # run gpt judge
+        IFS=' ' read -r -a eval_types <<< "${EVAL_TYPES[i]}"
+        for eval_type in "${eval_types[@]}"; do
+          export RESULTS_DIR=$OUTDIR
+          export JUDGE_OUTDIR=$OUTDIR/$eval_type/
+          rm -rf $JUDGE_OUTDIR/*.db*
+          mkdir -p $JUDGE_OUTDIR
+          echo "RESULTS_DIR: $RESULTS_DIR"
+          echo "JUDGE_OUTDIR: $JUDGE_OUTDIR"
+
+          python run_gpt_judge.py \
+            --prompts_file $RESULTS_DIR/${benchmark}_output.jsonl \
+            --prompt_field $PROMPT_COLUMN \
+            --answer_field "answer" \
+            --completions_field "completions" \
+            --completion_type "response" \
+            --model_utils_name $MODEL_UTILS \
+            --tool_call_timeouts '{"code_interpreter": {"python": 200}}' \
+            --n_samples $NUM_SAMPLES_TO_GENERATE \
+            --repeat 1 \
+            --output_dir $JUDGE_OUTDIR \
+            --judge_model_name $JUDGE_MODEL_NAME \
+            --eval_type $eval_type \
+            --num_worker_procs 512 \
+            --generation_config "$JUDGE_GENERATION_CONFIG"
+        done
+      done
+
+      python summarize_results.py --output_dir $EXPERIMENT_OUTPUT_DIR
+    fi
+  environment: azureml:reasoning-lm-tooluse:220825
+  environment_variables:
+    JOB_EXECUTION_MODE: Basic
+    AZUREML_COMPUTE_USE_COMMON_RUNTIME: 'true'
+    AZUREML_COMMON_RUNTIME_USE_SBOM_CAPABILITY: 'false'
+    _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourcegroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+    PHIGEN_HOME: "/workspace/phigen_home"
+    PHYAGI_API_TIMEOUT: "3600"
+    CODE_INTERPRETER: "LOCAL"
+    PYBOX_RUNTIME: "apptainer"
+    PYBOX_OFFLINE: "1"
+    PYBOX_COMMON_PIP_PACKAGES: "NO INSTALL"
+    APPTAINER_FALLBACK_MODE: "1"
+inputs:
+  tokenizer:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/phi_ckpts/
+    mode: ro_mount
+  simpleevalprompts:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/eval_prompts/
+    mode: ro_mount
+  ci_installation_wheels:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/users/sahagar/codeinterpreter_wheels/
+    mode: ro_mount
+outputs:
+  local_docker_images:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/users/sahagar/local_docker_images/
+    mode: rw_mount
+  output_ckpt:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/phi_ckpts/
+    mode: rw_mount
+  output_dir:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/evals/reasoning_tool_use/
+    mode: rw_mount
+sampling_algorithm: grid
+search_space:
+  model_config:
+    type: choice
+    values:
+      - Phi-4-reasoning-hf,microsoft/Phi-4-reasoning,microsoft/Phi-4-reasoning,32768,bfloat16,1,1,phi4_v1_tent_data,re_tool_qwen_template_sys
+      - sft_phi4r_toolv0_2e_5e-6lr,tool_use/sft_phi4r_toolv0_2e_5e-6lr/1130,tool_use/tokenizer,32768,bfloat16,1,1,phi4_v1_tent_data,re_tool_qwen_template_sys
+      - sft_phi4_openthoughts_toolv0_2e_10xlr,tool_use/sft_phi4_openthoughts_toolv0_2e_10xlr/1765,tool_use/tokenizer,32768,bfloat16,1,1,phi4_v1_tent_data,re_tool_qwen_template_sys
+      - sft_15b_mathv2code5_otcode_oaif_high32k_tool_10xlr,tool_use/sft_15b_mathv2code5_otcode_oaif_high32k_tool_10xlr/10000,tool_use/tokenizer,32768,bfloat16,1,1,phi4_v1_tent_data,re_tool_qwen_template_sys
+      - Qwen3-32B-hf,Qwen/Qwen3-32B,Qwen/Qwen3-32B,32768,bfloat16,2,1,qwen_v1_msri_data,re_tool_qwen_template_sys
+      - Qwen3-235B-A22B-hf,Qwen/Qwen3-235B-A22B,Qwen/Qwen3-235B-A22B,32768,bfloat16,8,1,qwen_v1_msri_data,re_tool_qwen_template_sys
+  temperature:
+    type: choice
+    values:
+      - 1.0
+  seed:
+    type: choice
+    values:
+      - 42
+objective:
+  primary_metric: dummy_metric
+  goal: maximize
+limits:
+  max_total_trials: 1000
+  max_concurrent_trials: 8

@@ -1,0 +1,1135 @@
+data_root: ${oc.env:AMLT_DATA_DIR, "/mnt/phyagi"}
+dataset:
+  # synthetic nlp (unweighted size:  B)
+  # ------------------------------ textbooks ------------------------------
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/textbook/gpt35/textbook_merged_v3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: textbook
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/misc/gpt35/middle_school_textbooks/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/textbook/gpt35/textbook_exercise_merged_v3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+    # validation_split: 0.01
+    # label: textbook
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/textbook/gpt4/textbook_exercise_merged_v1/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: textbook
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/textbook/gpt35/textbook_story_merged_v12/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: textbook
+  # ------------------------------ commonsense ------------------------------
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/textbook/gpt4/textbook_story_v21/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: textbook
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/winostory/merged_v12/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: commonsense
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/WinoEx/merged_v1/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: commonsense
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/WinoSynth/merged_v6/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: commonsense
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/WinoQA/merged_v3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: commonsense
+  # - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/mystery_win/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 0.4
+  #   # validation_split: 0.01
+  #   # label: commonsense
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/LifeMoments/OriginalLifeMoments/merged_v3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: commonsense
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/LifeMoments/NewLifeMoments/merged_v7/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: commonsense
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/omg_nlp/merged_v5/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: commonsense
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/misc/gpt35/tom_mixed/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/MultiStepQA/merged_v2/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+  # ------------------------------ concentration ------------------------------
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/confusing_exercises/merged_v3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+    # validation_split: 0.01
+    # label: concentration
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/ConcentrationExercises/merged_v3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: concentration
+  # ------------------------------ rewrite & text understanding ------------------------------
+  # - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/rewrite/merged_v3/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 1.0
+  #   # validation_split: 0.01
+  #   # label: text_manipulation
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/internet-query/merged_v3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+    # validation_split: 0.01
+    # label: text_manipulation
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/TextEdit/merged_v2/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: text_manipulation
+  # ------------------------------ conversations & stories ------------------------------
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Conversations/gpt4/merged_v4/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: conversations
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/conversations_scrambled_new/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: conversations
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Conversations/gpt35/merged_v01-08/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.1
+    # validation_split: 0.01
+    # label: conversations
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Conversations/gpt35/merged_v09-16/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.1
+    # validation_split: 0.01
+    # label: conversations
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Conversations/gpt35/merged_v17-24/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.1
+    # validation_split: 0.01
+    # label: conversations
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Conversations/gpt35/merged_v25-32/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.1
+    # validation_split: 0.01
+    # label: conversations
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Conversations/gpt35/merged_v33-37/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.1
+    # validation_split: 0.01
+    # label: conversations
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/FanFictionRewrite/merged_v4/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: fanfiction
+  # ------------------------------ instruction/chat ------------------------------
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/task_instructions/dv3/dv3_expansion/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: instruction
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/task_instructions/gpt4/advanced_instructions/keywords_3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/task_instructions/gpt4/advanced_instructions/keywords_6/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/task_instructions/gpt4/advanced_instructions/none_3_and_6/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/task_instructions/gpt4/advanced_instructions/misc/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+    # validation_split: 0.01
+    # label: instruction
+  # - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/task_instructions/gpt35/instructions_vars/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 2.0
+  #   validation_split: 0.01
+  #   # label: instruction
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/lm-sys-instruct/merged_v5/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: instruction
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/misc/gpt35/logic_puzzles/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/creative/merged_v6/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+    # validation_split: 0.01
+    # label: instruction
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/StatDiscussions/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/complex_instructions/merged_v4/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: instruction
+  # ------------------------------ RAG ------------------------------
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/KeywordsRAG/merged_v2/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: rag
+  # ------------------------------ medical ------------------------------
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/medical/MedSeb_withexercises_v1/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: medical
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/medical/MedSeb_withoutexercises_v1/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: medical
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/medical/healthcare_interactions/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: medical
+  # ------------------------------ pdfs ------------------------------
+  # - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/pdf_rewrites/basic_rewrite/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 2.0
+  #   # validation_split: 0.01
+  #   # label: pdf
+  # - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/pdf_rewrites/case_study/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 2.0
+  #   # validation_split: 0.01
+  #   # label: pdf
+  # ------------------------------ new data not in v0_improved ------------------------------
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/json_qa/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: new data
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/ChatbotMetaprompt/merged_v2/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: new data
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/roleplay/merged_v1/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: new data
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/SQL/merged_v1/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: new data
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/misc/gpt4/fanfic_emoji_chat/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: new data
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/non-mmlu-law-qa/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: new data
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Pes2oConvs/merged_v5/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+    # validation_split: 0.01
+    # label: new data
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Pes2oExercises/merged_v3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+    # validation_split: 0.01
+    # label: new data
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/ResearchLevelMC/rlmc_rows/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+    # validation_split: 0.01
+    # label: new data
+
+
+  # mmlu & math
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/KeywordExercises/merged_v3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: keyword_exercises
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/KeywordsConvs/merged_v6/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: keyword_convs
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/advanced_textbooks/merged_v3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: mmlu
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/sci_phi/misc_no_mathnation/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: math
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/sci_phi/textbook/Mar20/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: mmlu_textbook
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/sci_phi/textbook/Mar20/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: mmlu_textbook
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/sci_phi/textbook/Mar20/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: mmlu_textbook
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/sci_phi/textbook/Mar20/shard_003/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: mmlu_textbook
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/sci_phi/qa/Mar20/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: mmlu_qa
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/sci_phi/qa/Mar20/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: mmlu_qa
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/sci_phi/qa/Mar20/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: mmlu_qa
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/sci_phi/qa/Mar20/shard_003/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: mmlu_qa
+
+  # wiki (unweighted size:  B)
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/wiki_rewrites/gpt4/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+    # validation_split: 0.01
+    # label: wiki_rewrites
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/wiki_rewrites/gpt4/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+    # validation_split: 0.01
+    # label: wiki_rewrites
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/wiki_rewrites/gpt4/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+    # validation_split: 0.01
+    # label: wiki_rewrites
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/wiki_rewrites/wiki_keyword/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+    # validation_split: 0.01
+    # label: wiki_keyword
+  # web wiki
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/dewiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/dewikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/dewiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-de/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/enwiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/enwikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/enwiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-en/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/eswiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/eswikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/eswiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-es/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/frwiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/frwikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/frwiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-fr/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/itwiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/itwikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/itwiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-it/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/ptwiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/ptwikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/ptwiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-pt/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/ruwiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/ruwikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/ruwiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-ru/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/zhwiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/zhwikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/zhwiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-zh/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/jawiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/jawikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/jawiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-jp/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+
+  # code (unweighted size: 11.2B)
+  - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stack-dedup-python-filtered-approved/5/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+    # validation_split: 0.01
+    # label: stack-dedup-python
+  - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stackexchange-stackoverflow-filtered/5/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+    # validation_split: 0.01
+    # label: stackexchange-stackoverflow
+  # synthetic code
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/code/code_conversations_4_all/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+    # validation_split: 0.01
+    # label: code-conversational
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/code/textbooks/python/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+    # validation_split: 0.01
+    # label: code-textbooks-python
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/code/textbooks/not_python/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+    # validation_split: 0.01
+    # label: code-textbooks-not-python
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/code/omg/gpt4_merged/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+    # validation_split: 0.01
+    # label: code-omg-gpt4
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/code/omg/gpt35_minimal/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: code-omg-gpt35
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/code/omg/exploratory/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+    # validation_split: 0.01
+    # label: code-omg-gpt35
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/code/p3_tagged/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/code/longcodes/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+
+  # web nlp
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/cream_of_the_turing/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_003/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_004/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_005/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_006/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_007/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_008/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_009/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_010/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_011/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_012/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_013/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_014/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/web_filtered_rewrites/rewrites_turing/shard_015/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 0.5
+
+  # multiling
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/sci_phi/qa_multilang_figsp/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: multiling
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/sci_phi/qa_multilang_rjz/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+    # validation_split: 0.01
+    # label: multiling
+
+dataset_concat: random_iterable
+dataset_provider: stream_lm

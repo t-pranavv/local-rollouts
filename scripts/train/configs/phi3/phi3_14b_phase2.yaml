@@ -1,0 +1,51 @@
+model:
+  pretrained_model_name_or_path: ${oc.env:CHECKPOINT_DIR}/${oc.env:CHECKPOINT_TAG}
+
+training_args:
+  ds_config:
+    bf16:
+      enabled: true
+    data_types:
+      grad_accum_dtype: fp32
+    optimizer:
+      type: AdamW
+      params:
+        lr: 1.0e-4 # IMPORTANT: Revisit this!!! Either 1e-4 or 6e.5. Check ablation results from 7B.
+        betas:
+        - 0.9
+        - 0.95
+        eps: 1.0e-8
+        weight_decay: 0.001
+    scheduler:
+      type: WarmupDecayLR
+      params:
+        warmup_min_lr: 0
+        warmup_max_lr: 1.0e-4 # IMPORTANT: Revisit this!!! See above comment.
+        warmup_type: linear
+        warmup_num_steps: 1000
+    zero_optimization:
+      stage: 1
+    gradient_clipping: 1.0
+    steps_per_print: 100
+    train_batch_size: 2048
+    train_micro_batch_size_per_gpu: 1
+    wall_clock_breakdown: false
+    zero_allow_untested_optimizer: true
+  do_final_eval: false
+  max_steps: 250000 # 2T tokens
+  logging_steps: 10
+  save_steps: 1000 # [ 500 for 32 nodes, 1000 for 64 nodes ]
+  save_final_checkpoint: true
+  load_checkpoint_num_tries: 3
+  seed: 42
+  timeout: 900
+  eval_steps: 999999
+  eval_max_steps: 150
+  pipe_parallel_size: 4
+  dataloader_shuffle: true
+  dataloader_num_workers: 1
+  dataloader_prefetch_factor: 512
+  batch_tracker: true
+  batch_tracker_save_steps: 100
+  mlflow: false
+  wandb: true

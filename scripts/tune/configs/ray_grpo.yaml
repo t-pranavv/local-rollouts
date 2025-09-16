@@ -1,0 +1,62 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/ray_grpo
+tokenizer:
+  pretrained_tokenizer_name_or_path: microsoft/Phi-3-mini-4k-instruct
+dataset:
+  - label: gsm8k
+    train_file: ${data_root}/gsm8k/train.parquet
+    validation_file: ${data_root}/gsm8k/test.parquet
+    tokenizer: ${tokenizer.pretrained_tokenizer_name_or_path}
+    messages_column_name: prompt
+    ground_truth_column_name: answer
+    max_length: 256
+    filter_max_length: true
+rewards:
+  - name: math_verifier
+    type: gsm8k
+    kwargs:
+      format_score: 0.0
+      correct_score: 1.0
+tuning_args:
+  n_nodes: 1
+  n_gpus_per_node: 4
+  do_final_eval: true
+  eval_before_training: true
+  max_steps: 160 # either `epochs` or `max_steps` must be set
+  log_n_eval_completions: 40 # log first 40 questions with completions during every evaluation step
+  save_steps: 40
+  save_final_checkpoint: true
+  eval_steps: 40
+  group_size: 8 # completions per question
+  train_batch_size: 16 # number of questions per round
+  train_max_micro_batch_size_per_gpu: 4 # maximum number of packed documents per GPU
+  num_policy_updates_per_batch: 1
+  kl_coeff: 1e-3
+  dataloader_shuffle: false
+  checkpoint_mode: async
+  actor:
+    model:
+      pretrained_model_name_or_path: <pretrained_model_name_or_path> # must be MixFormerSequential model
+
+    optimizer:
+      betas: [0.9, 0.999]
+      weight_decay: 0.01
+    scheduler:
+      warmup_num_steps: 20
+      # decay_num_steps: 140 # enables learning rate decay to zero
+      warmup_max_lr: 5.0e-6
+    manual_offload: true # manual offload to CPU (more stable)
+    fsdp_offload: false # FSDP offload to CPU (less stable)
+    dtype: bfloat16
+  rollout:
+    prompt_length: 256
+    response_length: 512
+    dtype: bfloat16
+    gpu_memory_utilization: 0.5
+    enforce_eager: false
+    enable_prefix_caching: false
+    preemption_mode: swap
+    sampling_params:
+      stop_token_ids: [32007]
+      temperature: 1.0

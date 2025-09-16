@@ -1,0 +1,37 @@
+import math
+
+def check(a, b, epsilon=1e-8):
+    # a: extracted model solution, b: ground truth answer, epsilon: tolerance
+    if type(b) == int or type(b) == str or type(b) == set:
+        return a == b
+    return abs(a-b) < epsilon
+
+def check(a, b, epsilon=1e-8):
+    # a: extracted model solution, b: ground truth answer, epsilon: tolerance
+    if type(a) == str and "math" in a:
+        try:
+            a = eval(a, {"math": math})
+        except Exception as e:
+            logger().error(f"math eval error in {a}:{e}")
+    if type(b) == str and "math" in b:
+        try:
+            b = eval(b, {"math": math})
+        except Exception as e:
+            logger().error(f"math eval error in {b}:{e}")
+    if type(b) == int:
+        return a == b
+    if type(b) == str:
+        if type(a) == int and "%" in b:
+            a = str(a) + "%"
+        else:
+            a = str(a)
+        return a.replace(" ", "").lower() == b.replace(" ", "").lower()
+    if type(b) == set:
+        return a == b
+    if type(b) == list:
+        return a == b
+    if type(b) == tuple:
+        return a == b
+    return abs(a - b) < epsilon
+
+print({{check}})

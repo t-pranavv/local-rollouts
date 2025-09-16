@@ -1,0 +1,21 @@
+# Folders
+.git/
+.pytest_cache/
+.vscode/
+.github/
+amlt/
+docker/
+docs/
+mlruns/
+phyagi.egg-info/
+tests/
+wandb/
+
+# File extensions
+*.bin
+*.db
+*.log
+*.npy
+*.pkl
+*.pt
+*.safetensors

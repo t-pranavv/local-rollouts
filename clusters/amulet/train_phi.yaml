@@ -1,0 +1,204 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
+description: Experiment "train_phi"
+
+target:
+  service: sing
+  name: baltic08
+  workspace_name: aifrontiers_ws
+
+environment:
+  image: nvidia25.03-pytorch2.7.1-te2.4-deepspeed0.17.1-flashattn2.8.0.post2-vllm0.9.1:20250702
+  registry: aifrontiers.azurecr.io
+  setup:
+    - set -e -o xtrace
+    - pip install -e .
+    - wget https://aka.ms/downloadazcopy-v10-linux && tar xzf downloadazcopy-v10-linux && sudo mv azcopy_linux_amd64_*/azcopy /usr/local/bin/azcopy
+
+storage:
+  phyagi:
+    storage_account_name: phyagi
+    container_name: data
+  output:
+    storage_account_name: phyagi
+    container_name: amulet
+
+code:
+  # Copy this YAML to `phyagi-experiments` repository for changes,
+  # and remember to change the `local_dir` to your `phyagi-sdk` repository path
+  local_dir: <PATH/TO/phyagi-sdk>
+
+jobs:
+  # Phi-1
+  - name: phi1-350m
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - cd scripts/train
+      - python ds_train.py configs/phi1/phi1-350m.yaml --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: phi1-1.3b
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - cd scripts/train
+      - python ds_train.py configs/phi1/phi1-1.3b.yaml --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+
+  # Phi-1.5
+  - name: phi1.5_web-only
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - cd scripts/train
+      - python ds_train.py configs/phi1.5/phi1.5_web-only.yaml --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: phi1.5_web
+    sku: 1xG8-H100-IB
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - cd scripts/train
+      - python ds_train.py configs/phi1.5/phi1.5_web.yaml --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: phi1.5
+    sku: 1xG8-H100-IB
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - cd scripts/train
+      - python ds_train.py configs/phi1.5/phi1.5.yaml --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+
+  # Phi-2
+  - name: phi2_2.7b
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - cd scripts/train
+      - python ds_train.py configs/phi2/phi2_2.7b.yaml --output_dir $$AMLT_OUTPUT_DIR --data_store azcopy --blob_account phyagi
+    submit_args:
+      env:
+        BLOB_SAS_TOKEN: "$BLOB_SAS_TOKEN"
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: phi2_2.7b_stream
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - cd scripts/train
+      - python ds_train.py configs/phi2/phi2_2.7b_stream.yaml --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        DATASET_MOUNT_BLOCK_BASED_CACHE_ENABLED: True
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: phi2_7b
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - cd scripts/train
+      - python ds_train.py configs/phi2/phi2_7b.yaml --output_dir $$AMLT_OUTPUT_DIR --data_store azcopy --blob_account phyagi
+    submit_args:
+      env:
+        BLOB_SAS_TOKEN: "$BLOB_SAS_TOKEN"
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+
+  # Phi-3
+  - name: phi3_3.8b_phase_1
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - python scripts/tools/singularity/all_reduce_test.py
+      - cd scripts/train
+      - python ds_train.py configs/phi3/phi3_phase1_data.yaml configs/phi3/phi3_3.8b_phase1.yaml --output_dir $$AMLT_OUTPUT_DIR --data_store azcopy --blob_account phyagi
+    submit_args:
+      env:
+        BLOB_SAS_TOKEN: "$BLOB_SAS_TOKEN"
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: phi3_3.8b_phase_2
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - python scripts/tools/singularity/all_reduce_test.py
+      - cd scripts/train
+      - python ds_train.py configs/phi3/phi3_3.8b_phase2_data.yaml configs/phi3/phi3_3.8b_phase2.yaml --output_dir $$AMLT_OUTPUT_DIR --data_store azcopy --blob_account phyagi --training_args.max_steps 200000 --training_args.save_steps 100
+    submit_args:
+      env:
+        BLOB_SAS_TOKEN: "$BLOB_SAS_TOKEN"
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: phi3_14b_phase_1
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - python scripts/tools/singularity/all_reduce_test.py
+      - cd scripts/train
+      - python ds_train.py configs/phi3/phi3_phase1_data.yaml configs/phi3/phi3_14b_phase1.yaml --output_dir $$AMLT_OUTPUT_DIR --data_store azcopy --blob_account phyagi
+    submit_args:
+      env:
+        BLOB_SAS_TOKEN: "$BLOB_SAS_TOKEN"
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: phi3_14b_phase_2
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - python scripts/tools/singularity/all_reduce_test.py
+      - cd scripts/train
+      - python ds_train.py configs/phi3/phi3_14b_phase2_data.yaml configs/phi3/phi3_14b_phase2.yaml --output_dir $$AMLT_OUTPUT_DIR --data_store azcopy --blob_account phyagi --training_args.max_steps 200000 --training_args.save_steps 100
+    submit_args:
+      env:
+        BLOB_SAS_TOKEN: "$BLOB_SAS_TOKEN"
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers

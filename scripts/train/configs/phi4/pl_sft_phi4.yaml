@@ -1,0 +1,68 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/pl_sft_phi4
+dataset:
+  - cache_dir: ${data_root}/post_train_data/final_v5/packed_16384/16k_data_20/
+    seq_len: 16384
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/phoenix_sft_4k_ver13_16384/
+    seq_len: 16384
+    weight: 1.0
+dataset_concat: random
+dataset_provider: lm
+model:
+  pretrained_model_name_or_path: <pretrained_model_name_or_path>
+  torch_dtype: bf16 # `torch_dtype` might be default to `fp32` and will waste memory
+  architecture:
+    mixer:
+      flash_rotary: true # `flash_rotary` will not work with `fsdp_cpu_offload: true`
+      fused_dense: false
+    norm:
+      norm_cls: rms
+  tp_size: 2
+training_args:
+  strategy:
+    type: dctp
+    data_parallel_size: 4
+    tensor_parallel_size: ${model.tp_size}
+    activation_checkpointing: false
+    fsdp_compile: false
+    fsdp_cpu_offload: false
+    tp_async: false
+    tp_sequence_parallel: true
+    tp_loss_parallel: false
+  trainer:
+    precision: bf16-mixed
+    max_steps: 4770 # 5B tokens (1 epoch)
+    log_every_n_steps: 10
+    accumulate_grad_batches: 16
+    gradient_clip_val: 1.0
+  lightning_module:
+    optimizer:
+      type: adamw
+      params:
+        lr: 1.0e-6
+        betas:
+        - 0.8
+        - 0.95
+        eps: 1.0e-8
+        weight_decay: 0.0
+    scheduler:
+      type: warmup_decay
+      params:
+        warmup_min_lr: 1.0e-7
+        warmup_max_lr: 1.0e-6
+        warmup_type: linear
+        warmup_num_steps: 450
+      interval: step
+      frequency: 1
+      name: warmup_decay_lr
+  do_eval: false
+  train_micro_batch_size_per_gpu: 1
+  save_steps: 250
+  save_final_checkpoint: true
+  seed: 42
+  dataloader_shuffle: true
+  dataloader_num_workers: 1
+  dataloader_prefetch_factor: 512
+  wandb: true

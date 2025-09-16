@@ -1,0 +1,64 @@
+model:
+  pretrained_model_name_or_path: <pretrained_model_name_or_path> # phi-4-base ckpt located at https://aifshared.blob.core.windows.net/data/phi4checkpoints/phi-4-base/last@0010714_pp0/
+  gradient_checkpointing: true
+training_args:
+  ds_config:
+    bf16:
+      enabled: true
+    data_types:
+      grad_accum_dtype: fp32
+    optimizer:
+      type: AdamW
+      params:
+        lr: 2.0e-5
+        betas:
+        - 0.9
+        - 0.95
+        eps: 1.0e-8
+        weight_decay: 1.0e-4
+    scheduler:
+      type: WarmupDecayLR
+      params:
+        warmup_min_lr: 2.0e-7
+        warmup_max_lr: 2.0e-5
+        warmup_type: linear
+        warmup_num_steps: 450
+    zero_optimization:
+      stage: 3
+      offload_param:
+        device: cpu
+        pin_memory: true
+      offload_optimizer:
+        device: cpu
+        pin_memory: true
+      overlap_comm: true
+      sub_group_size: 1e9
+      contiguous_gradients: true
+      stage3_max_live_parameters: 1e9
+      stage3_max_reuse_distance: 1e9
+      stage3_gather_16bit_weights_on_model_save: true
+    gradient_clipping: 1.0
+    steps_per_print: 10
+    train_batch_size: 64
+    train_micro_batch_size_per_gpu: 1
+    wall_clock_breakdown: false
+    zero_allow_untested_optimizer: true
+  do_final_eval: false
+  max_steps: 4770 # equivalent to 5B tokens or 1 epoch of the datasets
+  logging_steps: 10
+  save_steps: 100
+  save_final_checkpoint: true
+  load_checkpoint_num_tries: 3
+  seed: 42
+  timeout: 900
+  eval_steps: 999999
+  eval_max_steps: 150
+  pipe_parallel_size: 0
+  dataloader_shuffle: true
+  dataloader_num_workers: 1
+  dataloader_prefetch_factor: 512
+  batch_tracker: false
+  batch_tracker_save_steps: 100
+  mlflow: false
+  wandb: false
+  tensorboard: true

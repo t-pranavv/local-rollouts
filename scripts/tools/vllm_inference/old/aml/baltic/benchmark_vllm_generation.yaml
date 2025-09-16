@@ -1,0 +1,116 @@
+# az ml job create --file scripts/tools/vllm_inference/aml/baltic/benchmark_vllm_generation.yaml --resource-group aifrontiers --workspace-name aifrontiers_ws
+$schema: https://azuremlschemas.azureedge.net/latest/sweepJob.schema.json
+type: sweep
+compute: /subscriptions/22da88f6-1210-4de2-a5a3-da4c7c2a1213/resourcegroups/gcr-singularity/providers/microsoft.machinelearningservices/virtualclusters/baltic08
+# compute: /subscriptions/d4404794-ab5b-48de-b7c7-ec1fefb0a04e/resourcegroups/gcr-singularity-octo/providers/microsoft.machinelearningservices/virtualclusters/whitney14
+resources:
+  instance_count: 1
+  instance_type: Singularity.ND12_H100_v5 # 1 GPU
+  # instance_type: Singularity.ND24_H100_v5 # 2 GPUs
+  # instance_type: Singularity.ND48_H100_v5 # 4 GPUs
+  # instance_type: Singularity.ND96r_H100_v5 # 8 GPUs
+  # instance_type: Singularity.ND96isr_MI300X_v5 # 8 AMD GPUs
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ''
+      interactive: false
+      sshPublicKey: ""
+      enableAzmlInt: true
+      # priority: Low
+      # priority: Medium
+      priority: High
+      # slaTier: Standard
+      slaTier: Premium
+experiment_name: model_evaluation
+tags:
+  Project_Name: Orca
+  ProjectID: PRJ-0438-A49
+  Experiment: Reasoning_LLM
+trial:
+  code: ../../../../../
+  command: |
+    export MODEL_NAME=$(echo ${{search_space.model_config}} | cut -d',' -f1)
+    export MODEL_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f2)
+    export MAX_SEQ_LEN=$(echo ${{search_space.model_config}} | cut -d',' -f3)
+    export TOKENIZER_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f4)
+    if [ -z "$TOKENIZER_PATH" ]; then
+      export TOKENIZER_PATH=$MODEL_PATH
+    fi
+
+    export VLLM_MODEL_NAME=$(echo vllm-local-$MODEL_NAME)
+
+    echo "MODEL_NAME: $MODEL_NAME"
+    echo "MODEL_PATH: $MODEL_PATH"
+    echo "MAX_SEQ_LEN: $MAX_SEQ_LEN"
+    echo "TOKENIZER_PATH: $TOKENIZER_PATH"
+    echo "VLLM_MODEL_NAME: $VLLM_MODEL_NAME"
+
+    export OPENAI_API_KEY="key"
+
+    export PYTHONPATH="$(pwd):$PYTHONPATH"
+    cd scripts/tools/vllm_inference
+
+
+    # start vllm servers
+    source start_vllm_servers.sh --world-size=1 --pretrained-model=${{inputs.ckpt}}/$MODEL_PATH --tokenizer-model=${{inputs.ckpt}}/$TOKENIZER_PATH --base-port=$VLLM_LOCAL_BASE_PORT --api-key=$OPENAI_API_KEY --max-model-len=$MAX_SEQ_LEN --served-model-name=$VLLM_MODEL_NAME --dtype=bfloat16 --seed=${{search_space.seed}} --generation-config=auto --override-generation-config='{\"temperature\": ${{search_space.temperature}}, \"top_p\": 0.95, \"do_sample\": true, \"use_cache\":true, \"eos_token_id\":100265, \"pad_token_id\":100349}'
+
+
+    echo "Waiting for VLLM servers to be ready..."
+
+    while ! curl -s http://localhost:$VLLM_LOCAL_BASE_PORT > /dev/null 2>&1; do
+      echo "Waiting for VLLM server on port $port..."
+      sleep 5
+    done
+    echo "VLLM server ready on port $port"
+    
+    # Run benchmark per GPU
+    echo "Running benchmark..."
+    vllm bench serve --label ${VLLM_MODEL_NAME} --model $VLLM_MODEL_NAME --tokenizer ${{inputs.ckpt}}/$TOKENIZER_PATH --disable-tqdm
+  environment: azureml:nvidia2503-pytorch271-te24-deepspeed0171-flashattn280post2-vllm091-20250702:1
+  environment_variables:
+    JOB_EXECUTION_MODE: Basic
+    AZUREML_COMPUTE_USE_COMMON_RUNTIME: 'true'
+    _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourcegroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+    VLLM_LOCAL_NUM_INSTANCES: '8'
+    VLLM_LOCAL_BASE_PORT: '8000'
+    PHIGEN_AUTO_IBALL: 'False'
+    PHIGEN_HOME: '/workspace/phigen_home'
+    PHYAGI_API_TIMEOUT: '99999999'
+inputs:
+  ckpt:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/
+    mode: ro_mount
+  tokenizer:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/
+    mode: ro_mount
+sampling_algorithm: grid
+search_space:
+  model_config:
+    type: choice
+    values:
+    # - Qwen2.5-14B-Instruct,tool_use/huggingface_models/Qwen2.5-14B-Instruct,32768
+    # - Qwen2.5-32B-Instruct,tool_use/huggingface_models/Qwen2.5-32B-Instruct,32768
+    # - Qwen3-14B,tool_use/huggingface_models/Qwen3-14B,32768
+    # - Qwen3-32B,tool_use/huggingface_models/Qwen3-32B,32768
+    # - Qwen3-32B-FP8,tool_use/huggingface_models/Qwen3-32B-FP8,32768
+    # - Qwen3-30B-A3B,tool_use/huggingface_models/Qwen3-30B-A3B,32768
+    - Qwen3-235B-A22B,tool_use/huggingface_models/Qwen3-235B-A22B,32768
+    # - Qwen2.5-14B-Instruct-1M,tool_use/huggingface_models/Qwen2.5-14B-Instruct-1M,1010000
+  temperature:
+    type: choice
+    values:
+      - 0.8
+  seed:
+    type: choice
+    values:
+      - 42
+objective:
+  primary_metric: dummy_metric
+  goal: maximize
+limits:
+  max_total_trials: 1000
+  max_concurrent_trials: 8

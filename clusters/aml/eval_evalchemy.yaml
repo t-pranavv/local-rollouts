@@ -1,0 +1,43 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+compute: /subscriptions/22da88f6-1210-4de2-a5a3-da4c7c2a1213/resourcegroups/gcr-singularity/providers/microsoft.machinelearningservices/virtualclusters/baltic08
+resources:
+  instance_count: 1
+  instance_type: Singularity.ND96r_H100_v5
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ""
+      interactive: false
+      sshPublicKey: ""
+      enableAzmlInt: true
+      priority: Medium
+      slaTier: Premium
+display_name: p1_phi4_evalchemy
+experiment_name: eval_evalchemy
+# Copy this YAML to `phyagi-experiments` repository for changes,
+# and remember to change it to your `phyagi-sdk` repository path
+code: <PATH/TO/phyagi-sdk>
+command: |
+  pip install -e .
+  git clone https://github.com/caiom/evalchemy.git
+  pip install -e evalchemy[eval]
+  pip install -e evalchemy/eval/chat_benchmarks/alpaca_eval
+  python scripts/eval/evalchemy/eval_evalchemy.py --model_path microsoft/phi-4 --output_path ${{outputs.output_dir}} --num_evals 1 --num_concurrent 20 --work_dir evalchemy --wait 200 --temperature 0.1 --top_p 0.95 --system_prompt_type simple --tasks LiveCodeBench --max_gen_toks 14500
+environment: azureml:nvidia2503-pytorch271-te24-deepspeed0171-flashattn280post2-vllm091-20250702:1
+environment_variables:
+  JOB_EXECUTION_MODE: Basic
+  AZUREML_COMPUTE_USE_COMMON_RUNTIME: true
+  _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourcegroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  DATA_ROOT: ${{inputs.input}}
+  HF_TOKEN: <hf-token>
+inputs:
+  input:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/
+    mode: ro_mount
+outputs:
+  output_dir:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/evals/evalchemy/${{name}}/
+    mode: rw_mount

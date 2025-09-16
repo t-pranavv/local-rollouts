@@ -1,0 +1,55 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Evaluate on Code Generation (Phi-2)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${cwd}/scripts/eval/eval.py",
+            "console": "integratedTerminal",
+            "args": [
+                "scripts/eval/configs/code_generation.yaml",
+                "microsoft/phi-2",
+            ],
+            "justMyCode": true
+        },
+        {
+            "name": "Train MixFormer (DeepSpeed)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "deepspeed.launcher.runner",
+            "args": [
+                "--num_nodes=1",
+                "--num_gpus=1",
+                "${workspaceFolder}/scripts/train/ds_train.py",
+                "${workspaceFolder}/scripts/train/configs/ds_mixformer-sequential-350m.yaml"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+        },
+        {
+            "name": "Train MixFormer (Hugging Face)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/scripts/train/hf_train.py",
+            "args": [
+                "${workspaceFolder}/scripts/train/configs/hf_mixformer-sequential-350m.yaml"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+        },
+    ]
+}

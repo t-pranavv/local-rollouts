@@ -1,0 +1,37 @@
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/agi-eval
+tokenizer:
+  pretrained_tokenizer_name_or_path: microsoft/phi-2
+eval_tasks:
+  task_0:
+    task_name: agi_math
+    task_kwargs:
+      batch_size: 8
+  task_1:
+    task_name: lsat_ar
+    task_kwargs:
+      batch_size: 8
+  task_2:
+    task_name: lsat_lr
+    task_kwargs:
+      batch_size: 8
+  task_3:
+    task_name: lsat_rc
+    task_kwargs:
+      batch_size: 8
+  task_4:
+    task_name: aqua_rat
+    task_kwargs:
+      batch_size: 8
+  task_5:
+    task_name: logiqa_en
+    task_kwargs:
+      batch_size: 8
+  task_6:
+    task_name: sat_en
+    task_kwargs:
+      batch_size: 8
+  task_7:
+    task_name: sat_math
+    task_kwargs:
+      batch_size: 8

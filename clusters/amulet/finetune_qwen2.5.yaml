@@ -1,0 +1,63 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
+description: Experiment "finetune_qwen2.5"
+
+target:
+  service: sing
+  name: baltic08
+  workspace_name: aifrontiers_ws
+
+environment:
+  image: nvidia25.03-pytorch2.7.1-te2.4-deepspeed0.17.1-flashattn2.8.0.post2-vllm0.9.1:20250702
+  registry: aifrontiers.azurecr.io
+  setup:
+    - set -e -o xtrace
+    - pip install -e .[rl]
+
+storage:
+  aifshared:
+    storage_account_name: aifshared
+    container_name: data
+  output:
+    storage_account_name: aifshared
+    container_name: amulet
+
+code:
+  # Copy this YAML to `phyagi-experiments` repository for changes,
+  # and remember to change the `local_dir` to your `phyagi-sdk` repository path
+  local_dir: <PATH/TO/phyagi-sdk>
+
+jobs:
+  - name: p1_qwen2.5-7b_32k_ds_sft
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - cd scripts/train
+      - python ds_train.py configs/qwen2.5/ds_sft_qwen2.5-7b_32k.yaml --model.pretrained_model_name_or_path /mnt/aifshared/models/Qwen2.5-7B-Instruct/mixformer-sequential --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: p1_qwen2.5-32b_pl_sft
+    sku: 8xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    mpi: True
+    process_count_per_node: 8
+    command:
+      - cd scripts/train
+      - python pl_train.py configs/qwen2.5/pl_sft_qwen2.5-32b_32k.yaml --model.pretrained_model_name_or_path /mnt/aifshared/models/qwen2.5-32b/mixformer-sequential --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        CUDA_DEVICE_MAX_CONNECTIONS: 1
+        TORCH_NCCL_ASYNC_ERROR_HANDLING: 1
+        TORCH_NCCL_HEARTBEAT_TIMEOUT_SEC: 120
+        SINGULARITY_MPI_ENV: "-mca pml ucx -mca coll ^hcoll --bind-to numa -x RX_QUEUE_LEN=8192 -x IB_RX_QUEUE_LEN=8192 -x UCX_TLS=tcp -x HCOLL_ENABLE_MCAST_ALL=0 -x coll_hcoll_enable=0 -x UCX_NET_DEVICES=eth0 -x NCCL_IB_TIMEOUT=16 -x NCCL_IB_SL=0 -x NCCL_IB_TC=41 -x NCCL_IB_GID_INDEX=3 -x NCCL_IB_QPS_PER_CONNECTION=4 -x NCCL_IB_HCA=mlx5_1,mlx5_2,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_7,mlx5_8,mlx5_9,mlx5_10,mlx5_11,mlx5_12,mlx5_14,mlx5_15,mlx5_16,mlx5_17 -x NCCL_SOCKET_IFNAME=eth0 -x NCCL_DEBUG=INFO"
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers

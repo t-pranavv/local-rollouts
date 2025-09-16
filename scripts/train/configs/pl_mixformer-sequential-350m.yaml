@@ -1,0 +1,77 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/pl_mixformer-350m
+dataset:
+  - cache_dir: ${data_root}/omg.npy
+    seq_len: 2048
+    weight: 1.0
+dataset_concat: random
+eval_dataset_concat: null
+dataset_provider: lm
+dataset_global_weight: 1.0
+dataset_collator:
+  cls: lm
+model:
+  model_type: mixformer-sequential
+  torch_dtype: bf16
+  embd_layer: default
+  architecture:
+    block_cls: parallel
+    mixer:
+      mixer_cls: mha
+      dropout: 0.0
+      bias: true
+      flash_attn: true
+      flash_rotary: true
+      fused_dense: true
+    mlp:
+      mlp_cls: fused_mlp
+    norm:
+      norm_cls: torch
+    head:
+      head_cls: causal_lm
+      use_bias: true
+  vocab_size: 50304
+  n_positions: 2048
+  n_embd: 1024
+  n_layer: 20
+  n_head: 16
+  rotary_dim: 32
+  embd_pdrop: 0.0
+  resid_pdrop: 0.0
+  activation_function: gelu_new
+  layer_norm_epsilon: 1.0e-5
+  initializer_range: 0.02
+  pad_vocab_size_multiple: 64
+training_args:
+  trainer:
+    precision: bf16-mixed
+    max_epochs: 1
+    val_check_interval: null
+    log_every_n_steps: 1
+    accumulate_grad_batches: 1
+  lightning_module:
+    optimizer:
+      type: adamw
+      params:
+        lr: 1.8e-3
+        betas:
+        - 0.9
+        - 0.95
+        eps: 1.0e-7
+        weight_decay: 0.1
+    scheduler:
+      type: step
+      params:
+        step_size: 1000
+        gamma: 0.1
+      interval: step
+      frequency: 1
+      name: step_lr
+  train_micro_batch_size_per_gpu: 1
+  do_eval: true
+  save_steps: 100
+  save_final_checkpoint: true
+  seed: 42
+  dataloader_shuffle: true
+  eval_dataloader_shuffle: true

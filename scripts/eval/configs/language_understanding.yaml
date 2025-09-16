@@ -1,0 +1,18 @@
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/language-understanding
+tokenizer:
+  pretrained_tokenizer_name_or_path: microsoft/phi-2
+eval_tasks:
+  task_0:
+    task_name: lm_eval
+    task_kwargs:
+      tasks: ["piqa", "hellaswag", "openbookqa"]
+      batch_size: 8
+  task_1:
+    task_name: squad
+    task_kwargs:
+      batch_size: 8
+  task_2:
+    task_name: medmcqa
+    task_kwargs:
+      batch_size: 8

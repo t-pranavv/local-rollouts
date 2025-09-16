@@ -1,0 +1,96 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
+description: Experiment "eval_phyagi-sdk"
+
+target:
+  service: sing
+  name: baltic08
+  workspace_name: aifrontiers_ws
+
+environment:
+  image: nvidia25.03-pytorch2.7.1-te2.4-deepspeed0.17.1-flashattn2.8.0.post2-vllm0.9.1:20250702
+  registry: aifrontiers.azurecr.io
+  setup:
+    - set -e -o xtrace
+    - pip install -e .[eval]
+
+storage:
+  # If you need to download models from different storages and containers, add them here
+  # <label>:
+  #   storage_account_name: <storage_account_name>
+  #   container_name: <container_name>
+
+  aifshared:
+    storage_account_name: aifshared
+    container_name: data
+  output:
+    storage_account_name: aifshared
+    container_name: amulet
+
+code:
+  # Copy this YAML to `phyagi-experiments` repository for changes,
+  # and remember to change the `local_dir` to your `phyagi-sdk` repository path
+  local_dir: <PATH/TO/phyagi-sdk>
+
+jobs:
+  - name: p1_agi-eval
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    command:
+      - cd scripts/eval
+      - torchrun --nproc_per_node=8 eval_distributed.py configs/agi_eval.yaml <pretrained_model_name_or_path> --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: p1_common-sense-reasoning
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    command:
+      - cd scripts/eval
+      - torchrun --nproc_per_node=8 eval_distributed.py configs/common_sense_reasoning.yaml <pretrained_model_name_or_path> --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: p1_language-understanding
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    command:
+      - cd scripts/eval
+      - torchrun --nproc_per_node=8 eval_distributed.py configs/language_understanding.yaml <pretrained_model_name_or_path> --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: p1_mmlu
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    command:
+      - cd scripts/eval
+      - torchrun --nproc_per_node=8 eval_distributed.py configs/mmlu.yaml <pretrained_model_name_or_path> --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: p1_multi-step-reasoning
+    sku: 1xG8-H100-IB
+    sla_tier: premium
+    priority: medium
+    command:
+      - cd scripts/eval
+      - torchrun --nproc_per_node=8 eval_distributed.py configs/multi_step_reasoning.yaml <pretrained_model_name_or_path> --output_dir $$AMLT_OUTPUT_DIR
+    submit_args:
+      env:
+        WANDB_API_KEY: local-caf46ffffc84feab44e6da3913e16b683be41c53
+        WANDB_HOST: https://microsoft-research.wandb.io
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers

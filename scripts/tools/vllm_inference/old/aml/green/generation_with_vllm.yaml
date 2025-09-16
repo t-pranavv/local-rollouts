@@ -1,0 +1,153 @@
+# az ml job create --file generation_with_vllm.yaml --resource-group msr-aifrontiers-dev-eastus2-rg --workspace-name msr-aifrontiers-dev-eastus2-ws
+$schema: https://azuremlschemas.azureedge.net/latest/sweepJob.schema.json
+type: sweep
+compute: /subscriptions/a0c66465-bfb8-4525-84d0-75a8fb5a054f/resourceGroups/msr-aifrontiers-dev-eastus2-rg/providers/Microsoft.MachineLearningServices/virtualClusters/msr-aif-dev-eastus2-vc
+resources:
+  instance_count: 1
+  # instance_type: Singularity.ND12_H100_v5 # 1 GPU
+  # instance_type: Singularity.ND24_H100_v5 # 2 GPUs
+  # instance_type: Singularity.ND48_H100_v5 # 4 GPUs
+  instance_type: Singularity.ND96r_H100_v5 # 8 GPUs
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ''
+      interactive: false
+      sshPublicKey: ""
+      enableAzmlInt: true
+      # priority: Low
+      # priority: Medium
+      priority: High
+      # slaTier: Standard
+      slaTier: Premium
+      location: null
+      locations: ["eastus2"]
+experiment_name: data_generation
+tags:
+  Project_Name: Orca
+  ProjectID: PRJ-0438-A49
+  Experiment: Reasoning_LLM
+trial:
+  # code: ./
+  code: ../../../../../
+  command: |
+    # export MODEL_NAME=Qwen3-30B-A3B
+    # export MODEL_PATH=tool_use/huggingface_models/Qwen3-30B-A3B
+    # export MAX_SEQ_LEN=32768
+    # export TEMPERATURE=0.6
+    # export TENSOR_PARALLEL_SIZE=1
+    export MODEL_NAME=Qwen3-235B-A22B
+    export MODEL_PATH=tool_use/huggingface_models/Qwen3-235B-A22B
+    export MAX_SEQ_LEN=32768
+    export TEMPERATURE=0.6
+    export TENSOR_PARALLEL_SIZE=8
+    # TODO: Update the model name and path as needed
+    # Qwen2.5-14B-Instruct,tool_use/huggingface_models/Qwen2.5-14B-Instruct,32768,0.6,1
+    # Qwen2.5-32B-Instruct,tool_use/huggingface_models/Qwen2.5-32B-Instruct,32768,0.6,1
+    # Qwen3-14B,tool_use/huggingface_models/Qwen3-14B,32768,0.6,1
+    # Qwen3-32B,tool_use/huggingface_models/Qwen3-32B,32768,0.6,1
+    # Qwen3-32B-FP8,tool_use/huggingface_models/Qwen3-32B-FP8,32768,0.6,1
+    # Qwen3-30B-A3B,tool_use/huggingface_models/Qwen3-30B-A3B,32768,0.6,1
+    # Qwen3-235B-A22B,tool_use/huggingface_models/Qwen3-235B-A22B,32768,0.6,8
+    # Qwen3-235B-A22B-FP8,tool_use/huggingface_models/Qwen3-235B-A22B-FP8,32768,0.6,4
+
+    export TOKENIZER_PATH=$MODEL_PATH
+    export VLLM_MODEL_NAME=$(echo vllm-local-$MODEL_NAME)
+    export NUM_SERVERS=$(($VLLM_LOCAL_NUM_INSTANCES / $TENSOR_PARALLEL_SIZE))
+
+
+    export PROMPTS_DATA_FILE_NAME=$(echo ${{search_space.data_file}})
+    export PROMPTS_DATA_PATH=$(echo ${{inputs.seed_prompts}}/$PROMPTS_DATA_FILE_NAME.jsonl)
+    export PROMPT_COLUMN="prompt"
+
+    export OUTPUT_DIR=$(echo ${{outputs.output_dir}}/$MODEL_NAME/$PROMPTS_DATA_FILE_NAME/)
+
+    echo "MODEL_NAME: $MODEL_NAME"
+    echo "MODEL_PATH: $MODEL_PATH"
+    echo "MAX_SEQ_LEN: $MAX_SEQ_LEN"
+    echo "TOKENIZER_PATH: $TOKENIZER_PATH"
+    echo "TEMPERATURE: $TEMPERATURE"
+    echo "TENSOR_PARALLEL_SIZE: $TENSOR_PARALLEL_SIZE"
+    echo "NUM_SERVERS: $NUM_SERVERS"
+
+
+    echo "PROMPTS_DATA_FILE_NAME: $PROMPTS_DATA_FILE_NAME"
+    echo "PROMPTS_DATA_PATH: $PROMPTS_DATA_PATH"
+    echo "OUTPUT_DIR: $OUTPUT_DIR"
+    echo "VLLM_MODEL_NAME: $VLLM_MODEL_NAME"
+
+    # create the experiment output directory
+    mkdir -p $OUTPUT_DIR/rank_outputs
+
+    export OPENAI_API_KEY="key"
+    export PYTHONPATH="$(pwd):$PYTHONPATH"
+    cd scripts/tools/vllm_inference
+    
+    # start vllm servers
+    source start_vllm_servers_with_tensor_parallel.sh --world-size=$VLLM_LOCAL_NUM_INSTANCES --pretrained-model=${{inputs.ckpt}}/$MODEL_PATH --tokenizer-model=${{inputs.ckpt}}/$TOKENIZER_PATH --base-port=$VLLM_LOCAL_BASE_PORT --api-key=$OPENAI_API_KEY --max-model-len=$MAX_SEQ_LEN --served-model-name=$VLLM_MODEL_NAME --dtype=bfloat16 --seed=${{search_space.seed}} --generation-config=auto --override-generation-config='{\"temperature\": $TEMPERATURE, \"top_p\": 0.95, \"do_sample\": true, \"use_cache\":true}' --tensor-parallel-size=$TENSOR_PARALLEL_SIZE
+
+    torchrun --nproc_per_node=$NUM_SERVERS run_inference_on_vllm_server.py --prompts_file $PROMPTS_DATA_PATH --prompt_field=$PROMPT_COLUMN --output_dir $OUTPUT_DIR/rank_outputs --max_parallel_requests_per_gpu 128 --num_samples_to_generate=1 --served_model_name=$VLLM_MODEL_NAME
+    
+  environment: azureml:AzureML-ACPT-pytorch-1.13-py38-cuda11.7-gpu:10
+  environment_variables:
+    JOB_EXECUTION_MODE: Basic
+    AZUREML_COMPUTE_USE_COMMON_RUNTIME: 'true'
+    AML_LOCATION: "eastus2"
+    IPP_IMAGE_NAME: amegreenresources.azurecr.io/aif/reasoning-lm-tooluse:110825 
+    VLLM_LOCAL_NUM_INSTANCES: '8'
+    VLLM_LOCAL_BASE_PORT: '8000'
+inputs:
+  ckpt:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/azureml/
+    mode: ro_mount
+  tokenizer:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/azureml/
+    mode: ro_mount
+  seed_prompts:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/users/aif/post_train_data/raw/
+    mode: ro_mount
+outputs:
+  output_dir:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/users/aif/post_train_data/tool_use/
+    mode: rw_mount
+sampling_algorithm: grid
+search_space:
+  data_file:
+    type: choice
+    values:
+      - o3_mini_high/code/baai_taco_deduped_formatinsts
+      # - o3_mini_high/code/code_contests_originals_formatinsts
+      # - o3_mini_high/code/code_contests_rewrites_formatinsts
+      # - o3_mini_high/code/filtered/agent_instruct_code_data_filtered
+      # - o3_mini_high/code/filtered/code_chats_cot_seeds
+      # - o3_mini_high/code/github_pull_request_exercises
+      # - o3_mini_high/code/open_r1_codeforces
+      # - o3_mini_high/code/ot2_code_deduped
+      # - o3_mini_high/math/filtered/Numerical_CoT_full_priority_filtered
+      # - o3_mini_high/math/filtered/difficult_math_v8_Sep25_w_o1-preview_filtered
+      # - o3_mini_high/math/numina_v15_aops_olym_verifiable
+      # - o3_mini_high/oss/openthough_113k
+      # - o3_mini_high/safety/any_vs_any_safety_userprompts_seeds
+      # - o3_mini_high/safety/election_paired_seeds
+      # - o3_mini_high/safety/phichat_sensitive_seeds
+      # - o3_mini_high/synthetic_aime/syn_aime_160k
+      # - o3_mini_high/synthetic_aime/syn_aime_numina_v15_qs_97k_answer_verifiable
+  temperature:
+    type: choice
+    values:
+      - 0.8
+  seed:
+    type: choice
+    values:
+      - 42
+objective:
+  primary_metric: dummy_metric
+  goal: maximize
+limits:
+  max_total_trials: 1000
+  max_concurrent_trials: 4

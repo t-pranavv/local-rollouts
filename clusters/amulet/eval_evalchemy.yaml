@@ -1,0 +1,63 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
+description: Experiment "eval_evalchemy"
+
+target:
+  service: sing
+  name: baltic08
+  workspace_name: aifrontiers_ws
+
+environment:
+  image: nvidia25.03-pytorch2.7.1-te2.4-deepspeed0.17.1-flashattn2.8.0.post2-vllm0.9.1:20250702
+  registry: aifrontiers.azurecr.io
+  setup:
+    - set -e -o xtrace
+    - pip install -e .
+    - git clone https://github.com/caiom/evalchemy.git
+    - pip install -e evalchemy[eval]
+    - pip install -e evalchemy/eval/chat_benchmarks/alpaca_eval
+
+storage:
+  # If you need to download models from different storages and containers, add them here
+  # <label>:
+  #   storage_account_name: <storage_account_name>
+  #   container_name: <container_name>
+
+  aifshared:
+    storage_account_name: aifshared
+    container_name: data
+  output:
+    storage_account_name: aifshared
+    container_name: amulet
+
+code:
+  # Copy this YAML to `phyagi-experiments` repository for changes,
+  # and remember to change the `local_dir` to your `phyagi-sdk` repository path
+  local_dir: <PATH/TO/phyagi-sdk>
+
+jobs:
+  - name: p1_phi4_evalchemy
+    sku: 1xG2-H100
+    sla_tier: premium
+    priority: medium
+    mpi: False
+    process_count_per_node: 1
+    command:
+      - python scripts/eval/evalchemy/eval_evalchemy.py --model_path microsoft/phi-4 --output_path $$AMLT_OUTPUT_DIR --num_evals 1 --num_concurrent 20 --work_dir evalchemy --wait 200 --temperature 0.1 --top_p 0.95 --system_prompt_type simple --tasks LiveCodeBench --max_gen_toks 14500
+    submit_args:
+      env:
+        HF_TOKEN: <hf-token>
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+  - name: p1_deepseek-r1-qwen-14b_evalchemy
+    sku: 1xG2-H100
+    sla_tier: premium
+    priority: medium
+    mpi: False
+    process_count_per_node: 1
+    command:
+      - python scripts/eval/evalchemy/eval_evalchemy.py --model_path deepseek-ai/DeepSeek-R1-Distill-Qwen-14B --output_path $$AMLT_OUTPUT_DIR --num_evals 10 --num_concurrent 20 --work_dir evalchemy --wait 200 --temperature 0.6 --top_p 0.95 --system_prompt_type simple --tasks AIME24 --max_gen_toks 32000 --max_length 131072
+    submit_args:
+      env:
+        HF_TOKEN: <hf-token>
+        _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourceGroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers

@@ -1,0 +1,43 @@
+# az ml job create --file debug_node_gpu.yaml --resource-group msr-aifrontiers-dev-eastus2-rg --workspace-name msr-aifrontiers-dev-eastus2-ws
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+compute: /subscriptions/a0c66465-bfb8-4525-84d0-75a8fb5a054f/resourceGroups/msr-aifrontiers-dev-eastus2-rg/providers/Microsoft.MachineLearningServices/virtualClusters/msr-aif-dev-eastus2-vc
+resources:
+  instance_count: 1
+  instance_type: Singularity.ND12_H100_v5 # 1 GPU
+  # instance_type: Singularity.ND24_H100_v5 # 2 GPUs
+  # instance_type: Singularity.ND48_H100_v5 # 4 GPUs
+  # instance_type: Singularity.ND96r_H100_v5 # 8 GPUs
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ''
+      interactive: false
+      sshPublicKey: "[TODO: INSERT SSH PUBLIC KEY]"
+      enableAzmlInt: true
+      # priority: Low
+      # priority: Medium
+      priority: High
+      # slaTier: Standard
+      slaTier: Premium
+      location: null
+      locations: ["eastus2"]
+experiment_name: debug_node_gpu
+tags:
+  Project_Name: Orca
+  ProjectID: PRJ-0438-A49
+  Experiment: Reasoning_LLM
+code: ../../../../
+command: echo ${{outputs.blob_mount}} && echo $(pwd) && sleep infinity
+environment: azureml:AzureML-ACPT-pytorch-1.13-py38-cuda11.7-gpu:10
+environment_variables:
+  JOB_EXECUTION_MODE: Basic
+  AZUREML_COMPUTE_USE_COMMON_RUNTIME: 'true'
+  AZUREML_COMMON_RUNTIME_USE_SBOM_CAPABILITY: 'false'
+  AML_LOCATION: "eastus2"
+  IPP_IMAGE_NAME: amegreenresources.azurecr.io/aif/reasoning-lm-tooluse:220825
+outputs:
+  blob_mount:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/
+    mode: rw_mount

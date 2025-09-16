@@ -1,0 +1,74 @@
+# Phi-1 pre-training consists of 8 epochs (9.257B x 8 = 74.056B tokens)
+data_root: ${oc.env:DATA_ROOT, "/mnt/phyagi"}
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/phi1-1.3b
+dataset:
+  - cache_dir: ${data_root}/datasets/lm_datasets/the-stack-dedup-python-filtered/5 # 5.363B
+    seq_len: 2048
+    weight: 1.0
+  - cache_dir: ${data_root}/datasets/lm_datasets/textbook/v4 # 0.742B x 2 = 1.484B
+    seq_len: 2048
+    weight: 2.0
+  - cache_dir: ${data_root}/datasets/lm_datasets/stackoverflow-with-meta-data-filtered/6 # 0.847B x 2 = 1.694B
+    seq_len: 2048
+    weight: 2.0
+  - cache_dir: ${data_root}/datasets/lm_datasets/code_contest/CCa # 0.358B x 2 = 0.716B
+    seq_len: 2048
+    weight: 2.0
+dataset_concat: random
+dataset_provider: lm
+model:
+  model_type: mixformer-sequential
+  architecture:
+    block_cls: parallel
+    mixer:
+      mixer_cls: mha
+      dropout: 0.1
+    mlp:
+      mlp_cls: fused_mlp
+  vocab_size: 50304
+  n_positions: 2048
+  n_embd: 2048
+  n_layer: 24
+  n_head: 32
+  rotary_dim: 32
+  resid_pdrop: 0.1
+  pad_vocab_size_multiple: 64
+training_args:
+  ds_config:
+    fp16:
+      enabled: true
+      initial_scale_power: 12
+    optimizer:
+      type: AdamW
+      params:
+        lr: 1.0e-3
+        betas:
+        - 0.9
+        - 0.95
+        eps: 1.0e-7
+        weight_decay: 0.1
+    scheduler:
+      type: WarmupDecayLR
+      params:
+        warmup_min_lr: 0
+        warmup_max_lr: 1.0e-3
+        warmup_type: linear
+        warmup_num_steps: 750
+    zero_optimization:
+      stage: 1
+    gradient_clipping: 1.0
+    steps_per_print: 10000000000
+    train_batch_size: 1024
+    train_micro_batch_size_per_gpu: 4
+    wall_clock_breakdown: false
+    zero_allow_untested_optimizer: true
+  do_final_eval: true
+  num_train_epochs: 8
+  logging_steps: 0.0001
+  save_steps: 0.05
+  save_final_checkpoint: true
+  seed: 42
+  eval_steps: 0.1
+  eval_max_steps: 100
+  pipe_parallel_size: 1

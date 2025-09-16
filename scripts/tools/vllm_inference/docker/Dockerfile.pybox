@@ -1,0 +1,17 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+# DOCKER_BUILDKIT=1 docker buildx build --platform linux/x86_64 -t "aifrontiers.azurecr.io/python3.12-slim-pybox:160825" -f Dockerfile.pybox ./docker_context/ --progress=plain
+
+# Arguments supplied by running script
+ARG BASE_IMAGE="python:3.12-slim"
+
+# Creates variables from arguments
+FROM --platform=linux/amd64 $BASE_IMAGE AS base
+
+# Defines the base image
+FROM base
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install PYBOX available packages
+RUN pip install numpy pandas scipy scikit-learn matplotlib pillow requests beautifulsoup4 lxml pyarrow tqdm \
+    pydantic latex2sympy2-extended pylatexenc

@@ -1,0 +1,42 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/hf_dpo
+dataset:
+  path: json
+  data_files:
+    - <path-to-jsonl-file>
+model:
+  pretrained_model_name_or_path: microsoft/phi-1
+  torch_dtype: fp16
+tokenizer:
+  pretrained_tokenizer_name_or_path: microsoft/phi-1
+  pad_token: <|endoftext|>
+tuning_args:
+  learning_rate: 5.0e-7
+  beta: 0.1
+  label_smoothing: 0.0
+  loss_type: sigmoid
+  use_weighting: false
+  max_length: 512
+  max_prompt_length: 128
+  generate_during_eval: false
+  precompute_ref_log_probs: true
+  precompute_ref_batch_size: 8
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 16
+  max_steps: 10
+  save_steps: 10
+  logging_steps: 1
+  seed: 42
+  fp16: true
+  ddp_find_unused_parameters: false
+peft_config:
+  r: 64
+  lora_alpha: 16
+  bias: none
+  task_type: CAUSAL_LM
+  target_modules:
+    - Wqkv
+    - out_proj
+    - fc1
+    - fc2

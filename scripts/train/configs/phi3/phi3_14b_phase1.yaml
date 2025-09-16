@@ -1,0 +1,80 @@
+model:
+  model_type: mixformer-sequential
+  architecture:
+    block_cls: sequential
+    mixer:
+      mixer_cls: mha
+      bias: false
+      dropout: 0.0
+      flash_attn: true
+      flash_rotary: true
+      window_size: (2047, 0)
+      n_head_kv: 10
+    mlp:
+      mlp_cls: glu
+      act_fn: silu
+      n_inner: 17920
+    norm:
+      norm_cls: flash_rms
+    head:
+      head_cls: causal_lm
+      use_bias: false
+  vocab_size: 32064
+  n_positions: 4096
+  n_embd: 5120
+  n_layer: 40
+  n_head: 40
+  rotary_dim: 128
+  resid_pdrop: 0.0
+  layer_norm_epsilon: 1.0e-5
+  pad_vocab_size_multiple: 64
+  gradient_checkpointing: false
+
+training_args:
+  ds_config:
+    bf16:
+      enabled: true
+    data_types:
+      grad_accum_dtype: fp32
+    optimizer:
+      type: AdamW
+      params:
+        lr: 3.0e-4 # [ 3.0e-4, 6.0e-4 ]
+        betas:
+        - 0.9
+        - 0.95
+        eps: 1.0e-7
+        weight_decay: 0.1
+    scheduler:
+      type: WarmupDecayLR
+      params:
+        warmup_min_lr: 0.0
+        warmup_max_lr: 3.0e-4 # [ 3.0e-4, 6.0e-4 ]
+        warmup_type: linear
+        warmup_num_steps: 2000
+    zero_optimization:
+      stage: 1
+    gradient_clipping: 1.0
+    steps_per_print: 100
+    train_batch_size: 2048
+    train_micro_batch_size_per_gpu: 1
+    wall_clock_breakdown: false
+    zero_allow_untested_optimizer: true
+  do_final_eval: false
+  max_steps: 375000 # 3,122.6B tokens
+  logging_steps: 10
+  save_steps: 1000
+  save_final_checkpoint: true
+  load_checkpoint_num_tries: 3
+  seed: 42
+  timeout: 900
+  eval_steps: 999999
+  eval_max_steps: 150
+  pipe_parallel_size: 4
+  dataloader_shuffle: true
+  dataloader_num_workers: 1
+  dataloader_prefetch_factor: 512
+  batch_tracker: true
+  batch_tracker_save_steps: 100
+  mlflow: false
+  wandb: true

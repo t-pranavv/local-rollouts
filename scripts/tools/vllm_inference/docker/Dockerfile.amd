@@ -1,0 +1,169 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+# DOCKER_BUILDKIT=1 docker buildx build --platform linux/x86_64 -t "aif/reasoning-lm-amd:090425_v2" -f Dockerfile.amd /mnt/dev-disk/users/sahagar/reasoning_code/ --progress=plain
+
+# Arguments supplied by running script
+ARG BASE_IMAGE="rocm/pytorch:rocm6.3.3_ubuntu22.04_py3.10_pytorch_release_2.4.0"
+ARG INSTALLER_IMAGE
+ARG VALIDATOR_IMAGE
+
+# Creates variables from arguments
+FROM --platform=linux/amd64 $BASE_IMAGE AS base
+FROM --platform=linux/amd64 $INSTALLER_IMAGE AS installer
+FROM --platform=linux/amd64 $VALIDATOR_IMAGE AS validator
+
+# Defines the base image
+FROM base
+
+WORKDIR /workspace
+ENV DEBIAN_FRONTEND=noninteractive
+ARG TARGETPLATFORM='linux/x86_64'
+ARG torch_rocm_arch_list='gfx942'
+ENV TORCH_ROCM_ARCH_LIST=${torch_rocm_arch_list}
+
+# Retrieves and install Singularity script
+COPY --from=installer /installer /opt/microsoft/_singularity/installations/
+RUN /opt/microsoft/_singularity/installations/singularity/installer.sh
+
+# Retrieves and validates Singularity script
+COPY --from=validator /validations /opt/microsoft/_singularity/validations/
+RUN /opt/microsoft/_singularity/validations/validator.sh
+
+RUN echo "aiscuser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+RUN ls /usr/lib/python3/dist-packages
+RUN ls 
+
+# Add Permissions
+RUN chown -R :aiscuser /workspace /opt/conda/envs/py_3.10 /usr/local/lib/python3.10 /usr/local/bin/ /usr/include/python3.10 /usr/lib/python3/dist-packages
+RUN chmod -R 2775 /workspace /opt/conda/envs/py_3.10 /usr/local/lib/python3.10 /usr/local/bin/ /usr/include/python3.10 /usr/lib/python3/dist-packages
+
+# Installation/Basic Utilities
+RUN apt-get update && apt-get install -yq --no-install-recommends \
+        redis redis-server software-properties-common build-essential autotools-dev \
+        pdsh g++ gcc curl wget vim tmux emacs less unzip htop iftop iotop ca-certificates \
+        rsync iputils-ping net-tools sudo libfuse-dev fuse git git-lfs libnuma-dev \
+        dos2unix psmisc graphviz llvm-dev ninja-build npm libaio-dev jq lshw dmidecode \
+        util-linux automake autoconf libtool perftest net-tools openssh-client openssh-server \
+        pciutils libaio-dev libcap2 default-jdk lsb-release \
+    && apt-get purge -yq python3-blinker \
+    && rm -rf /var/lib/apt/lists/* && apt-get purge -yq --auto-remove && apt-get clean -yq \
+    && pip install --upgrade pip \
+    && pip install 'cmake>=3.26' 'setuptools>=61' 'setuptools-scm>=8' packaging pybind11 ninja wheel
+
+# Ensures Redis configuration is overriden
+RUN sed 's/bind 127.0.0.1 ::1/\# bind 127.0.0.1 ::1/g; s/protected-mode yes/protected-mode no/g' /etc/redis/redis.conf > /home/aiscuser/redis.conf \
+    && cp /home/aiscuser/redis.conf /etc/redis/redis.conf
+
+# Install AZ-Cli
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash && \
+    az --version
+
+# Install Azcopy
+RUN wget -O azcopy.tar.gz https://aka.ms/downloadazcopy-v10-linux && \
+    tar -xf azcopy.tar.gz && \
+    sudo cp azcopy_linux_amd64_*/azcopy /usr/bin/azcopy && \
+    rm -rf azcopy.tar.gz azcopy_linux_amd64_* && \
+    azcopy --version
+
+# Switch to aiscuser for all package installation
+USER aiscuser
+
+# Setup TikToken Cache
+RUN mkdir -p /workspace/tiktoken_cache
+ARG TIKTOKEN_URL="https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken"
+RUN wget -O /workspace/tiktoken_cache/$(echo -n $TIKTOKEN_URL | sha1sum | head -c 40) $TIKTOKEN_URL
+ENV TIKTOKEN_CACHE_DIR=/workspace/tiktoken_cache
+
+# Update PyTorch (and related packages)
+RUN wget https://repo.radeon.com/rocm/manylinux/rocm-rel-6.3.3/torch-2.6.0%2Brocm6.3.3.git88b97641-cp310-cp310-linux_x86_64.whl \
+    && wget https://repo.radeon.com/rocm/manylinux/rocm-rel-6.3.3/torchvision-0.21.0%2Brocm6.3.3.git7af69879-cp310-cp310-linux_x86_64.whl \
+    && wget https://repo.radeon.com/rocm/manylinux/rocm-rel-6.3.3/torchaudio-2.6.0%2Brocm6.3.3.gitd8831425-cp310-cp310-linux_x86_64.whl \
+    && wget https://repo.radeon.com/rocm/manylinux/rocm-rel-6.3.3/pytorch_triton_rocm-3.2.0%2Brocm6.3.3.git6da9e660-cp310-cp310-linux_x86_64.whl \
+    && pip uninstall -y torch torchvision torchaudio pytorch-triton-rocm \
+    && pip install torch-2.6.0+rocm6.3.3.git88b97641-cp310-cp310-linux_x86_64.whl \
+        torchvision-0.21.0+rocm6.3.3.git7af69879-cp310-cp310-linux_x86_64.whl \
+        torchaudio-2.6.0+rocm6.3.3.gitd8831425-cp310-cp310-linux_x86_64.whl \
+        pytorch_triton_rocm-3.2.0+rocm6.3.3.git6da9e660-cp310-cp310-linux_x86_64.whl
+RUN rm *.whl
+
+# TransformerEngine
+ENV NVTE_FRAMEWORK='pytorch'
+ENV NVTE_ROCM_ARCH=$TORCH_ROCM_ARCH_LIST
+ENV NVTE_USE_ROCM=1
+ENV NVTE_USE_HIPBLASLT=1
+ENV NVTE_USE_ROCBLAS=1
+RUN git clone --recursive https://github.com/ROCm/TransformerEngine.git \
+    && cd TransformerEngine && git submodule update --init --recursive \
+    && MAX_JOBS=96 CMAKE_POLICY_VERSION_MINIMUM=3.5 pip install . && cd ..
+
+# DeepSpeed and OpenMPI
+ENV DEEPSPEED_VERSION="0.16.4"
+RUN DS_BUILD_UTILS=1 DS_BUILD_FUSED_LAMB=1 pip install deepspeed==$DEEPSPEED_VERSION \
+    && CC=mpicc MPICC=mpicc pip install mpi4py --no-binary mpi4py
+
+# Flash-Attention
+ENV FLASH_ATTENTION_VERSION="2.7.4.post1"
+RUN MAX_JOBS=96 GPU_ARCHS=$TORCH_ROCM_ARCH_LIST pip install flash-attn==$FLASH_ATTENTION_VERSION --no-build-isolation
+
+# ROCm SMI
+USER root
+RUN pip install /opt/rocm/share/amd_smi 
+USER aiscuser
+
+# vLLM
+ENV VLLM_VERSION="0.8.2"
+RUN git clone https://github.com/vllm-project/vllm.git \
+    && cd vllm && git checkout v$VLLM_VERSION \
+    && pip install --upgrade numba scipy huggingface-hub[cli,hf_transfer] setuptools_scm \
+    && pip install "numpy<2" \
+    && pip install -r requirements/rocm.txt \
+    && MAX_JOBS=96 PYTORCH_ROCM_ARCH=$TORCH_ROCM_ARCH_LIST CMAKE_POLICY_VERSION_MINIMUM=3.5 python setup.py develop \
+    && cd ..
+
+# Additional packages that prevents pip uninstalling when running on the cluster
+RUN pip install accelerate 'azure-identity==1.17.0' azure-storage-blob azureml-mlflow datasets einops evaluate \
+    huggingface-hub liger-kernel lightning mlflow natsort omegaconf pandas peft pre-commit pytest redis \
+    safetensors tensorboard tiktoken tokenizers 'transformers==4.50.3' trl typing-extensions wandb \
+    'azure-ai-ml>=1.14.0' 'azureml-core>=1.56.0' azure-keyvault-secrets boto3 bitsandbytes codetiming dill \
+    Faker hydra-core modelscope numpy packaging peft pyarrow pybind11 pylatexenc py-spy runai-model-streamer \
+    runai-model-streamer[s3] safetensors tensordict timm yapf latex2sympy2 hf_transfer nltk h5py tqdm openai \
+    azure-ai-evaluation virtualenv prettytable joblib
+RUN pip install git+https://github.com/EleutherAI/lm-evaluation-harness.git tenacity
+ENV HF_HUB_ENABLE_HF_TRANSFER 1
+
+# d373a380ddfefabdb4222551155613d1af1b179f
+RUN git clone https://github.com/microsoft/eureka-ml-insights \
+    && cd eureka-ml-insights && git checkout d373a380ddfefabdb4222551155613d1af1b179f \
+    && pip install -e . \
+    && cd ..
+
+# 8b6087c4f54971cd8ca2e0e986ba4d49ce87027c
+COPY --chown=aiscuser:aiscuser phyagi/phigen/. /workspace/phigen/
+RUN pip install -e /workspace/phigen/
+
+COPY --chown=aiscuser:aiscuser phyagi/phyeval/. /workspace/phyeval/
+RUN pip install -e /workspace/phyeval/
+
+COPY --chown=aiscuser:aiscuser phyagi/libraries/. /workspace/phyagi_libraries/
+RUN pip install -e /workspace/phyagi_libraries/agents
+ENV PYTHONPATH=/workspace/phyagi_libraries:$PYTHONPATH
+
+# d5a07082ba525ee5fe3d0592b6c7301a8bec3284
+COPY --chown=aiscuser:aiscuser phyagi-sdk/. /workspace/phyagi-sdk/
+ENV PYTHONPATH=/workspace/phyagi-sdk:$PYTHONPATH
+
+# Setup NLTK Cache
+RUN mkdir -p /workspace/nltk_data
+RUN python -m nltk.downloader -d /workspace/nltk_data all
+ENV NLTK_DATA=/workspace/nltk_data
+
+# Install SciCode
+RUN git clone https://github.com/scicode-bench/SciCode \
+    && cd SciCode && git checkout 588b4069d73d211434790bdf4f5a3b80c7830912 \
+    && python -m venv /workspace/scicode_venv \
+    && /workspace/scicode_venv/bin/python -m pip install --upgrade pip \
+    && /workspace/scicode_venv/bin/python -m pip install -e . \
+    && cd ..
+
+USER root

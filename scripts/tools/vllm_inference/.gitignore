@@ -1,0 +1,7 @@
+!*/bfcl_tools/*
+!requirements.txt
+!local/*.jsonl
+local/phi_ckps
+local/misc_scripts/*
+*.db-shm
+*.db-wal

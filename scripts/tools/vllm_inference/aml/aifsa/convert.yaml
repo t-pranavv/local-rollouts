@@ -1,0 +1,129 @@
+# az ml job create --file convert.yaml --resource-group ai-frontiers-rg --workspace-name ai-frontiers-sa-ws
+$schema: https://azuremlschemas.azureedge.net/latest/sweepJob.schema.json
+type: sweep
+compute: /subscriptions/5c9e4789-4852-4ffe-8551-d682affcbd74/resourceGroups/ai-frontiers-rg/providers/microsoft.machinelearningservices/virtualclusters/ai-frontiers-sa-vc
+resources:
+  instance_count: 1
+  instance_type: Singularity.ND12_H100_v5 # 1 GPU
+  # instance_type: Singularity.ND24_H100_v5 # 2 GPUs
+  # instance_type: Singularity.ND48_H100_v5 # 4 GPUs
+  # instance_type: Singularity.ND96r_H100_v5 # 8 GPUs
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ''
+      interactive: false
+      sshPublicKey: ""
+      enableAzmlInt: true
+      # priority: Low
+      priority: Medium
+      # priority: High
+      # slaTier: Standard
+      slaTier: Premium
+experiment_name: model_conversion
+tags:
+  Project_Name: Orca
+  ProjectID: PRJ-0438-A49
+  Experiment: Reasoning_LLM
+trial:
+  code: ../../../../
+  command: |
+    # Workaround for windows-sa nvidia driver issue
+    export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | tr ':' '\n' | grep -v "compat/lib" | tr '\n' ':' | sed 's/:$//')
+
+    # Print IB topology
+    nvidia-smi topo -m
+    
+    # General Configuration
+    export MODEL_NAME=$(echo ${{search_space.model_config}} | cut -d',' -f1)
+    export MODEL_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f2)
+    export TOKENIZER_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f3)
+    export DTYPE=$(echo ${{search_space.model_config}} | cut -d',' -f4)
+
+    # cd into vllm inference scripts directory
+    cd tools/vllm_inference
+
+    # model checkpoint conversion
+    if [[ $MODEL_NAME == *-hf ]]; then
+      echo "Skip conversion due to -hf suffix indicating HF model..."
+      if [[ -d ${{outputs.output_ckpt}}/huggingface_models/$MODEL_PATH ]]; then
+        echo "HF model already exists..."
+      else
+        echo "Downloading HF model from Hugging Face..."
+        if [ $NODE_RANK -eq 0 ]; then
+          python download_and_save_hf_models.py -m $MODEL_PATH -t $TOKENIZER_PATH -o ${{outputs.output_ckpt}}/huggingface_models
+          echo "HF model downloaded and saved to ${{outputs.output_ckpt}}/huggingface_models/$MODEL_PATH"
+        else
+          echo "Node $NODE_RANK waiting for HF model to be downloaded on rank 0"
+          while [ ! -d "${{outputs.output_ckpt}}/huggingface_models/$MODEL_PATH" ]; do
+            sleep 5
+          done
+          echo "HF model downloaded, proceeding on node $NODE_RANK..."
+        fi
+      fi
+      export MODEL_PATH=${{outputs.output_ckpt}}/huggingface_models/$MODEL_PATH
+      export TOKENIZER_PATH=$MODEL_PATH
+    elif [[ -d ${{outputs.output_ckpt}}/$MODEL_PATH/phi4 ]]; then
+      echo "Skip conversion, hf in phi4 class model already exists..."
+      export MODEL_PATH=${{outputs.output_ckpt}}/$MODEL_PATH/phi4
+      export TOKENIZER_PATH=${{inputs.tokenizer}}/$TOKENIZER_PATH
+    else
+      echo "Converting model from Zero3 to FP32 and then to HF format..."
+      if [ $NODE_RANK -eq 0 ]; then
+        echo "Node $NODE_RANK starting conversion..."
+        python -m phyagi.cli.interface convert ${{outputs.output_ckpt}}/$MODEL_PATH phi4 -t ${{inputs.tokenizer}}/$TOKENIZER_PATH --dtype=bfloat16 --debug_logit --debug_params --from_deepspeed_zero --save_intermediate_checkpoint # (for saving convertion to fp32)
+        echo "Conversion completed on rank 0"
+      else
+        echo "Node $NODE_RANK waiting for conversion to complete on rank 0..."
+        while [ ! -d "${{outputs.output_ckpt}}/$MODEL_PATH/phi4" ]; do
+          sleep 5
+        done
+        echo "Conversion completed, proceeding on node $NODE_RANK..."
+      fi
+      export MODEL_PATH=${{outputs.output_ckpt}}/$MODEL_PATH/phi4
+      export TOKENIZER_PATH=${{inputs.tokenizer}}/$TOKENIZER_PATH
+    fi
+
+    echo "============================ GENERAL CONFIGURATION ============================"
+    echo "MODEL_NAME: $MODEL_NAME"
+    echo "MODEL_PATH: $MODEL_PATH"
+    echo "TOKENIZER_PATH: $TOKENIZER_PATH"
+    echo "OUTPUT_CHECKPOINT_DIR: ${{outputs.output_ckpt}}/$MODEL_PATH/phi4"
+    echo "==============================================================================="
+  environment: azureml:reasoning-lm-tooluse:220825
+  environment_variables:
+    JOB_EXECUTION_MODE: Basic
+    AZUREML_COMPUTE_USE_COMMON_RUNTIME: 'true'
+    AZUREML_COMMON_RUNTIME_USE_SBOM_CAPABILITY: 'false'
+    _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/5c9e4789-4852-4ffe-8551-d682affcbd74/resourcegroups/ai-frontiers-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ai-frontiers-id
+inputs:
+  tokenizer:
+    type: uri_folder
+    path: azureml://datastores/aifrontierssadata/paths/phi_ckpts/
+    mode: ro_mount
+outputs:
+  output_ckpt:
+    type: uri_folder
+    path: azureml://datastores/aifrontierssadata/paths/phi_ckpts/
+    mode: rw_mount
+sampling_algorithm: grid
+search_space:
+  model_config:
+    type: choice
+    values:
+      - sft_phi4r_toolv0_2e_5e-6lr,tool_use/sft_phi4r_toolv0_2e_5e-6lr/1130,tool_use/tokenizer,bfloat16
+      - sft_phi4_openthoughts_toolv0_2e_10xlr,tool_use/sft_phi4_openthoughts_toolv0_2e_10xlr/1765,tool_use/tokenizer,bfloat16
+      - sft_15b_mathv2code5_otcode_oaif_high32k_tool_10xlr,tool_use/sft_15b_mathv2code5_otcode_oaif_high32k_tool_10xlr/14422,tool_use/tokenizer,bfloat16
+      - Phi-4-reasoning-plus-hf,microsoft/Phi-4-reasoning-plus,microsoft/Phi-4-reasoning-plus,bfloat16
+      - Phi-4-reasoning-hf,microsoft/Phi-4-reasoning,microsoft/Phi-4-reasoning,bfloat16
+      - phi-4-hf,microsoft/phi-4,microsoft/phi-4,bfloat16
+      - Qwen3-32B-hf,Qwen/Qwen3-32B,Qwen/Qwen3-32B,bfloat16
+      - Qwen3-235B-A22B-FP8-hf,Qwen/Qwen3-235B-A22B-FP8,Qwen/Qwen3-235B-A22B-FP8,bfloat16
+      - Qwen3-235B-A22B-hf,Qwen/Qwen3-235B-A22B,Qwen/Qwen3-235B-A22B,bfloat16
+objective:
+  primary_metric: dummy_metric
+  goal: maximize
+limits:
+  max_total_trials: 1000
+  max_concurrent_trials: 16

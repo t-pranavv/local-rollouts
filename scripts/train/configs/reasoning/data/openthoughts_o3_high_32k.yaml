@@ -1,0 +1,7 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+dataset:
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/oss/openthough_113k/32768     # 333086720 tokens
+    seq_len: 32768
+    weight: 1.0
+dataset_concat: random
+dataset_provider: lm

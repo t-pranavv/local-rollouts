@@ -1,0 +1,93 @@
+# total tokens: 14263681024+2*(47087616+102825984)+757366784 = 15320875008 (upweighted)
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+dataset:
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/code/baai_taco_deduped_formatinsts/32768 # 61177856 tokens
+    seq_len: 32768
+    weight: 5.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/code/code_contests_originals_formatinsts/32768 # 109805568 tokens
+    seq_len: 32768
+    weight: 5.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/code/code_contests_rewrites_formatinsts/32768 # 139460608 tokens
+    seq_len: 32768
+    weight: 5.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/code/open_r1_codeforces/32768 # 18874368 tokens
+    seq_len: 32768
+    weight: 5.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/code/filtered/code_chats_cot_seeds/32768 # 323878912 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/code/filtered/agent_instruct_code_data_filtered/32768 # 647823360 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/code/github_pull_request_exercises/32768 # 124813312 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/synthetic_aime/syn_aime_160k/32768 # 845381632 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/oss/openthough_113k/32768 # 331415552 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/math/filtered/difficult_math_v8_Sep25_w_o1-preview_filtered/32768 # 705855488 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/math/filtered/Numerical_CoT_full_priority_filtered/32768 # 1587183616 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/math/numina_v15_aops_olym_verifiable/32768 # 874840064 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/synthetic_aime/syn_aime_numina_v15_qs_97k_answer_verifiable/32768 # 474021888 tokens
+    seq_len: 32768
+    weight: 2.0
+  ##################################################
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/code/baai_taco_deduped_formatinsts/32768 # 5898240 tokens
+    seq_len: 32768
+    weight: 5.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/code/code_contests_originals_formatinsts/32768 # 4718592 tokens
+    seq_len: 32768
+    weight: 5.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/code/code_contests_rewrites_formatinsts/32768 # 6094848 tokens
+    seq_len: 32768
+    weight: 5.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/code/open_r1_codeforces/32768 # 1802240 tokens
+    seq_len: 32768
+    weight: 5.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/code/filtered/code_chats_cot_seeds/32768 # 71794688 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/code/filtered/agent_instruct_code_data_filtered/32768 # 204505088 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/code/github_pull_request_exercises/32768 # 36110336 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/synthetic_aime/syn_aime_160k/32768 # 3276800 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/oss/openthough_113k/32768 # 3112960 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/math/filtered/difficult_math_v8_Sep25_w_o1-preview_filtered/32768 # 5341184 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/math/filtered/Numerical_CoT_full_priority_filtered/32768 # 14712832 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/math/numina_v15_aops_olym_verifiable/32768 # 6717440 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_oai_fixed/o3_mini_high/synthetic_aime/syn_aime_numina_v15_qs_97k_answer_verifiable/32768 # 1474560 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/safety/any_vs_any_safety_userprompts_seeds/32768 # 47087616 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/safety/election_paired_seeds/32768 # 102825984 tokens
+    seq_len: 32768
+    weight: 2.0
+  - cache_dir: ${data_root}/post_train_data/tokenized_nooai/o3_mini_high/safety/phichat_sensitive_seeds/32768 # 757366784 tokens
+    seq_len: 32768
+    weight: 1.0
+dataset_concat: random
+dataset_provider: lm

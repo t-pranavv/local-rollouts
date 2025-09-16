@@ -1,0 +1,7 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+dataset:
+  - cache_dir: ${data_root}/post_train_data/tokenized/math_p01_code_p01_acad_p01_puzzle_p0/
+    seq_len: 16384
+    weight: 1.0
+dataset_concat: random
+dataset_provider: lm

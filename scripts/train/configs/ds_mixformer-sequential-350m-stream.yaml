@@ -1,0 +1,102 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/ds_mixformer-sequential-350m-stream
+dataset:
+  - dataset_path: ${data_root}/omg.npy
+    seq_len: 2048
+    weight: 1.0
+dataset_concat: random_iterable # [random, sequential]
+eval_dataset_concat: null # [null, random, sequential]
+dataset_provider: stream_lm
+dataset_global_weight: 1.0
+dataset_collator:
+  cls: lm
+  # ignore_token_ids: []
+  # ignore_token_id_range: [start_idx, end_idx]
+  # ignore_index: -100
+model:
+  model_type: mixformer-sequential
+  embd_layer: default # [default, positional]
+  architecture:
+    block_cls: parallel # [parallel, sequential]
+    mixer:
+      mixer_cls: mha
+      dropout: 0.0
+      bias: true
+      # `flash_attn`, `flash_rotary` and `fused_dense` fallback to PyTorch
+      # implementation if not supported
+      flash_attn: true
+      flash_rotary: true
+      fused_dense: true
+    mlp:
+      mlp_cls: fused_mlp # [fused_mlp, glu, mlp]
+    norm:
+      norm_cls: torch # [torch, rms, flash_rms]
+    head:
+      head_cls: causal_lm # [causal_lm, seq_cls]
+      use_bias: true
+  vocab_size: 50304
+  n_positions: 2048
+  n_embd: 1024
+  n_layer: 20
+  n_head: 16
+  rotary_dim: 32
+  embd_pdrop: 0.0
+  resid_pdrop: 0.0
+  activation_function: gelu_new
+  layer_norm_epsilon: 1.0e-5
+  initializer_range: 0.02
+  pad_vocab_size_multiple: 64
+  gradient_checkpointing: false
+  cp_size: 1
+training_args:
+  ds_config:
+    fp16:
+      enabled: true
+      initial_scale_power: 12
+    optimizer:
+      type: AdamW
+      params:
+        lr: 1.8e-3
+        betas:
+        - 0.9
+        - 0.95
+        eps: 1.0e-7
+        weight_decay: 0.1
+    scheduler:
+      type: WarmupDecayLR
+      params:
+        warmup_min_lr: 0
+        warmup_max_lr: 1.8e-3
+        warmup_type: linear
+        warmup_num_steps: 750
+    zero_optimization:
+      stage: 1
+    gradient_clipping: 1.0
+    steps_per_print: 10000000000
+    train_batch_size: 1024
+    train_micro_batch_size_per_gpu: 4
+    wall_clock_breakdown: false
+    zero_allow_untested_optimizer: true
+  do_eval: true
+  do_final_eval: true
+  # train_batch_size_init_rampup: 512
+  # train_batch_size_per_rampup: 128
+  # rampup_steps: 100
+  num_train_epochs: 1
+  logging_steps: 0.0001
+  save_steps: 20
+  save_final_checkpoint: true
+  seed: 42
+  eval_steps: 0.2
+  eval_max_steps: 100
+  pipe_parallel_size: 1
+  context_parallel_size: ${model.cp_size}
+  batch_tracker: false
+  batch_tracker_save_steps: null
+  dataloader_shuffle: true
+  eval_dataloader_shuffle: true
+  mlflow: true
+  wandb: true
+  # wandb_api_key: <api_key>
+  # wandb_host: <host>

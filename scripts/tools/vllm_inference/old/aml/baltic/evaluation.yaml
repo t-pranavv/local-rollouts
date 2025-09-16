@@ -1,0 +1,194 @@
+# az ml job create --file evaluation.yaml --resource-group aifrontiers --workspace-name aifrontiers_ws
+$schema: https://azuremlschemas.azureedge.net/latest/sweepJob.schema.json
+type: sweep
+compute: /subscriptions/22da88f6-1210-4de2-a5a3-da4c7c2a1213/resourcegroups/gcr-singularity/providers/microsoft.machinelearningservices/virtualclusters/baltic08
+# compute: /subscriptions/d4404794-ab5b-48de-b7c7-ec1fefb0a04e/resourcegroups/gcr-singularity-octo/providers/microsoft.machinelearningservices/virtualclusters/whitney14
+resources:
+  instance_count: 1
+  # instance_type: Singularity.ND12_H100_v5 # 1 GPU
+  # instance_type: Singularity.ND24_H100_v5 # 2 GPUs
+  # instance_type: Singularity.ND48_H100_v5 # 4 GPUs
+  instance_type: Singularity.ND96r_H100_v5 # 8 GPUs
+  # instance_type: Singularity.ND96isr_MI300X_v5 # 8 AMD GPUs
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ''
+      interactive: false
+      sshPublicKey: ""
+      enableAzmlInt: true
+      # priority: Low
+      # priority: Medium
+      priority: High
+      # slaTier: Standard
+      slaTier: Premium
+experiment_name: model_evaluation
+tags:
+  Project_Name: Orca
+  ProjectID: PRJ-0438-A49
+  Experiment: Reasoning_LLM
+trial:
+  code: ../../../../../
+  command: |
+    export MODEL_NAME=$(echo ${{search_space.model_config}} | cut -d',' -f1)
+    export MODEL_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f2)
+    export MAX_SEQ_LEN=$(echo ${{search_space.model_config}} | cut -d',' -f3)
+    export MAX_EVAL_SEQ_LEN=$(echo ${{search_space.model_config}} | cut -d',' -f4)
+    export MODEL_TYPE=$(echo ${{search_space.model_config}} | cut -d',' -f5)
+    export TOKENIZER_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f6)
+    export EXPERIMENT_NAME=eval_5x
+    export EXPERIMENT_OUTPUT_DIR=$(echo ${{outputs.output_dir}}/$MODEL_NAME/$EXPERIMENT_NAME/seed_${{search_space.seed}}_temperature_${{search_space.temperature}})
+    if [[ $MODEL_TYPE == "reasoning" ]]; then
+        export VLLM_MODEL_NAME=$(echo vllm-local-reasoning-phi-$MODEL_NAME)
+    else
+        export VLLM_MODEL_NAME=$(echo vllm-local-$MODEL_NAME)
+    fi
+
+    echo "MODEL_NAME: $MODEL_NAME"
+    echo "MODEL_PATH: $MODEL_PATH"
+    echo "MAX_SEQ_LEN: $MAX_SEQ_LEN"
+    echo "MAX_EVAL_SEQ_LEN: $MAX_EVAL_SEQ_LEN"
+    echo "MODEL_TYPE: $MODEL_TYPE"
+    echo "EXPERIMENT_NAME: $EXPERIMENT_NAME"
+    echo "EXPERIMENT_OUTPUT_DIR: $EXPERIMENT_OUTPUT_DIR"
+    echo "VLLM_MODEL_NAME: $VLLM_MODEL_NAME"
+
+    # create the experiment output directory
+    mkdir -p $EXPERIMENT_OUTPUT_DIR
+
+    # cd into vllm inference scripts directory
+    export PYTHONPATH="$(pwd):$PYTHONPATH"
+    cd scripts/tools/vllm_inference
+
+    # get phyagi api key from azure key vault
+    export PHYAGI_API_KEY=$(python keyvault_secrets.py --secret-name phigen-api-key-eval --get --output_only_secret)
+    
+    # model checkpoint conversion
+    if [[ $MODEL_NAME == *-hf ]]; then
+      echo "Skip conversion due to -hf suffix indicating HF model..."  
+    elif [[ -d ${{outputs.output_ckpt}}/$MODEL_PATH/phi4 ]]; then
+      echo "Skip conversion, hf in phi4 class model already exists..."
+      export MODEL_PATH=$MODEL_PATH/phi4
+    else
+      echo "Converting model from Zero3 to FP32 and then to HF format..."
+      python -m phyagi.cli.interface convert ${{outputs.output_ckpt}}/$MODEL_PATH phi4 -t ${{inputs.tokenizer}}/$TOKENIZER_PATH --dtype=bfloat16 --debug_logit --debug_params --from_deepspeed_zero --save_intermediate_checkpoint # (for saving convertion to fp32)
+      export MODEL_PATH=$MODEL_PATH/phi4
+    fi
+
+
+    # start vllm servers
+    source start_vllm_servers.sh --world-size=$VLLM_LOCAL_NUM_INSTANCES --pretrained-model=${{outputs.output_ckpt}}/$MODEL_PATH --tokenizer-model=${{inputs.tokenizer}}/$TOKENIZER_PATH  --base-port=$VLLM_LOCAL_BASE_PORT --api-key=key --max-model-len=$MAX_SEQ_LEN --served-model-name=$VLLM_MODEL_NAME --dtype=bfloat16 --max-num-seqs=128 --seed=${{search_space.seed}} --generation-config=auto --override-generation-config='{\"temperature\": ${{search_space.temperature}}, \"top_p\": 0.95, \"do_sample\": true, \"use_cache\":true, \"eos_token_id\":100265, \"pad_token_id\":100349}'
+
+    # run aime 2022-2024, gpqa diamond and math 500 evaluations
+    # benchmarks=("aime_2024" "aime_2023" "aime_2022" "gpqa_diamond" "math_500_test")
+    # EVAL_TYPES=("AIME_SIMPLE AIME" "AIME_SIMPLE AIME" "AIME_SIMPLE AIME" "GPQA" "MATH")
+    # run aime 2024 50x, gpqa diamond 5x
+    benchmarks=("aime_2024" "gpqa_diamond")
+    EVAL_TYPES=("AIME_SIMPLE AIME" "GPQA")
+    for i in "${!benchmarks[@]}"; do
+      benchmark=${benchmarks[i]}
+      IFS=' ' read -r -a eval_types <<< "${EVAL_TYPES[i]}"
+      if [[ $benchmark == aime_202* ]]; then
+        export PROMPT_COLUMN="problem" 
+        export NUM_SAMPLES=50
+      else
+        export PROMPT_COLUMN="prompt"
+        export NUM_SAMPLES=5
+      fi
+
+      export OUTDIR=$(echo $EXPERIMENT_OUTPUT_DIR/$benchmark/)
+      rm -rf $OUTDIR/*
+      
+      if [[ ! -f $OUTDIR/result.jsonl ]]; then        
+        mkdir -p $OUTDIR
+        echo "OUTDIR: $OUTDIR"
+        torchrun --nproc_per_node=$VLLM_LOCAL_NUM_INSTANCES run_inference_on_vllm_server.py --prompts_file ${{inputs.simpleevalprompts}}/${benchmark}.jsonl --prompt_field=$PROMPT_COLUMN --output_dir $OUTDIR/rank_outputs --max_parallel_requests_per_gpu 128 --add_system_message --system_message=cot_final --num_samples_to_generate=$NUM_SAMPLES --served_model_name=$VLLM_MODEL_NAME
+        python merge_output.py --output_dir $OUTDIR/rank_outputs --output_file $OUTDIR/result.jsonl
+      else
+        echo "OUTDIR: $OUTDIR already exists, skipping inference"
+      fi
+      # run gpt judge
+      for eval_type in "${eval_types[@]}"; do
+        python run_gpt_judge.py -i $OUTDIR/result.jsonl --prompt_field=$PROMPT_COLUMN -o $OUTDIR/gpt_judge/$eval_type -n 1 --eval_type $eval_type
+      done
+    done
+    
+    python summarize_results.py --output_dir $EXPERIMENT_OUTPUT_DIR
+
+    # # run phyeval paper evaluations
+    # mkdir -p $EXPERIMENT_OUTPUT_DIR/paper && cd $EXPERIMENT_OUTPUT_DIR/paper
+    # python -m phyeval.runeval --config configs/phoenix/paper.yaml --chat_mode chat_mode --models $VLLM_MODEL_NAME --nodb --maxjobs 256 --num_stragglers 5 --dbdir /scratch/phyeval_db --top_p 0.95 --num_trials 5 --temperature ${{search_space.temperature}} --max_tokens $MAX_EVAL_SEQ_LEN
+    # # run phyeval livebench evaluations
+    # mkdir -p $EXPERIMENT_OUTPUT_DIR/livebench && cd $EXPERIMENT_OUTPUT_DIR/livebench
+    # python -m phyeval.runeval --config configs/livebench.yaml --chat_mode chat_mode --models $VLLM_MODEL_NAME --nodb --maxjobs 256 --num_stragglers 5 --dbdir /scratch/phyeval_db --top_p 0.95 --num_trials 5 --temperature ${{search_space.temperature}} --max_tokens $MAX_EVAL_SEQ_LEN
+  environment: azureml:reasoning-lm:210425
+  environment_variables:
+    JOB_EXECUTION_MODE: Basic
+    AZUREML_COMPUTE_USE_COMMON_RUNTIME: 'true'
+    _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourcegroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+    VLLM_LOCAL_NUM_INSTANCES: '8'
+    VLLM_LOCAL_BASE_PORT: '8000'
+    PHIGEN_AUTO_IBALL: 'False'
+    PHIGEN_HOME: '/workspace/phigen_home'
+    PHYAGI_API_TIMEOUT: '99999999'
+inputs:
+  input_ckpt:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/phi_ckpts/
+    mode: ro_mount
+  tokenizer:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/phi_ckpts/
+    mode: ro_mount
+  simpleevalprompts:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/eval_prompts/
+    mode: ro_mount
+outputs:
+  output_ckpt:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/phi_ckpts/
+    mode: rw_mount
+  output_dir:
+    type: uri_folder
+    path: azureml://datastores/aifshared/paths/evals/reasoning_tool_use/
+    mode: rw_mount
+sampling_algorithm: grid
+search_space:
+  model_config:
+    type: choice
+    values:
+      # - sft_14b_allmathv2_code_2e_coco_5e_high32k_10xlr,sft_14b_allmathv2_code_2e_coco_5e_high32k_10xlr/13660,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - sft_13p5b_ot_saimev2_mathv2_code_high32k_10xlr_2,sft_13p5b_ot_saimev2_mathv2_code_high32k_10xlr_2/12870,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - sft_14b_phi4_mathv2code_2e_coco_5e_high32k_10xlr,sft_14b_phi4_mathv2code_2e_coco_5e_high32k_10xlr/13660,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - sft_15b_phi4_mathv2code_coco5e_oaif_high32k_10xlr,sft_15b_phi4_mathv2code_coco5e_oaif_high32k_10xlr/output/14025,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - sft_16b_phi4_mathv2code5_otcode_oaif_safe_high32_2,sft_16b_phi4_mathv2code5_otcode_oaif_safe_high32_2/output/15325,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - Phi-4-reasoning-hf,huggingface_models/Phi-4-reasoning,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - Phi-4-reasoning-plus-hf,huggingface_models/Phi-4-reasoning-plus,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - phi-4-hf,huggingface_models/phi-4,16384,14000,nonreasoning,huggingface_models/Phi-4-reasoning
+      # - PhiSilica-hf,tool_use/Phi-7B/reasoning,8192,8000,nonreasoning,tool_use/Phi-7B/reasoning
+      - sft_7b_mathv2code5_otcode_oaif_safe_low8k_zero3_2,sft_7b_mathv2code5_otcode_oaif_safe_low8k_zero3_2/output/10600,8192,8000,reasoning,tool_use/Phi-7B/reasoning,huggingface_models/Phi-4-reasoning
+      # - phi-4-reasoning-unsloth-bnb-4bit-hf,huggingface_models/phi-4-reasoning-unsloth-bnb-4bit,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - phi-4-reasoning-IQ4_NL-hf,huggingface_models/Phi-4-reasoning-GGUF/phi-4-reasoning-IQ4_NL.gguf,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - phi-4-reasoning-IQ4_XS-hf,huggingface_models/Phi-4-reasoning-GGUF/phi-4-reasoning-IQ4_XS.gguf,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - phi-4-reasoning-Q4_0-hf,huggingface_models/Phi-4-reasoning-GGUF/phi-4-reasoning-Q4_0.gguf,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - phi-4-reasoning-Q4_1-hf,huggingface_models/Phi-4-reasoning-GGUF/phi-4-reasoning-Q4_1.gguf,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - phi-4-reasoning-Q4_K_M-hf,huggingface_models/Phi-4-reasoning-GGUF/phi-4-reasoning-Q4_K_M.gguf,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - phi-4-reasoning-Q8_0-hf,huggingface_models/Phi-4-reasoning-GGUF/phi-4-reasoning-Q8_0.gguf,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - phi-4-reasoning-UD-Q4_K_XL-hf,huggingface_models/Phi-4-reasoning-GGUF/phi-4-reasoning-UD-Q4_K_XL.gguf,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+      # - phi-4-reasoning-UD-Q8_K_XL-hf,huggingface_models/Phi-4-reasoning-GGUF/phi-4-reasoning-UD-Q8_K_XL.gguf,32768,30000,reasoning,huggingface_models/Phi-4-reasoning
+  temperature:
+    type: choice
+    values:
+      - 0.8
+  seed:
+    type: choice
+    values:
+      - 42
+objective:
+  primary_metric: dummy_metric
+  goal: maximize
+limits:
+  max_total_trials: 1000
+  max_concurrent_trials: 4

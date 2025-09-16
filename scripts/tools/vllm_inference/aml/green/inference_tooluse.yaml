@@ -1,0 +1,252 @@
+# az ml job create --file inference_tooluse.yaml --resource-group msr-aifrontiers-dev-eastus2-rg --workspace-name msr-aifrontiers-dev-eastus2-ws
+$schema: https://azuremlschemas.azureedge.net/latest/sweepJob.schema.json
+type: sweep
+compute: /subscriptions/a0c66465-bfb8-4525-84d0-75a8fb5a054f/resourceGroups/msr-aifrontiers-dev-eastus2-rg/providers/Microsoft.MachineLearningServices/virtualClusters/msr-aif-dev-eastus2-vc
+resources:
+  instance_count: 1
+  # instance_type: Singularity.ND12_H100_v5 # 1 GPU
+  # instance_type: Singularity.ND24_H100_v5 # 2 GPUs
+  # instance_type: Singularity.ND48_H100_v5 # 4 GPUs
+  instance_type: Singularity.ND96r_H100_v5 # 8 GPUs
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ''
+      interactive: false
+      sshPublicKey: ""
+      enableAzmlInt: true
+      # priority: Low
+      # priority: Medium
+      priority: High
+      # slaTier: Standard
+      slaTier: Premium
+      location: null
+      locations: ["eastus2"]
+experiment_name: model_tooluse_inference
+tags:
+  Project_Name: Orca
+  ProjectID: PRJ-0438-A49
+  Experiment: Reasoning_LLM
+trial:
+  code: ../../../../
+  distribution:
+    type: pytorch
+    process_count_per_instance: 1
+  command: |
+    # Print IB topology
+    nvidia-smi topo -m
+    
+    # General Configuration
+    export MODEL_NAME=$(echo ${{search_space.model_config}} | cut -d',' -f1)
+    export MODEL_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f2)
+    export TOKENIZER_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f3)
+    export SERVED_MODEL_NAME=$(echo vllm-local-$MODEL_NAME)
+    export MAX_MODEL_LEN=$(echo ${{search_space.model_config}} | cut -d',' -f4)
+    export DTYPE=$(echo ${{search_space.model_config}} | cut -d',' -f5)
+    export MODEL_UTILS=$(echo ${{search_space.model_config}} | cut -d',' -f8)
+    export SYSMSG=$(echo ${{search_space.model_config}} | cut -d',' -f9)
+    export TEMPERATURE=$(echo ${{search_space.model_config}} | cut -d',' -f10)
+
+    export PROMPT_FILE=$(echo ${{search_space.data_file}} | cut -d',' -f1)
+    export PROMPT_COLUMN=$(echo ${{search_space.data_file}} | cut -d',' -f2)
+
+    export PYBOX_DOCKER_ARCHIVE="${{outputs.local_docker_images}}/python3.12-slim-pybox.tar"
+    export PYBOX_APPTAINER_IMAGE="${{outputs.local_docker_images}}/python3.12-slim-pybox.sif"
+    export PYBOX_WHEELS_DIR="${{inputs.ci_installation_wheels}}"
+    export SEED=${{search_space.seed}}
+    export GENERATION_CONFIG="auto"
+    export OVERRIDE_GENERATION_CONFIG='{"temperature": $TEMPERATURE, "skip_special_tokens": false}'
+
+    # Experiment Configuration
+    export OUTDIR=$(echo ${{outputs.output_dir}}/$MODEL_NAME/seed_${SEED}_temperature_${TEMPERATURE}/$(date +%Y-%m-%d_%H-%M-%S))
+
+    # GPU Configuration
+    export NODE_RANK=${NODE_RANK:-0}
+    export NODES=${AZUREML_NODE_COUNT:-1}
+    export GPUS=${GPU_PER_NODE_COUNT:-1}
+    export WORLD_SIZE=$(( NODES * GPUS ))
+
+    # Server Configuration
+    export API_KEY="key"
+    export PORT=9000
+    export TENSOR_PARALLEL_SIZE=$(echo ${{search_space.model_config}} | cut -d',' -f6)
+    export PIPELINE_PARALLEL_SIZE=$(echo ${{search_space.model_config}} | cut -d',' -f7)
+    export TPP=$(( TENSOR_PARALLEL_SIZE * PIPELINE_PARALLEL_SIZE ))
+    export TOTAL_GPUS=$(( NODES * GPUS ))
+    export DATA_PARALLEL_SIZE=$(( TOTAL_GPUS / TPP > 0 ? TOTAL_GPUS / TPP : 1 ))
+    export DATA_PARALLEL_SIZE_LOCAL=$(( GPUS / TPP > 0 ? GPUS / TPP : 1 ))
+    export VLLM_DP_MASTER_IP=0.0.0.0
+    export API_SERVER_COUNT=$DATA_PARALLEL_SIZE
+
+    # cd into vllm inference scripts directory
+    cd tools/vllm_inference
+    
+    # model checkpoint conversion
+    if [[ $MODEL_NAME == *-hf ]]; then
+      echo "Skip conversion due to -hf suffix indicating HF model..."
+      export MODEL_PATH=${{outputs.output_ckpt}}/$MODEL_PATH
+      export TOKENIZER_PATH=${{inputs.tokenizer}}/$TOKENIZER_PATH
+    elif [[ -d ${{outputs.output_ckpt}}/$MODEL_PATH/phi4 ]]; then
+      echo "Skip conversion, hf in phi4 class model already exists..."
+      export MODEL_PATH=${{outputs.output_ckpt}}/$MODEL_PATH/phi4
+      export TOKENIZER_PATH=${{inputs.tokenizer}}/$TOKENIZER_PATH
+    else
+      echo "Converting model from Zero3 to FP32 and then to HF format..."
+      if [ $NODE_RANK -eq 0 ]; then
+        echo "Node $NODE_RANK starting conversion..."
+        python -m phyagi.cli.interface convert ${{outputs.output_ckpt}}/$MODEL_PATH phi4 -t ${{inputs.tokenizer}}/$TOKENIZER_PATH --dtype=bfloat16 --debug_logit --debug_params --from_deepspeed_zero --save_intermediate_checkpoint # (for saving convertion to fp32)
+        echo "Conversion completed on rank 0"
+      else
+        echo "Node $NODE_RANK waiting for conversion to complete on rank 0..."
+        while [ ! -d "${{outputs.output_ckpt}}/$MODEL_PATH/phi4" ]; do
+          sleep 5
+        done
+        echo "Conversion completed, proceeding on node $NODE_RANK..."
+      fi
+      export MODEL_PATH=${{outputs.output_ckpt}}/$MODEL_PATH/phi4
+      export TOKENIZER_PATH=${{inputs.tokenizer}}/$TOKENIZER_PATH
+    fi
+
+    echo "Starting VLLM servers with the following configuration:"
+    echo "============================ GENERAL CONFIGURATION ============================"
+    echo "MODEL_NAME: $MODEL_NAME"
+    echo "MODEL_PATH: $MODEL_PATH"
+    echo "TOKENIZER_PATH: $TOKENIZER_PATH"
+    echo "SERVED_MODEL_NAME: $SERVED_MODEL_NAME"
+    echo "MAX_MODEL_LEN: $MAX_MODEL_LEN"
+    echo "DTYPE: $DTYPE"
+    echo "SEED: $SEED"
+    echo "GENERATION_CONFIG: $GENERATION_CONFIG"
+    echo "OVERRIDE_GENERATION_CONFIG: $OVERRIDE_GENERATION_CONFIG"
+    echo "SYSMSG: $SYSMSG"
+    echo "TEMPERATURE: $TEMPERATURE"
+    echo "PYBOX_DOCKER_ARCHIVE: $PYBOX_DOCKER_ARCHIVE"
+    echo "PYBOX_APPTAINER_IMAGE: $PYBOX_APPTAINER_IMAGE"
+    echo "PYBOX_WHEELS_DIR: $PYBOX_WHEELS_DIR"
+    echo "============================ EXPERIMENT CONFIGURATION ============================"
+    echo "PROMPT_FILE: $PROMPT_FILE"
+    echo "PROMPT_COLUMN: $PROMPT_COLUMN"
+    echo "OUTPUT DIR: $OUTDIR"
+    echo "============================ GPU CONFIGURATION ============================"
+    echo "NODE_RANK: $NODE_RANK"
+    echo "NODES: $NODES"
+    echo "GPUS: $GPUS"
+    echo "WORLD_SIZE: $WORLD_SIZE"
+    echo "============================ SERVER CONFIGURATION ============================"
+    echo "API_SERVER_COUNT: $API_SERVER_COUNT"
+    echo "PORT: $PORT"
+    echo "TENSOR_PARALLEL_SIZE: $TENSOR_PARALLEL_SIZE"
+    echo "PIPELINE_PARALLEL_SIZE: $PIPELINE_PARALLEL_SIZE"
+    echo "TPP: $TPP"
+    echo "TOTAL_GPUS: $TOTAL_GPUS"
+    echo "DATA_PARALLEL_SIZE: $DATA_PARALLEL_SIZE"
+    echo "DATA_PARALLEL_SIZE_LOCAL: $DATA_PARALLEL_SIZE_LOCAL"
+    echo "VLLM_DP_MASTER_IP: $VLLM_DP_MASTER_IP"
+    echo "MASTER_ADDR: $MASTER_ADDR"
+    echo "MASTER_PORT: $MASTER_PORT"
+    echo "============================ PYBOX RUNTIME CONFIGURATION ============================"
+    echo "CODE_INTERPRETER: $CODE_INTERPRETER"
+    echo "CODE_INTERPRETER_MI_CLIENT_ID: $CODE_INTERPRETER_MI_CLIENT_ID"
+    echo "PYBOX_RUNTIME: $PYBOX_RUNTIME"
+    echo "PYBOX_MAX_SESSIONS: $PYBOX_MAX_SESSIONS"
+    echo "PYBOX_APPTAINER_IMAGE: $PYBOX_APPTAINER_IMAGE"
+    echo "PYBOX_DOCKER_ARCHIVE: $PYBOX_DOCKER_ARCHIVE"
+    echo "PYBOX_WHEELS_DIR: $PYBOX_WHEELS_DIR"
+    echo "APPTAINER_FALLBACK_MODE: $APPTAINER_FALLBACK_MODE"
+    echo "PYBOX_COMMON_PIP_PACKAGES: $PYBOX_COMMON_PIP_PACKAGES"
+    echo "PYBOX_OFFLINE: $PYBOX_OFFLINE"
+    echo "==============================================================================="
+
+    # Start VLLM servers
+    bash start_vllm_servers.sh
+
+    if [ $NODE_RANK -eq 0 ]; then
+      mkdir -p $OUTDIR
+      export NUM_SAMPLES_TO_GENERATE=1
+      python run_inference_on_vllm_server.py  \
+        --base_ip $VLLM_DP_MASTER_IP \
+        --base_port $PORT \
+        --num_servers $API_SERVER_COUNT \
+        --served_model_name $SERVED_MODEL_NAME \
+        --prompts_file ${{inputs.data_folder}}/$PROMPT_FILE \
+        --prompt_field $PROMPT_COLUMN \
+        --output_dir $OUTDIR \
+        --tokenizer_path $TOKENIZER_PATH \
+        --agent_cls "VLLMLocalToolResponseAgent" \
+        --api_type "completion" \
+        --max_tool_call_steps 5 \
+        --tool_call_timeouts '{"code_interpreter": {"python": 200}}' \
+        --model_utils_name $MODEL_UTILS \
+        --max_model_seq_len $MAX_MODEL_LEN \
+        --system_message $SYSMSG \
+        --thinking_model \
+        --num_worker_procs $TOTAL_GPUS \
+        --num_samples_to_generate $NUM_SAMPLES_TO_GENERATE \
+        --generation_config "$OVERRIDE_GENERATION_CONFIG"
+    fi
+  environment: azureml:AzureML-ACPT-pytorch-1.13-py38-cuda11.7-gpu:10
+  environment_variables:
+    JOB_EXECUTION_MODE: Basic
+    AZUREML_COMPUTE_USE_COMMON_RUNTIME: 'true'
+    AZUREML_COMMON_RUNTIME_USE_SBOM_CAPABILITY: 'false'
+    AML_LOCATION: "eastus2"
+    IPP_IMAGE_NAME: amegreenresources.azurecr.io/aif/reasoning-lm-tooluse:220825
+    PHIGEN_HOME: "/workspace/phigen_home"
+    PHYAGI_API_TIMEOUT: "3600"
+    PHYAGI_API_KEY: "9R4WdHcun3SwcAzZlVx78BqxpIQRNqDJ"
+    CODE_INTERPRETER: "LOCAL"
+    PYBOX_RUNTIME: "apptainer"
+    PYBOX_OFFLINE: "1"
+    PYBOX_COMMON_PIP_PACKAGES: "NO INSTALL"
+    APPTAINER_FALLBACK_MODE: "1"
+inputs:
+  tokenizer:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/azureml/
+    mode: ro_mount
+  data_folder:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/users/aif/post_train_data/raw/
+    mode: ro_mount
+  ci_installation_wheels:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/users/sahagar/codeinterpreter_wheels/
+    mode: ro_mount
+outputs:
+  local_docker_images:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/users/sahagar/local_docker_images/
+    mode: rw_mount
+  output_ckpt:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/azureml/
+    mode: rw_mount
+  output_dir:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/users/aif/post_train_data/tool_use/
+    mode: rw_mount
+sampling_algorithm: grid
+search_space:
+  data_file:
+    type: choice
+    values:
+      - gpqa_diamond.jsonl,prompt
+  model_config:
+    type: choice
+    values:
+      - Qwen3-32B-hf,huggingface_models/Qwen3-32B,huggingface_models/Qwen3-32B,32768,bfloat16,2,1,qwen_v1_msri_data,re_tool_qwen_template_sys,1.0 # Figure out Qwen-3's original sys prompt
+      - Qwen3-235B-A22B-FP8-hf,huggingface_models/Qwen3-235B-A22B-FP8,huggingface_models/Qwen3-235B-A22B-FP8,32768,bfloat16,4,1,qwen_v1_msri_data,re_tool_qwen_template_sys,1.0
+      - Qwen3-235B-A22B-hf,huggingface_models/Qwen3-235B-A22B,huggingface_models/Qwen3-235B-A22B,32768,bfloat16,8,1,qwen_v1_msri_data,re_tool_qwen_template_sys,1.0
+      - gpt-oss-120b-hf,huggingface_models/gpt-oss-120b,huggingface_models/gpt-oss-120b,131072,auto,1,1,qwen_v1_msri_data,re_tool_qwen_template_sys,1.0 # Update the parsing in model_utils.py to handle this model
+      - gpt-oss-20b-hf,huggingface_models/gpt-oss-20b,huggingface_models/gpt-oss-20b,131072,auto,1,1,qwen_v1_msri_data,re_tool_qwen_template_sys,1.0 # Update the parsing in model_utils.py to handle this model
+  seed:
+    type: choice
+    values:
+      - 42
+objective:
+  primary_metric: dummy_metric
+  goal: maximize
+limits:
+  max_total_trials: 1000
+  max_concurrent_trials: 8

@@ -1,0 +1,65 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/hf_mixformer-350m
+dataset:
+  - cache_dir: ${data_root}/omg.npy
+    seq_len: 2048
+    weight: 1.0
+dataset_concat: random
+eval_dataset_concat: null
+dataset_provider: lm
+dataset_global_weight: 1.0
+dataset_collator:
+  cls: lm
+model:
+  model_type: mixformer-sequential
+  torch_dtype: bf16
+  embd_layer: default
+  architecture:
+    block_cls: parallel
+    mixer:
+      mixer_cls: mha
+      dropout: 0.0
+      bias: true
+      flash_attn: true
+      flash_rotary: true
+      fused_dense: true
+    mlp:
+      mlp_cls: fused_mlp
+    norm:
+      norm_cls: torch
+    head:
+      head_cls: causal_lm
+      use_bias: true
+  vocab_size: 50304
+  n_positions: 2048
+  n_embd: 1024
+  n_layer: 20
+  n_head: 16
+  rotary_dim: 32
+  embd_pdrop: 0.0
+  resid_pdrop: 0.0
+  activation_function: gelu_new
+  layer_norm_epsilon: 1.0e-5
+  initializer_range: 0.02
+  pad_vocab_size_multiple: 64
+  gradient_checkpointing: false
+training_args:
+  optim: adamw_torch
+  adam_beta1: 0.9
+  adam_beta2: 0.95
+  adam_epsilon: 1.0e-7
+  eval_strategy: steps
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 2
+  gradient_accumulation_steps: 64
+  learning_rate: 1.8e-3
+  weight_decay: 0.1
+  lr_scheduler_type: cosine
+  num_train_epochs: 1
+  warmup_ratio: 0.05
+  logging_steps: 0.0001
+  save_steps: 0.2
+  eval_steps: 0.2
+  bf16: true
+  seed: 42

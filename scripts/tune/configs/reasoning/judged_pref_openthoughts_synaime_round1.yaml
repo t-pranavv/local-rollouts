@@ -1,0 +1,5 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+dataset:
+  path: json
+  data_files:
+    - ${data_root}/post_train_data/dpo/judged_pref_5bopenthoughtssynaime/judged_preference_data_rl1.jsonl

@@ -1,0 +1,14 @@
+# 925,663,232 total tokens
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+dataset:
+  - cache_dir: ${data_root}/post_train_data/tokenized/tool_use/ci/o3-mini-high/v1_fixed_only_rawmsg/ci_math_v8_p01_numina_p0_sample_high/32768 # 284688384 tokens
+    seq_len: 32768
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/tool_use/ci/o3-mini-high/v1_fixed_only_rawmsg/ci_syn_aime_sample_high/32768 # 307888128 tokens
+    seq_len: 32768
+    weight: 1.0
+  - cache_dir: ${data_root}/post_train_data/tokenized/o3_mini_high/oss/openthough_113k/32768     # 333086720 tokens
+    seq_len: 32768
+    weight: 1.0
+dataset_concat: random
+dataset_provider: lm

@@ -1,0 +1,62 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/ray_grpo_phi4
+tokenizer:
+  pretrained_tokenizer_name_or_path: microsoft/phi-4
+dataset:
+  - train_file: ${data_root}/post_train_data/gsm8k/train.parquet
+    validation_file: ${data_root}/post_train_data/gsm8k/test.parquet
+    tokenizer: ${tokenizer.pretrained_tokenizer_name_or_path}
+    messages_column_name: prompt
+    ground_truth_column_name: answer
+    max_length: 1024
+    filter_max_length: true
+rewards:
+  - name: math_verifier
+    type: gsm8k
+    kwargs:
+      format_score: 0.0
+      correct_score: 1.0
+tuning_args:
+  n_nodes: 1
+  n_gpus_per_node: 8
+  do_final_eval: true
+  eval_before_training: true
+  max_steps: 360
+  log_n_eval_completions: 40
+  save_steps: 40
+  save_final_checkpoint: true
+  eval_steps: 40
+  group_size: 8
+  train_batch_size: 16
+  train_max_micro_batch_size_per_gpu: 1
+  num_policy_updates_per_batch: 1
+  kl_coeff: 0.001
+  dataloader_shuffle: false
+  checkpoint_mode: sync
+  actor:
+    model:
+      pretrained_model_name_or_path: <pretrained_model_name_or_path>
+    optimizer:
+      betas: [0.9, 0.999]
+      weight_decay: 0.01
+    scheduler:
+      warmup_num_steps: 20
+      warmup_max_lr: 5.0e-6
+    fsdp_offload: true
+    dtype: bfloat16
+    activation_checkpointing: true
+  rollout:
+    prompt_length: 1024
+    response_length: 15360
+    dtype: bfloat16
+    gpu_memory_utilization: 0.5
+    enforce_eager: false
+    enable_prefix_caching: false
+    preemption_mode: swap
+    sampling_params:
+      temperature: 1.0
+  wandb:
+    key: ${oc.env:WANDB_TOKEN}
+    host: ${oc.env:WANDB_HOST}
+    project: ${oc.env:WANDB_PROJECT}

@@ -1,0 +1,124 @@
+:root {
+    --primary: #0f387e;
+    --secondary: #5b7ebb;
+}
+
+/* Theme colors */
+html[data-theme=light] {
+    --pst-color-inline-code: #0f387e;
+}
+html[data-theme=dark] {
+    --pst-color-inline-code: #5b7ebb;
+}
+
+/* Anchors */
+a.headerlink {
+    color: var(--primary) !important;
+}
+a:hover {
+    color: var(--secondary) !important;
+}
+a.nav-link.active {
+    border-left: 2px solid var(--secondary) !important;
+}
+a.reference {
+    text-decoration: none !important;
+}
+
+/* Left-side menu */
+a.navbar-brand > img {
+    max-width: 40% !important;
+}
+
+p.caption {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+}
+
+p.title.logo__title {
+    text-decoration: none !important;
+}
+
+nav.bd-links {
+    margin-right: 0 !important;
+}
+
+/* Right-side menu */
+.bd-sidebar-secondary {
+    height: inherit !important;
+    max-height: 100vh !important;
+    flex-direction: row !important;
+}
+
+.tocsection {
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    margin-bottom: -0.25rem !important;
+}
+@media screen and (min-width: 1200px) {
+    .tocsection {
+        font-size: 13px !important;
+    }
+}
+.tocsection > svg {
+    padding-right: 0.5rem !important;
+}
+.tocsection > i {
+    display: none !important;
+}
+
+.toc-entry {
+    padding: .25rem 0 !important;
+}
+
+/* Content */
+button.btn.dropdown-toggle {
+    font-size: 1.425rem !important;
+}
+.bd-header-article .btn {
+    font-size: 1.1rem !important;
+}
+.bd-article-container {
+    max-width: unset !important;
+}
+
+p.prev-next-title {
+    color: var(--secondary) !important;
+    text-decoration: none !important;
+}
+
+#pst-back-to-top {
+    background-color: var(--primary) !important;
+    color: #ffffff !important
+}
+
+code.literal {
+    background-color: #ffffff !important;
+    color: var(--primary) !important;
+}
+
+
+/* API */
+dl.py.attribute,
+dl.py.class,
+dl.py.method:not(:last-child),
+dl.py.function {
+    border-bottom: 1px solid var(--pst-color-border) !important;
+}
+dd {
+    margin-bottom: 1rem !important;
+}
+
+/* Jupyter notebook table */
+div.output_area.rendered_html.docutils.container > div > table {
+    width: auto !important;
+}
+
+/* Footer */
+.bd-footer-content {
+    display: none !important;
+}
+.bd-footer {
+    border-top: none !important;
+}

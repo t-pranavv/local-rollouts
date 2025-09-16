@@ -1,0 +1,55 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/hf_sft_phi4
+dataset:
+  path: json
+  data_files:
+    - ${data_root}/post_train_data/final_v5/packed_16384/16k_data_20.jsonl
+    - ${data_root}/post_train_data/phoenix_sft_4k_ver13_16384.jsonl
+model:
+  pretrained_model_name_or_path: <pretrained_model_name_or_path>
+  attn_implementation: flash_attention_2
+  torch_dtype: torch.bfloat16
+  use_cache: false
+tokenizer:
+  pretrained_tokenizer_name_or_path: microsoft/phi-4
+  pad_token: <|endoftext|>
+tuning_args:
+  dataset_text_field: text
+  max_seq_length: 16384
+  packing: true
+  use_liger: true
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 1
+  gradient_checkpointing: true
+  max_steps: 4770
+  save_steps: 100
+  learning_rate: 1.0e-6
+  adam_beta1: 0.8
+  adam_beta2: 0.95
+  warmup_steps: 450
+  logging_steps: 10
+  seed: 42
+  ddp_find_unused_parameters: false
+  report_to: none
+  deepspeed:
+    bf16:
+      enabled: true
+    data_types:
+      grad_accum_dtype: fp32
+    zero_optimization:
+      stage: 3
+      overlap_comm: true
+      contiguous_gradients: true
+      sub_group_size: 1e9
+      reduce_bucket_size: auto
+      stage3_prefetch_bucket_size: auto
+      stage3_param_persistence_threshold: auto
+      stage3_max_live_parameters: 1e9
+      stage3_max_reuse_distance: 1e9
+      stage3_gather_16bit_weights_on_model_save: true
+    gradient_accumulation_steps: auto
+    gradient_clipping: auto
+    train_batch_size: auto
+    train_micro_batch_size_per_gpu: auto
+    wall_clock_breakdown: false

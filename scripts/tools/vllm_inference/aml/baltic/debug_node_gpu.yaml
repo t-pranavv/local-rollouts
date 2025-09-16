@@ -1,0 +1,42 @@
+# az ml job create --file debug_node_gpu.yaml --resource-group aifrontiers --workspace-name aifrontiers_ws
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+compute: /subscriptions/22da88f6-1210-4de2-a5a3-da4c7c2a1213/resourcegroups/gcr-singularity/providers/microsoft.machinelearningservices/virtualclusters/baltic08
+# compute: /subscriptions/22da88f6-1210-4de2-a5a3-da4c7c2a1213/resourceGroups/gcr-singularity/providers/Microsoft.MachineLearningServices/virtualClusters/msrresrchbasicvc
+# compute: /subscriptions/d4404794-ab5b-48de-b7c7-ec1fefb0a04e/resourcegroups/gcr-singularity-octo/providers/microsoft.machinelearningservices/virtualclusters/whitney14
+resources:
+  instance_count: 1
+  instance_type: Singularity.ND12_H100_v5 # 1 GPU
+  # instance_type: Singularity.ND24_H100_v5 # 2 GPUs
+  # instance_type: Singularity.ND48_H100_v5 # 4 GPUs
+  # instance_type: Singularity.ND96r_H100_v5 # 8 GPUs
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ''
+      interactive: false
+      sshPublicKey: "[TODO: INSERT SSH PUBLIC KEY]"
+      enableAzmlInt: true
+      # priority: Low
+      priority: Medium
+      # priority: High
+      # slaTier: Standard
+      slaTier: Premium
+experiment_name: debug_node_gpu
+tags:
+  Project_Name: Orca
+  ProjectID: PRJ-0438-A49
+  Experiment: Reasoning_LLM
+code: ../../../../
+command: echo ${{outputs.blob_mount}} && echo $(pwd) && sleep infinity
+environment: azureml:reasoning-lm-tooluse:220825
+environment_variables:
+    JOB_EXECUTION_MODE: Basic
+    AZUREML_COMPUTE_USE_COMMON_RUNTIME: 'true'
+    AZUREML_COMMON_RUNTIME_USE_SBOM_CAPABILITY: 'false'
+    _AZUREML_SINGULARITY_JOB_UAI: /subscriptions/d4fe558f-6660-4fe7-99ec-ae4716b5e03f/resourcegroups/aifrontiers/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aifrontiers
+outputs:
+  blob_mount:
+    type: uri_folder
+    path: azureml://datastores/aifrontiers/paths/
+    mode: rw_mount

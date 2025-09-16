@@ -1,0 +1,2433 @@
+data_root: ${oc.env:AMLT_DATA_DIR, "/mnt/phyagi"}
+dataset:
+  # WEB
+  ## Turing web v2 (999B tokens in 175 shards)
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_003/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_004/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_005/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_006/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_007/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_008/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_009/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_010/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_011/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_012/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_013/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_014/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_015/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_016/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_017/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_018/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_019/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_020/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_021/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_022/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_023/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_024/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_025/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_026/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_027/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_028/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_029/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_030/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_031/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_032/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_033/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_034/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_035/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_036/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_037/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_038/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_039/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_040/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_041/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_042/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_043/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_044/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_045/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_046/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_047/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_048/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_049/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_050/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_051/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_052/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_053/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_054/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_055/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_056/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_057/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_058/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_059/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_060/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_061/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_062/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_063/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_064/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_065/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_066/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_067/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_068/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_069/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_070/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_071/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_072/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_073/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_074/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_075/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_076/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_077/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_078/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_079/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_080/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_081/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_082/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_083/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_084/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_085/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_086/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_087/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_088/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_089/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_090/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_091/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_092/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_093/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_094/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_095/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_096/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_097/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_098/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_099/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_100/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_101/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_102/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_103/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_104/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_105/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_106/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_107/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_108/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_109/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_110/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_111/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_112/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_113/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_114/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_115/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_116/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_117/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_118/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_119/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_120/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_121/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_122/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_123/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_124/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_125/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_126/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_127/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_128/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_129/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_130/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_131/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_132/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_133/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_134/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_135/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_136/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_137/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_138/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_139/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_140/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_141/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_142/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_143/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_144/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_145/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_146/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_147/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_148/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_149/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_150/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_151/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_152/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_153/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_154/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_155/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_156/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_157/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_158/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_159/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_160/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_161/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_162/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_163/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_164/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_165/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_166/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_167/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_168/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_169/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_170/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_171/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_172/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_173/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2/shard_174/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.0
+
+  ## Turing web v2_strictest (423B tokens in 78 shards)
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_003/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_004/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_005/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_006/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_007/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_008/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_009/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_010/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_011/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_012/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_013/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_014/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_015/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_016/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_017/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_018/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_019/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_020/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_021/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_022/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_023/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_024/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_025/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_026/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_027/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_028/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_029/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_030/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_031/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_032/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_033/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_034/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_035/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_036/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_037/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_038/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_039/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_040/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_041/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_042/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_043/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_044/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_045/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_046/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_047/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_048/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_049/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_050/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_051/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_052/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_053/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_054/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_055/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_056/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_057/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_058/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_059/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_060/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_061/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_062/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_063/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_064/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_065/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_066/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_067/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_068/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_069/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_070/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_071/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_072/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_073/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_074/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_075/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_076/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+  - dataset_path: ${data_root}/phidatasets/tokenized/turing_filtered/v2_strictest/shard_077/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 1.5
+
+  # QA heavy including web rewrites (7.3B stackexchange, 37.8B conversations (web rewrites) in 5 shards)
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/stackexchange/all_non_stackoverflow_non_meta/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Conversations/gpt35/merged_v01-08/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Conversations/gpt35/merged_v09-16/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Conversations/gpt35/merged_v17-24/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Conversations/gpt35/merged_v25-32/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/Conversations/gpt35/merged_v33-37/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/nlp/mystery_win/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 4.0
+
+
+  # WIKI & WIKI rewrites (23.8B wiki, 1B wikihow, 41.6B wiki rewrites)
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/dewiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/dewikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/dewiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-de/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/enwiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/enwikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/enwiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-en/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/eswiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/eswikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/eswiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-es/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/frwiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/frwikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/frwiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-fr/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/itwiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/itwikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/itwiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-it/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/ptwiki/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/ptwikisource/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wiki/ptwiktionary/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/wikihow/wikihow-pt/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+
+  # rewrites
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/wiki_rewrites/gpt35/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/wiki_rewrites/gpt35/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/wiki_rewrites/gpt35/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/wiki_rewrites/gpt35/shard_003/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 5.0
+  # - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/wiki_rewrites/gpt4/shard_000/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 5.0
+  # - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/wiki_rewrites/gpt4/shard_001/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 5.0
+  # - dataset_path: ${data_root}/phidatasets/tokenized/synthetic/wiki_rewrites/gpt4/shard_002/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 5.0
+
+  # ACADEMIC (springer/arxiv/pubmed/mdpi 114.2B, pile-of-law-filtered 35B, osf 0.57B, econstar 2.64B, ssrn 6.78B, plos 3.61B)
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/crossref/crossref_scrambled_pages/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/journals/mdpi/text_only/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/journals/mdpi/text_only/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/journals/mdpi/text_only/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/journals/springer_open/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/journals/springer_open/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/journals/springer_open/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/journals/econstar/text_only/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/journals/osf/text_only/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/journals/ssrn/text_only/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/journals/plos/text_only/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/core/core35_noeq_notables_v5/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/core/core35_noeq_notables_v5/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/core/core35_noeq_notables_v5/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pmc/pmc_pages/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pmc/pmc_pages/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pmc/pmc_pages/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pmc/pmc_pages/shard_003/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pmc/pmc_pages/shard_004/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pmc/pmc_pages/shard_005/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+    # validation_split: 0.02
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pmc/pmc_pages/shard_006/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/ar5iv/arxiv_pages/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+    # validation_split: 0.02
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/ar5iv/arxiv_pages/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/ar5iv/arxiv_pages/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/ar5iv/arxiv_pages/shard_003/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/ar5iv/arxiv_pages/shard_004/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/ar5iv/arxiv_pages/shard_005/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pile-of-law-cats/filtered/courtlistener_opinions/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pile-of-law-cats/filtered/congressional_hearings/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pile-of-law-cats/filtered/scotus_oral_arguments/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pile-of-law-cats/filtered/state_codes/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pile-of-law-cats/filtered/bva_opinions/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pile-of-law-cats/filtered/eurlex/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 3.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/pile-of-law-cats/filtered/courtlistener_docket_entry_documents/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 2.0
+
+  # CODE 55.08B unfiltered code, 30.80B filtered code -> we use unfiltered code to only boost fraction of code without overfitting on filtered code with many iterations.
+  ## unfiltered
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/stack-dedup-approved/python/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+    # validation_split: 0.02
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/stack-dedup-approved/python/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/stack-dedup-approved/python/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/stack-dedup-approved/typescript/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/stackexchange/stackoverflow/shard_000/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/stackexchange/stackoverflow/shard_001/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+    # validation_split: 0.02
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/stackexchange/stackoverflow/shard_002/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/site_dataset/stackexchange/stackoverflow/shard_003/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+
+  # filtered code
+  - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stackexchange-stackoverflow-filtered/4/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+  # - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stackexchange-stackoverflow-filtered/5/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 6.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stack-dedup-python-filtered-approved/5/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+  # - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stack-dedup-python-filtered-approved/5.5/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 6.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stack-dedup-typescript-filtered-approved/4/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+  # - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stack-dedup-typescript-filtered-approved/4.5/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 6.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stack-dedup-java-filtered-approved/3/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+  # - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stack-dedup-java-filtered-approved/5/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 6.0
+  - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stack-dedup-javascript-filtered-approved/3.75/custom_llama2/train.npy
+    use_eos_token: false
+    original_tokenizer:
+      pretrained_model_name_or_path: /tmp/data/tokenizer
+    num_shards: 1024
+    seq_len: 4096
+    weight: 6.0
+  # - dataset_path: ${data_root}/phidatasets/tokenized/filtered_code/stack-dedup-javascript-filtered-approved/5/custom_llama2/train.npy
+  #   use_eos_token: false
+  #   original_tokenizer:
+  #     pretrained_model_name_or_path: /tmp/data/tokenizer
+  #   num_shards: 1024
+  #   seq_len: 4096
+  #   weight: 6.0
+
+dataset_concat: random_iterable
+dataset_provider: stream_lm

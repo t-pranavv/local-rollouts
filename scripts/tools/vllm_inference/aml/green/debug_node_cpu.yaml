@@ -1,0 +1,41 @@
+# az ml job create --file debug_node_cpu.yaml --resource-group genai-research-centralus-rg --workspace-name genai-research-ipp-ws-centralus
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+compute: /subscriptions/dafd1668-60a8-412f-a27f-7b80943885bb/resourceGroups/genai-research-centralus-rg/providers/Microsoft.MachineLearningServices/virtualClusters/genai-ipprsrch-cus-cpu
+resources:
+  instance_count: 1
+  # instance_type: Singularity.D8_v3 # 8 CPUs / 32 GB RAM
+  instance_type: Singularity.D16_v3 # 16 CPUs / 64 GB RAM
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ''
+      interactive: false
+      sshPublicKey: "[TODO: INSERT SSH PUBLIC KEY]"
+      enableAzmlInt: true
+      # priority: Low
+      # priority: Medium
+      priority: High
+      # slaTier: Standard
+      slaTier: Premium
+      location: null
+      locations: ["centralus"]
+experiment_name: debug_node_cpu
+tags:
+  Project_Name: Orca
+  ProjectID: PRJ-0438-A49
+  Experiment: Reasoning_LLM
+code: ../../../../
+command: echo ${{outputs.blob_mount}} && echo $(pwd) && sleep infinity
+environment: azureml:AzureML-ACPT-pytorch-1.13-py38-cuda11.7-gpu:10
+environment_variables:
+  JOB_EXECUTION_MODE: Basic
+  AZUREML_COMPUTE_USE_COMMON_RUNTIME: 'true'
+  AZUREML_COMMON_RUNTIME_USE_SBOM_CAPABILITY: 'false'
+  AML_LOCATION: "eastus2"
+  IPP_IMAGE_NAME: amegreenresources.azurecr.io/aif/reasoning-lm-tooluse:220825
+outputs:
+  blob_mount:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/
+    mode: rw_mount

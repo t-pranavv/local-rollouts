@@ -1,0 +1,117 @@
+# az ml job create --file evaluation.yaml --resource-group msr-aifrontiers-dev-eastus2-rg --workspace-name msr-aifrontiers-dev-eastus2-ws
+$schema: https://azuremlschemas.azureedge.net/latest/sweepJob.schema.json
+type: sweep
+compute: /subscriptions/a0c66465-bfb8-4525-84d0-75a8fb5a054f/resourceGroups/msr-aifrontiers-dev-eastus2-rg/providers/Microsoft.MachineLearningServices/virtualClusters/msr-aif-dev-eastus2-vc
+resources:
+  instance_count: 1
+  instance_type: Singularity.ND12_H100_v5 # 1 GPU
+  # instance_type: Singularity.ND24_H100_v5 # 2 GPUs
+  # instance_type: Singularity.ND48_H100_v5 # 4 GPUs
+  # instance_type: Singularity.ND96r_H100_v5 # 8 GPUs
+  properties:
+    ComputeSpecification:
+      Automatic: false
+    AISuperComputer:
+      imageVersion: ''
+      interactive: false
+      sshPublicKey: ""
+      enableAzmlInt: true
+      # priority: Low
+      # priority: Medium
+      priority: High
+      # slaTier: Standard
+      slaTier: Premium
+      location: null
+      locations: ["eastus2"]
+experiment_name: model_conversion
+tags:
+  Project_Name: Orca
+  ProjectID: PRJ-0438-A49
+  Experiment: Reasoning_LLM
+trial:
+  code: ../../../../
+  distribution:
+    type: pytorch
+    process_count_per_instance: 1
+  command: |
+    # Print IB topology
+    nvidia-smi topo -m
+    
+    # General Configuration
+    export MODEL_NAME=$(echo ${{search_space.model_config}} | cut -d',' -f1)
+    export MODEL_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f2)
+    export TOKENIZER_PATH=$(echo ${{search_space.model_config}} | cut -d',' -f3)
+    export DTYPE=$(echo ${{search_space.model_config}} | cut -d',' -f4)
+
+    # cd into vllm inference scripts directory
+    cd tools/vllm_inference
+
+    # model checkpoint conversion
+    if [[ $MODEL_NAME == *-hf ]]; then
+      echo "Skip conversion due to -hf suffix indicating HF model..."
+    elif [[ -d ${{outputs.output_ckpt}}/$MODEL_PATH/phi4 ]]; then
+      echo "Skip conversion, hf in phi4 class model already exists..."
+    else
+      echo "Converting model from Zero3 to FP32 and then to HF format..."
+      if [ $NODE_RANK -eq 0 ]; then
+        echo "Node $NODE_RANK starting conversion..."
+        python -m phyagi.cli.interface convert ${{outputs.output_ckpt}}/$MODEL_PATH phi4 -t ${{inputs.tokenizer}}/$TOKENIZER_PATH --dtype=bfloat16 --debug_logit --debug_params --from_deepspeed_zero --save_intermediate_checkpoint # (for saving convertion to fp32)
+        echo "Conversion completed on rank 0"
+      else
+        echo "Node $NODE_RANK waiting for conversion to complete on rank 0..."
+        while [ ! -d "${{outputs.output_ckpt}}/$MODEL_PATH/phi4" ]; do
+          sleep 5
+        done
+        echo "Conversion completed, proceeding on node $NODE_RANK..."
+      fi
+    fi
+
+    echo "============================ GENERAL CONFIGURATION ============================"
+    echo "MODEL_NAME: $MODEL_NAME"
+    echo "MODEL_PATH: $MODEL_PATH"
+    echo "TOKENIZER_PATH: $TOKENIZER_PATH"
+    echo "OUTPUT_CHECKPOINT_DIR: ${{outputs.output_ckpt}}/$MODEL_PATH/phi4"
+    echo "==============================================================================="
+  environment: azureml:AzureML-ACPT-pytorch-1.13-py38-cuda11.7-gpu:10
+  environment_variables:
+    JOB_EXECUTION_MODE: Basic
+    AZUREML_COMPUTE_USE_COMMON_RUNTIME: 'true'
+    AZUREML_COMMON_RUNTIME_USE_SBOM_CAPABILITY: 'false'
+    AML_LOCATION: "eastus2"
+    IPP_IMAGE_NAME: amegreenresources.azurecr.io/aif/reasoning-lm-tooluse:220825
+inputs:
+  tokenizer:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/azureml/
+    mode: ro_mount
+outputs:
+  output_ckpt:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/azureml/
+    mode: rw_mount
+sampling_algorithm: grid
+search_space:
+  model_config:
+    type: choice
+    values:
+      - Phi-4-reasoning-hf,huggingface_models/Phi-4-reasoning,huggingface_models/Phi-4-reasoning,bfloat16
+      - Qwen3-32B-hf,huggingface_models/Qwen3-32B,huggingface_models/Qwen3-32B,bfloat16
+      - sft_phi4r_toolv0_2e_5e-6lr,sft_phi4r_toolv0_2e_5e-6lr/output/1130,tool_use/base_models/phi-4-reasoning/15325/hf,bfloat16
+      - sft_phi4_openthoughts_toolv0_2e_10xlr,sft_phi4_openthoughts_toolv0_2e_10xlr/output/1765,tool_use/base_models/phi-4-reasoning/15325/hf,bfloat16
+      - sft_15b_mathv2code5_otcode_oaif_high32k_tool_10xlr,sft_15b_mathv2code5_otcode_oaif_high32k_tool_10xlr/output/14422,tool_use/base_models/phi-4-reasoning/15325/hf,bfloat16
+      # - Qwen3-235B-A22B-FP8-hf,huggingface_models/Qwen3-235B-A22B-FP8,huggingface_models/Qwen3-235B-A22B-FP8,bfloat16
+      # - Qwen3-235B-A22B-hf,huggingface_models/Qwen3-235B-A22B,huggingface_models/Qwen3-235B-A22B,bfloat16
+  temperature:
+    type: choice
+    values:
+      - 0.8
+  seed:
+    type: choice
+    values:
+      - 42
+objective:
+  primary_metric: dummy_metric
+  goal: maximize
+limits:
+  max_total_trials: 1000
+  max_concurrent_trials: 4

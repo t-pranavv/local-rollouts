@@ -1,0 +1,63 @@
+data_root: ${oc.env:DATA_ROOT, "/mnt/aifshared"}
+output_root: ${oc.env:OUTPUT_ROOT, "~/phyagi_results"}
+output_dir: ${output_root}/hf_dpo_phi4
+dataset:
+  path: json
+  data_files:
+    - ${data_root}/post_train_data/dpo_v3/combined_a_7_trl_format.jsonl
+model:
+  pretrained_model_name_or_path: <pretrained_model_name_or_path>
+  attn_implementation: flash_attention_2
+  torch_dtype: torch.bfloat16
+  use_cache: false
+tokenizer:
+  pretrained_tokenizer_name_or_path: microsoft/phi-4
+tuning_args:
+  max_length: 4096
+  max_prompt_length: 4096
+  beta: 0.1
+  generate_during_eval: false
+  precompute_ref_log_probs: false
+  use_liger_kernel: true
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 8
+  gradient_checkpointing: true
+  max_steps: 3402
+  save_steps: 100
+  learning_rate: 1.0e-7
+  weight_decay: 1.0e-4
+  adam_beta1: 0.8
+  adam_beta2: 0.95
+  warmup_ratio: 0.1
+  logging_steps: 10
+  seed: 42
+  bf16: true
+  ddp_find_unused_parameters: false
+  report_to: none
+  deepspeed:
+    bf16:
+      enabled: auto
+    data_types:
+      grad_accum_dtype: fp32
+    zero_optimization:
+      stage: 3
+      offload_param:
+        device: cpu
+        pin_memory: true
+      offload_optimizer:
+        device: cpu
+        pin_memory: true
+      overlap_comm: true
+      contiguous_gradients: true
+      sub_group_size: 1e9
+      reduce_bucket_size: auto
+      stage3_prefetch_bucket_size: auto
+      stage3_param_persistence_threshold: auto
+      stage3_max_live_parameters: 1e9
+      stage3_max_reuse_distance: 1e9
+      stage3_gather_16bit_weights_on_model_save: true
+    gradient_accumulation_steps: auto
+    gradient_clipping: auto
+    train_batch_size: auto
+    train_micro_batch_size_per_gpu: auto
+    wall_clock_breakdown: false

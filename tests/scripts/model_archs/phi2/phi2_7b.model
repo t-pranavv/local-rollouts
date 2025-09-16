@@ -1,0 +1,61 @@
+MixFormerSequentialForCausalLM(
+  (layers): Sequential(
+    (0): Embedding(
+      (wte): Embedding(50304, 4096)
+      (drop): Dropout(p=0.0, inplace=False)
+    )
+    (1): ParallelBlock(
+      (ln): LayerNorm((4096,), eps=1e-05, elementwise_affine=True)
+      (mixer): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): Linear(in_features=4096, out_features=12288, bias=True)
+        (out_proj): Linear(in_features=4096, out_features=4096, bias=True)
+        (inner_attn): Attention(
+          (drop): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (mlp): MLP(
+        (act): NewGELUActivation()
+        (fc1): Linear(in_features=4096, out_features=16384, bias=True)
+        (fc2): Linear(in_features=16384, out_features=4096, bias=True)
+      )
+      (resid_dropout): Dropout(p=0.1, inplace=False)
+    )
+    (2): ParallelBlock(
+      (ln): LayerNorm((4096,), eps=1e-05, elementwise_affine=True)
+      (mixer): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): Linear(in_features=4096, out_features=12288, bias=True)
+        (out_proj): Linear(in_features=4096, out_features=4096, bias=True)
+        (inner_attn): Attention(
+... [truncated] ...
+        (fc2): Linear(in_features=16384, out_features=4096, bias=True)
+      )
+      (resid_dropout): Dropout(p=0.1, inplace=False)
+    )
+    (32): ParallelBlock(
+      (ln): LayerNorm((4096,), eps=1e-05, elementwise_affine=True)
+      (mixer): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): Linear(in_features=4096, out_features=12288, bias=True)
+        (out_proj): Linear(in_features=4096, out_features=4096, bias=True)
+        (inner_attn): Attention(
+          (drop): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (mlp): MLP(
+        (act): NewGELUActivation()
+        (fc1): Linear(in_features=4096, out_features=16384, bias=True)
+        (fc2): Linear(in_features=16384, out_features=4096, bias=True)
+      )
+      (resid_dropout): Dropout(p=0.1, inplace=False)
+    )
+    (33): CausalLMHead(
+      (ln): LayerNorm((4096,), eps=1e-05, elementwise_affine=True)
+      (linear): Linear(in_features=4096, out_features=50304, bias=True)
+    )
+  )
+  (loss): CausalLMLoss(
+    (loss_fct): CrossEntropyLoss()
+  )
+)
