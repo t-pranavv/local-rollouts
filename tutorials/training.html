@@ -1,0 +1,1126 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Training &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/training';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/tutorials/training.html" />
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Supervised Fine-Tuning (SFT)" href="sft.html" />
+    <link rel="prev" title="Model architecture" href="model_architecture.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2Ftutorials/training.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Training</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Sections </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Training</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Tokenizing-and-loading-the-data">Tokenizing and loading the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Creating-the-model">Creating the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Training-the-model">Training the model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#DeepSpeed">DeepSpeed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Hugging-Face">Hugging Face</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyTorch-Lightning">PyTorch Lightning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Customizing-the-training">Customizing the training</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Overriding-the-DeepSpeed-trainer">Overriding the DeepSpeed trainer</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Training">
+<h1>Training<a class="headerlink" href="#Training" title="Link to this heading">#</a></h1>
+<p>This tutorial provides a step-by-step guide to training a model on a dataset.</p>
+<p>There are three steps involved in training a model:</p>
+<ol class="arabic simple">
+<li><p>Tokenizing and loading the data.</p></li>
+<li><p>Creating the model</p></li>
+<li><p>Training the model.</p></li>
+</ol>
+<p>We will explore each of these steps in detail.</p>
+<section id="Tokenizing-and-loading-the-data">
+<h2>Tokenizing and loading the data<a class="headerlink" href="#Tokenizing-and-loading-the-data" title="Link to this heading">#</a></h2>
+<p>The initial step involves either tokenizing a new dataset or loading a previously tokenized one. We will employ the <code class="docutils literal notranslate"><span class="pre">LMDatasetProvider</span></code> class and utilize a dataset from the <a class="reference external" href="https://huggingface.co/datasets">Hugging Face datasets library</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.train.lm.lm_dataset_provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMDatasetProvider</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;WANDB_MODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;disabled&quot;</span>
+<span class="n">dataset_provider</span> <span class="o">=</span> <span class="n">LMDatasetProvider</span><span class="o">.</span><span class="n">from_hub</span><span class="p">(</span>
+    <span class="n">dataset_path</span><span class="o">=</span><span class="s2">&quot;wikitext&quot;</span><span class="p">,</span>
+    <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;wikitext-2-raw-v1&quot;</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="s2">&quot;gpt2&quot;</span><span class="p">,</span>
+    <span class="n">cache_dir</span><span class="o">=</span><span class="s2">&quot;cache&quot;</span><span class="p">,</span>
+    <span class="n">seq_len</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 10:45:15,798] [INFO] [lm_dataset_provider.py:252:from_hub] Loading non-tokenized dataset...
+[phyagi] [2025-05-19 10:45:17,999] [WARNING] [lm_dataset_provider.py:270:from_hub] &#39;cache&#39; already exists and will be overritten.
+[phyagi] [2025-05-19 10:45:18,000] [INFO] [lm_dataset_provider.py:285:from_hub] Creating validation split (if necessary)...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "74cc88484a1341bfa5aee0590bedba36", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "70f09986a96a46ea907c3ee7f8029ac8", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "6602a5e52de746b49c31df0342dd06a0", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 10:45:19,442] [INFO] [lm_dataset_provider.py:309:from_hub] Saving tokenized dataset: cache
+</pre></div></div>
+</div>
+<p>Once the data has been tokenized, a set of NumPy arrays will be generated in the <code class="docutils literal notranslate"><span class="pre">cache</span></code> directory. If the data has already been tokenized, you can load it from the cache directory using the following code: <code class="docutils literal notranslate"><span class="pre">dataset_provider</span> <span class="pre">=</span> <span class="pre">LMDatasetProvider.from_cache(&quot;cache&quot;)</span></code>.</p>
+<p>These arrays represent continuous blocks of tokenized data that can be swiftly loaded into memory and divided into different sequence lengths. With the dataset provider prepared, you can obtain the training and validation datasets by calling the <code class="docutils literal notranslate"><span class="pre">get_train_dataset</span></code> and <code class="docutils literal notranslate"><span class="pre">get_val_dataset</span></code> methods, as shown below:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">dataset_provider</span><span class="o">.</span><span class="n">get_train_dataset</span><span class="p">()</span>
+<span class="n">val_dataset</span> <span class="o">=</span> <span class="n">dataset_provider</span><span class="o">.</span><span class="n">get_val_dataset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Creating-the-model">
+<h2>Creating the model<a class="headerlink" href="#Creating-the-model" title="Link to this heading">#</a></h2>
+<p>After loading the datasets, you can create a model using a configuration object, which is similar to the Hugging Face API. For example:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">GPT2Config</span><span class="p">,</span> <span class="n">GPT2LMHeadModel</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">GPT2Config</span><span class="p">(</span><span class="n">n_layer</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_embd</span><span class="o">=</span><span class="mi">192</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">GPT2LMHeadModel</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This example employs the default configuration (apart from the number of layers and embeddings) arguments to create the model. However, you can easily modify these by altering the arguments passed to <code class="docutils literal notranslate"><span class="pre">GPT2Config</span></code>.</p>
+</section>
+<section id="Training-the-model">
+<h2>Training the model<a class="headerlink" href="#Training-the-model" title="Link to this heading">#</a></h2>
+<p>With the data prepared and the model loaded, we can now proceed to train the model. PhyAGI offers two training classes: <code class="docutils literal notranslate"><span class="pre">DsTrainer</span></code> and <code class="docutils literal notranslate"><span class="pre">HfTrainer</span></code>. The former utilizes DeepSpeed for training the model, while the latter relies on Hugging Face’s <code class="docutils literal notranslate"><span class="pre">transformers.Trainer</span></code> class.</p>
+<section id="DeepSpeed">
+<h3>DeepSpeed<a class="headerlink" href="#DeepSpeed" title="Link to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.trainers.ds.ds_trainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">DsTrainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.trainers.ds.ds_training_args</span><span class="w"> </span><span class="kn">import</span> <span class="n">DsTrainingArguments</span>
+
+<span class="n">training_args</span> <span class="o">=</span> <span class="n">DsTrainingArguments</span><span class="p">(</span><span class="s2">&quot;gpt2-wt103&quot;</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">DsTrainer</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+    <span class="n">eval_dataset</span><span class="o">=</span><span class="n">val_dataset</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 10:45:20,526] [WARNING] [ds_trainer.py:321:_prepare_ds_config] `scheduler.params.total_num_steps` not provided. Setting to 1 steps.
+[2025-05-19 10:45:20,528] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed info: version=0.16.7, git-hash=unknown, git-branch=unknown
+[2025-05-19 10:45:20,529] [INFO] [config.py:735:__init__] Config mesh_device None world_size = 1
+[2025-05-19 10:45:20,588] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2025-05-19 10:45:20,589] [INFO] [logging.py:107:log_dist] [Rank 0] Using DeepSpeed Optimizer param name adamw as basic optimizer
+[2025-05-19 10:45:20,590] [INFO] [logging.py:107:log_dist] [Rank 0] Removing param_group that has no &#39;params&#39; in the basic Optimizer
+[2025-05-19 10:45:20,591] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Basic Optimizer = FusedAdam
+[2025-05-19 10:45:20,592] [INFO] [logging.py:107:log_dist] [Rank 0] Creating fp16 optimizer with dynamic loss scale
+[2025-05-19 10:45:20,597] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Final Optimizer = FP16_Optimizer
+[2025-05-19 10:45:20,598] [WARNING] [lr_schedules.py:683:get_lr] Attempting to get learning rate from scheduler before it has started
+[2025-05-19 10:45:20,599] [WARNING] [lr_schedules.py:759:__init__] total_num_steps 1 is less than warmup_num_steps 1000
+[2025-05-19 10:45:20,600] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed using configured LR scheduler = WarmupDecayLR
+[2025-05-19 10:45:20,600] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed LR Scheduler = &lt;deepspeed.runtime.lr_schedules.WarmupDecayLR object at 0x7fd255f45900&gt;
+[2025-05-19 10:45:20,601] [INFO] [logging.py:107:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0], mom=[[0.9, 0.95]]
+[2025-05-19 10:45:20,602] [INFO] [config.py:1003:print] DeepSpeedEngine configuration:
+[2025-05-19 10:45:20,603] [INFO] [config.py:1007:print]   activation_checkpointing_config  {
+    &#34;partition_activations&#34;: false,
+    &#34;contiguous_memory_optimization&#34;: false,
+    &#34;cpu_checkpointing&#34;: false,
+    &#34;number_checkpoints&#34;: null,
+    &#34;synchronize_checkpoint_boundary&#34;: false,
+    &#34;profile&#34;: false
+}
+[2025-05-19 10:45:20,603] [INFO] [config.py:1007:print]   aio_config ................... {&#39;block_size&#39;: 1048576, &#39;queue_depth&#39;: 8, &#39;intra_op_parallelism&#39;: 1, &#39;single_submit&#39;: False, &#39;overlap_events&#39;: True, &#39;use_gds&#39;: False}
+[2025-05-19 10:45:20,604] [INFO] [config.py:1007:print]   amp_enabled .................. False
+[2025-05-19 10:45:20,605] [INFO] [config.py:1007:print]   amp_params ................... False
+[2025-05-19 10:45:20,606] [INFO] [config.py:1007:print]   autotuning_config ............ {
+    &#34;enabled&#34;: false,
+    &#34;start_step&#34;: null,
+    &#34;end_step&#34;: null,
+    &#34;metric_path&#34;: null,
+    &#34;arg_mappings&#34;: null,
+    &#34;metric&#34;: &#34;throughput&#34;,
+    &#34;model_info&#34;: null,
+    &#34;results_dir&#34;: &#34;autotuning_results&#34;,
+    &#34;exps_dir&#34;: &#34;autotuning_exps&#34;,
+    &#34;overwrite&#34;: true,
+    &#34;fast&#34;: true,
+    &#34;start_profile_step&#34;: 3,
+    &#34;end_profile_step&#34;: 5,
+    &#34;tuner_type&#34;: &#34;gridsearch&#34;,
+    &#34;tuner_early_stopping&#34;: 5,
+    &#34;tuner_num_trials&#34;: 50,
+    &#34;model_info_path&#34;: null,
+    &#34;mp_size&#34;: 1,
+    &#34;max_train_batch_size&#34;: null,
+    &#34;min_train_batch_size&#34;: 1,
+    &#34;max_train_micro_batch_size_per_gpu&#34;: 1.024000e+03,
+    &#34;min_train_micro_batch_size_per_gpu&#34;: 1,
+    &#34;num_tuning_micro_batch_sizes&#34;: 3
+}
+[2025-05-19 10:45:20,606] [INFO] [config.py:1007:print]   bfloat16_enabled ............. False
+[2025-05-19 10:45:20,607] [INFO] [config.py:1007:print]   bfloat16_immediate_grad_update  False
+[2025-05-19 10:45:20,608] [INFO] [config.py:1007:print]   checkpoint_parallel_write_pipeline  False
+[2025-05-19 10:45:20,608] [INFO] [config.py:1007:print]   checkpoint_tag_validation_enabled  True
+[2025-05-19 10:45:20,609] [INFO] [config.py:1007:print]   checkpoint_tag_validation_fail  False
+[2025-05-19 10:45:20,610] [INFO] [config.py:1007:print]   comms_config ................. &lt;deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7fd31c631f60&gt;
+[2025-05-19 10:45:20,610] [INFO] [config.py:1007:print]   communication_data_type ...... None
+[2025-05-19 10:45:20,611] [INFO] [config.py:1007:print]   compile_config ............... deepcompile=False free_activation=False offload_activation=False offload_opt_states=False double_buffer=True symmetric_memory=False debug_log=False offload_parameters=False sync_before_reduce=False sync_after_reduce=False sync_before_allgather=False sync_after_allgather=False
+[2025-05-19 10:45:20,612] [INFO] [config.py:1007:print]   compression_config ........... {&#39;weight_quantization&#39;: {&#39;shared_parameters&#39;: {&#39;enabled&#39;: False, &#39;quantizer_kernel&#39;: False, &#39;schedule_offset&#39;: 0, &#39;quantize_groups&#39;: 1, &#39;quantize_verbose&#39;: False, &#39;quantization_type&#39;: &#39;symmetric&#39;, &#39;quantize_weight_in_forward&#39;: False, &#39;rounding&#39;: &#39;nearest&#39;, &#39;fp16_mixed_quantize&#39;: False, &#39;quantize_change_ratio&#39;: 0.001}, &#39;different_groups&#39;: {}}, &#39;activation_quantization&#39;: {&#39;shared_parameters&#39;: {&#39;enabled&#39;: False, &#39;quantization_type&#39;: &#39;symmetric&#39;, &#39;range_calibration&#39;: &#39;dynamic&#39;, &#39;schedule_offset&#39;: 1000}, &#39;different_groups&#39;: {}}, &#39;sparse_pruning&#39;: {&#39;shared_parameters&#39;: {&#39;enabled&#39;: False, &#39;method&#39;: &#39;l1&#39;, &#39;schedule_offset&#39;: 1000}, &#39;different_groups&#39;: {}}, &#39;row_pruning&#39;: {&#39;shared_parameters&#39;: {&#39;enabled&#39;: False, &#39;method&#39;: &#39;l1&#39;, &#39;schedule_offset&#39;: 1000}, &#39;different_groups&#39;: {}}, &#39;head_pruning&#39;: {&#39;shared_parameters&#39;: {&#39;enabled&#39;: False, &#39;method&#39;: &#39;topk&#39;, &#39;schedule_offset&#39;: 1000}, &#39;different_groups&#39;: {}}, &#39;channel_pruning&#39;: {&#39;shared_parameters&#39;: {&#39;enabled&#39;: False, &#39;method&#39;: &#39;l1&#39;, &#39;schedule_offset&#39;: 1000}, &#39;different_groups&#39;: {}}, &#39;layer_reduction&#39;: {&#39;enabled&#39;: False}}
+[2025-05-19 10:45:20,612] [INFO] [config.py:1007:print]   curriculum_enabled_legacy .... False
+[2025-05-19 10:45:20,613] [INFO] [config.py:1007:print]   curriculum_params_legacy ..... False
+[2025-05-19 10:45:20,614] [INFO] [config.py:1007:print]   data_efficiency_config ....... {&#39;enabled&#39;: False, &#39;seed&#39;: 1234, &#39;data_sampling&#39;: {&#39;enabled&#39;: False, &#39;num_epochs&#39;: 1000, &#39;num_workers&#39;: 0, &#39;pin_memory&#39;: False, &#39;curriculum_learning&#39;: {&#39;enabled&#39;: False}, &#39;dynamic_batching&#39;: {&#39;enabled&#39;: False, &#39;lr_scaling_method&#39;: &#39;linear&#39;, &#39;min_batch_size&#39;: 1, &#39;max_batch_size&#39;: None, &#39;sequence_picking_order&#39;: &#39;dataloader&#39;, &#39;verbose&#39;: False}}, &#39;data_routing&#39;: {&#39;enabled&#39;: False, &#39;random_ltd&#39;: {&#39;enabled&#39;: False, &#39;layer_token_lr_schedule&#39;: {&#39;enabled&#39;: False}}}}
+[2025-05-19 10:45:20,614] [INFO] [config.py:1007:print]   data_efficiency_enabled ...... False
+[2025-05-19 10:45:20,615] [INFO] [config.py:1007:print]   dataloader_drop_last ......... False
+[2025-05-19 10:45:20,616] [INFO] [config.py:1007:print]   disable_allgather ............ False
+[2025-05-19 10:45:20,616] [INFO] [config.py:1007:print]   dump_state ................... False
+[2025-05-19 10:45:20,617] [INFO] [config.py:1007:print]   dynamic_loss_scale_args ...... {&#39;init_scale&#39;: 4096, &#39;scale_window&#39;: 1000, &#39;delayed_shift&#39;: 2, &#39;consecutive_hysteresis&#39;: False, &#39;min_scale&#39;: 1}
+[2025-05-19 10:45:20,617] [INFO] [config.py:1007:print]   eigenvalue_enabled ........... False
+[2025-05-19 10:45:20,618] [INFO] [config.py:1007:print]   eigenvalue_gas_boundary_resolution  1
+[2025-05-19 10:45:20,619] [INFO] [config.py:1007:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2025-05-19 10:45:20,619] [INFO] [config.py:1007:print]   eigenvalue_layer_num ......... 0
+[2025-05-19 10:45:20,620] [INFO] [config.py:1007:print]   eigenvalue_max_iter .......... 100
+[2025-05-19 10:45:20,626] [INFO] [config.py:1007:print]   eigenvalue_stability ......... 1e-06
+[2025-05-19 10:45:20,627] [INFO] [config.py:1007:print]   eigenvalue_tol ............... 0.01
+[2025-05-19 10:45:20,627] [INFO] [config.py:1007:print]   eigenvalue_verbose ........... False
+[2025-05-19 10:45:20,628] [INFO] [config.py:1007:print]   elasticity_enabled ........... False
+[2025-05-19 10:45:20,629] [INFO] [config.py:1007:print]   flops_profiler_config ........ {
+    &#34;enabled&#34;: false,
+    &#34;recompute_fwd_factor&#34;: 0.0,
+    &#34;profile_step&#34;: 1,
+    &#34;module_depth&#34;: -1,
+    &#34;top_modules&#34;: 1,
+    &#34;detailed&#34;: true,
+    &#34;output_file&#34;: null
+}
+[2025-05-19 10:45:20,629] [INFO] [config.py:1007:print]   fp16_auto_cast ............... False
+[2025-05-19 10:45:20,630] [INFO] [config.py:1007:print]   fp16_enabled ................. True
+[2025-05-19 10:45:20,631] [INFO] [config.py:1007:print]   fp16_master_weights_and_gradients  False
+[2025-05-19 10:45:20,631] [INFO] [config.py:1007:print]   global_rank .................. 0
+[2025-05-19 10:45:20,632] [INFO] [config.py:1007:print]   grad_accum_dtype ............. None
+[2025-05-19 10:45:20,633] [INFO] [config.py:1007:print]   gradient_accumulation_steps .. 256
+[2025-05-19 10:45:20,633] [INFO] [config.py:1007:print]   gradient_clipping ............ 0.0
+[2025-05-19 10:45:20,634] [INFO] [config.py:1007:print]   gradient_predivide_factor .... 1.0
+[2025-05-19 10:45:20,635] [INFO] [config.py:1007:print]   graph_harvesting ............. False
+[2025-05-19 10:45:20,635] [INFO] [config.py:1007:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2025-05-19 10:45:20,636] [INFO] [config.py:1007:print]   initial_dynamic_scale ........ 4096
+[2025-05-19 10:45:20,637] [INFO] [config.py:1007:print]   load_universal_checkpoint .... False
+[2025-05-19 10:45:20,637] [INFO] [config.py:1007:print]   loss_scale ................... 0
+[2025-05-19 10:45:20,638] [INFO] [config.py:1007:print]   memory_breakdown ............. False
+[2025-05-19 10:45:20,639] [INFO] [config.py:1007:print]   mics_hierarchial_params_gather  False
+[2025-05-19 10:45:20,639] [INFO] [config.py:1007:print]   mics_shard_size .............. -1
+[2025-05-19 10:45:20,640] [INFO] [config.py:1007:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path=&#39;&#39;, job_name=&#39;DeepSpeedJobName&#39;) comet=CometConfig(enabled=False, samples_log_interval=100, project=None, workspace=None, api_key=None, experiment_name=None, experiment_key=None, online=None, mode=None) wandb=WandbConfig(enabled=False, group=None, team=None, project=&#39;deepspeed&#39;) csv_monitor=CSVConfig(enabled=False, output_path=&#39;&#39;, job_name=&#39;DeepSpeedJobName&#39;)
+[2025-05-19 10:45:20,641] [INFO] [config.py:1007:print]   nebula_config ................ {
+    &#34;enabled&#34;: false,
+    &#34;persistent_storage_path&#34;: null,
+    &#34;persistent_time_interval&#34;: 100,
+    &#34;num_of_version_in_retention&#34;: 2,
+    &#34;enable_nebula_load&#34;: true,
+    &#34;load_path&#34;: null
+}
+[2025-05-19 10:45:20,642] [INFO] [config.py:1007:print]   optimizer_legacy_fusion ...... False
+[2025-05-19 10:45:20,642] [INFO] [config.py:1007:print]   optimizer_name ............... adamw
+[2025-05-19 10:45:20,643] [INFO] [config.py:1007:print]   optimizer_params ............. {&#39;lr&#39;: 0.0018, &#39;betas&#39;: [0.9, 0.95], &#39;eps&#39;: 1e-07}
+[2025-05-19 10:45:20,644] [INFO] [config.py:1007:print]   pipeline ..................... {&#39;stages&#39;: &#39;auto&#39;, &#39;partition&#39;: &#39;best&#39;, &#39;seed_layers&#39;: False, &#39;activation_checkpoint_interval&#39;: 0, &#39;pipe_partitioned&#39;: True, &#39;grad_partitioned&#39;: True}
+[2025-05-19 10:45:20,644] [INFO] [config.py:1007:print]   pld_enabled .................. False
+[2025-05-19 10:45:20,645] [INFO] [config.py:1007:print]   pld_params ................... False
+[2025-05-19 10:45:20,646] [INFO] [config.py:1007:print]   prescale_gradients ........... False
+[2025-05-19 10:45:20,646] [INFO] [config.py:1007:print]   scheduler_name ............... WarmupDecayLR
+[2025-05-19 10:45:20,647] [INFO] [config.py:1007:print]   scheduler_params ............. {&#39;warmup_min_lr&#39;: 0.0, &#39;warmup_max_lr&#39;: 0.0018, &#39;warmup_type&#39;: &#39;linear&#39;, &#39;total_num_steps&#39;: 1}
+[2025-05-19 10:45:20,648] [INFO] [config.py:1007:print]   seq_parallel_communication_data_type  torch.float32
+[2025-05-19 10:45:20,648] [INFO] [config.py:1007:print]   sparse_attention ............. None
+[2025-05-19 10:45:20,649] [INFO] [config.py:1007:print]   sparse_gradients_enabled ..... False
+[2025-05-19 10:45:20,650] [INFO] [config.py:1007:print]   steps_per_print .............. 1000
+[2025-05-19 10:45:20,650] [INFO] [config.py:1007:print]   tensor_parallel_config ....... dtype=torch.float16 autotp_size=0 tp_overlap_comm=False tensor_parallel=TPConfig(tp_size=1, tp_grain_size=1, mpu=None, tp_group=None) injection_policy_tuple=None keep_module_on_host=False replace_with_kernel_inject=False
+[2025-05-19 10:45:20,651] [INFO] [config.py:1007:print]   timers_config ................ enabled=True synchronized=True
+[2025-05-19 10:45:20,652] [INFO] [config.py:1007:print]   train_batch_size ............. 1024
+[2025-05-19 10:45:20,653] [INFO] [config.py:1007:print]   train_micro_batch_size_per_gpu  4
+[2025-05-19 10:45:20,653] [INFO] [config.py:1007:print]   use_data_before_expert_parallel_  False
+[2025-05-19 10:45:20,654] [INFO] [config.py:1007:print]   use_node_local_storage ....... False
+[2025-05-19 10:45:20,655] [INFO] [config.py:1007:print]   wall_clock_breakdown ......... False
+[2025-05-19 10:45:20,655] [INFO] [config.py:1007:print]   weight_quantization_config ... None
+[2025-05-19 10:45:20,656] [INFO] [config.py:1007:print]   world_size ................... 1
+[2025-05-19 10:45:20,657] [INFO] [config.py:1007:print]   zero_allow_untested_optimizer  False
+[2025-05-19 10:45:20,657] [INFO] [config.py:1007:print]   zero_config .................. stage=0 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500000000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500000000 overlap_comm=False load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1000000000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50000000 param_persistence_threshold=100000 model_persistence_threshold=9223372036854775807 max_live_parameters=1000000000 max_reuse_distance=1000000000 gather_16bit_weights_on_model_save=False module_granularity_threshold=0 use_all_reduce_for_fetch_params=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False zeropp_loco_param=None mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True log_trace_cache_warnings=False
+[2025-05-19 10:45:20,658] [INFO] [config.py:1007:print]   zero_enabled ................. False
+[2025-05-19 10:45:20,659] [INFO] [config.py:1007:print]   zero_force_ds_cpu_optimizer .. True
+[2025-05-19 10:45:20,659] [INFO] [config.py:1007:print]   zero_optimization_stage ...... 0
+[2025-05-19 10:45:20,660] [INFO] [config.py:993:print_user_config]   json = {
+    &#34;train_batch_size&#34;: 1.024000e+03,
+    &#34;train_micro_batch_size_per_gpu&#34;: 4,
+    &#34;fp16&#34;: {
+        &#34;enabled&#34;: true,
+        &#34;initial_scale_power&#34;: 12
+    },
+    &#34;zero_optimization&#34;: {
+        &#34;stage&#34;: 0
+    },
+    &#34;optimizer&#34;: {
+        &#34;type&#34;: &#34;AdamW&#34;,
+        &#34;params&#34;: {
+            &#34;lr&#34;: 0.0018,
+            &#34;betas&#34;: [0.9, 0.95],
+            &#34;eps&#34;: 1e-07
+        }
+    },
+    &#34;scheduler&#34;: {
+        &#34;type&#34;: &#34;WarmupDecayLR&#34;,
+        &#34;params&#34;: {
+            &#34;warmup_min_lr&#34;: 0.0,
+            &#34;warmup_max_lr&#34;: 0.0018,
+            &#34;warmup_type&#34;: &#34;linear&#34;,
+            &#34;total_num_steps&#34;: 1
+        }
+    },
+    &#34;steps_per_print&#34;: 1000
+}
+[phyagi] [2025-05-19 10:45:20,667] [INFO] [ds_trainer.py:236:__init__] Model: GPT2LMHeadModel(
+  (transformer): GPT2Model(
+    (wte): Embedding(50257, 192)
+    (wpe): Embedding(1024, 192)
+    (drop): Dropout(p=0.1, inplace=False)
+    (h): ModuleList(
+      (0-3): 4 x GPT2Block(
+        (ln_1): LayerNorm((192,), eps=1e-05, elementwise_affine=True)
+        (attn): GPT2Attention(
+          (c_attn): Conv1D(nf=576, nx=192)
+          (c_proj): Conv1D(nf=192, nx=192)
+          (attn_dropout): Dropout(p=0.1, inplace=False)
+          (resid_dropout): Dropout(p=0.1, inplace=False)
+        )
+        (ln_2): LayerNorm((192,), eps=1e-05, elementwise_affine=True)
+        (mlp): GPT2MLP(
+          (c_fc): Conv1D(nf=768, nx=192)
+          (c_proj): Conv1D(nf=192, nx=768)
+          (act): NewGELUActivation()
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+    )
+    (ln_f): LayerNorm((192,), eps=1e-05, elementwise_affine=True)
+  )
+  (lm_head): Linear(in_features=192, out_features=50257, bias=False)
+)
+[phyagi] [2025-05-19 10:45:20,682] [INFO] [ds_trainer.py:237:__init__] Training arguments: {&#39;output_dir&#39;: &#39;/home/gderosa/phyagi-sdk/docs/tutorials/gpt2-wt103&#39;, &#39;ds_config&#39;: {&#39;train_batch_size&#39;: 1024, &#39;train_micro_batch_size_per_gpu&#39;: 4, &#39;fp16&#39;: {&#39;enabled&#39;: True, &#39;initial_scale_power&#39;: 12}, &#39;zero_optimization&#39;: {&#39;stage&#39;: 0}, &#39;optimizer&#39;: {&#39;type&#39;: &#39;AdamW&#39;, &#39;params&#39;: {&#39;lr&#39;: 0.0018, &#39;betas&#39;: [0.9, 0.95], &#39;eps&#39;: 1e-07}}, &#39;scheduler&#39;: {&#39;type&#39;: &#39;WarmupDecayLR&#39;, &#39;params&#39;: {&#39;warmup_min_lr&#39;: 0.0, &#39;warmup_max_lr&#39;: 0.0018, &#39;warmup_type&#39;: &#39;linear&#39;, &#39;total_num_steps&#39;: 1}}, &#39;steps_per_print&#39;: 1000}, &#39;do_eval&#39;: True, &#39;do_final_eval&#39;: False, &#39;train_batch_size_init_rampup&#39;: 0, &#39;train_batch_size_per_rampup&#39;: 0, &#39;rampup_steps&#39;: 0, &#39;num_train_epochs&#39;: 1, &#39;max_steps&#39;: 1, &#39;logging_steps&#39;: 10, &#39;save_steps&#39;: 500, &#39;save_final_checkpoint&#39;: False, &#39;eval_steps&#39;: 500, &#39;eval_max_steps&#39;: None, &#39;seed&#39;: 42, &#39;pipe_parallel_size&#39;: 1, &#39;pipe_parallel_partition_method&#39;: &#39;parameters&#39;, &#39;pipe_parallel_activation_checkpoint_steps&#39;: 0, &#39;tensor_parallel_size&#39;: 1, &#39;context_parallel_size&#39;: 1, &#39;batch_tracker&#39;: False, &#39;batch_tracker_save_steps&#39;: 10, &#39;dataloader_shuffle&#39;: True, &#39;eval_dataloader_shuffle&#39;: True, &#39;dataloader_pin_memory&#39;: True, &#39;dataloader_num_workers&#39;: 0, &#39;dataloader_prefetch_factor&#39;: None, &#39;load_checkpoint_num_tries&#39;: 1, &#39;backend&#39;: None, &#39;timeout&#39;: 1800, &#39;log_dir&#39;: &#39;/home/gderosa/phyagi-sdk/docs/tutorials/gpt2-wt103&#39;, &#39;mlflow&#39;: False, &#39;wandb&#39;: False, &#39;wandb_api_key&#39;: None, &#39;wandb_host&#39;: None, &#39;tensorboard&#39;: False}
+[phyagi] [2025-05-19 10:45:20,684] [INFO] [ds_trainer.py:656:train] Starting training...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+  0%|          | 0/1 [00:00&lt;?, ?it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 10:45:28,362] [INFO] [ds_trainer.py:761:train] {&#39;step/step_runtime&#39;: 7.674737930297852, &#39;step/samples_per_second&#39;: 133.42475134655956, &#39;step/samples_per_second_per_gpu&#39;: 133.42475134655956, &#39;step/tokens_per_second&#39;: 133.42475134655956, &#39;step/tokens_per_second_per_gpu&#39;: 133.42475134655956, &#39;step/tflops&#39;: 0.007211353769554979, &#39;step/tflops_per_gpu&#39;: 0.007211353769554979, &#39;step/mfu&#39;: 2.3284965352131026e-05, &#39;train/total_runtime&#39;: 7.676496267318726, &#39;train/progress&#39;: 1.0, &#39;train/epoch&#39;: 0.5, &#39;train/step&#39;: 1, &#39;train/loss&#39;: 10.843445777893066, &#39;train/loss_scale&#39;: 4096, &#39;train/gradient_norm&#39;: 2.3035886052062624, &#39;train/ppl&#39;: 51197.48956505967, &#39;train/learning_rate&#39;: 0.0, &#39;train/batch_size&#39;: 1024, &#39;train/n_samples&#39;: 1024, &#39;train/n_tokens&#39;: 1024, &#39;train/step_runtime&#39;: 7.674936771392822, &#39;train/samples_per_second&#39;: 133.42129459838768, &#39;train/samples_per_second_per_gpu&#39;: 133.42129459838768, &#39;train/tokens_per_second&#39;: 133.42129459838768, &#39;train/tokens_per_second_per_gpu&#39;: 133.42129459838768, &#39;train/tflops&#39;: 0.007211166938897937, &#39;train/tflops_per_gpu&#39;: 0.007211166938897937, &#39;train/mfu&#39;: 2.3284362088788948e-05}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 1/1 [00:07&lt;00:00,  7.68s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 10:45:28,365] [INFO] [ds_trainer.py:790:train] Training done.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<p>DeepSpeed uses <code class="docutils literal notranslate"><span class="pre">deepspeed</span></code> launcher. For instance, to train the model with 4 GPUs, you can execute the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>deepspeed<span class="w"> </span>--num_gpus<span class="o">=</span><span class="m">4</span><span class="w"> </span>train.py
+</pre></div>
+</div>
+<p>Make sure to replace <code class="docutils literal notranslate"><span class="pre">train.py</span></code> with the appropriate Python script containing your training code.</p>
+</section>
+<section id="Hugging-Face">
+<h3>Hugging Face<a class="headerlink" href="#Hugging-Face" title="Link to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrainingArguments</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.trainers.hf.hf_trainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">HfTrainer</span>
+
+<span class="c1"># Re-initialize the model to avoid the training to continue from the previous run</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">GPT2LMHeadModel</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span><span class="s2">&quot;gpt2-wt103&quot;</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">HfTrainer</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+    <span class="n">eval_dataset</span><span class="o">=</span><span class="n">val_dataset</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+    <div>
+
+      <progress value='1' max='1' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      [1/1 00:01, Epoch 0/1]
+    </div>
+    <table border="1" class="dataframe">
+  <thead>
+ <tr style="text-align: left;">
+      <th>Step</th>
+      <th>Training Loss</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table><p></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+TrainOutput(global_step=1, training_loss=10.859561920166016, metrics={&#39;train_runtime&#39;: 0.5342, &#39;train_samples_per_second&#39;: 14.976, &#39;train_steps_per_second&#39;: 1.872, &#39;total_flos&#39;: 87482695680.0, &#39;train_loss&#39;: 10.859561920166016, &#39;epoch&#39;: 0.003389830508474576})
+</pre></div></div>
+</div>
+<p>Hugging Face requires the <code class="docutils literal notranslate"><span class="pre">torch</span></code> launcher to be used for multi-GPU training. For instance, to train the model with 4 GPUs, you can execute the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>torchrun<span class="w"> </span>--nproc-per-node<span class="o">=</span><span class="m">4</span><span class="w"> </span>train.py
+</pre></div>
+</div>
+<p>Make sure to replace <code class="docutils literal notranslate"><span class="pre">train.py</span></code> with the appropriate Python script containing your training code.</p>
+</section>
+<section id="PyTorch-Lightning">
+<h3>PyTorch Lightning<a class="headerlink" href="#PyTorch-Lightning" title="Link to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.trainers.pl.pl_trainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlTrainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.trainers.pl.pl_training_args</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlTrainingArguments</span><span class="p">,</span> <span class="n">PlTrainerArguments</span><span class="p">,</span> <span class="n">PlLightningModuleArguments</span>
+
+<span class="c1"># Re-initialize the model to avoid the training to continue from the previous run</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">GPT2LMHeadModel</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="n">training_args</span> <span class="o">=</span> <span class="n">PlTrainingArguments</span><span class="p">(</span><span class="s2">&quot;gpt2-wt103&quot;</span><span class="p">,</span> <span class="n">trainer</span><span class="o">=</span><span class="n">PlTrainerArguments</span><span class="p">(</span><span class="n">max_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">lightning_module</span><span class="o">=</span><span class="n">PlLightningModuleArguments</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;adamw&quot;</span><span class="p">}))</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">PlTrainer</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+    <span class="n">eval_dataset</span><span class="o">=</span><span class="n">val_dataset</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+INFO: [rank: 0] Seed set to 42
+INFO:lightning.fabric.utilities.seed:[rank: 0] Seed set to 42
+INFO: Trainer will use only 1 of 4 GPUs because it is running inside an interactive / notebook environment. You may try to set `Trainer(devices=4)` but please note that multi-GPU inside interactive / notebook environments is considered experimental and unstable. Your mileage may vary.
+INFO:lightning.pytorch.utilities.rank_zero:Trainer will use only 1 of 4 GPUs because it is running inside an interactive / notebook environment. You may try to set `Trainer(devices=4)` but please note that multi-GPU inside interactive / notebook environments is considered experimental and unstable. Your mileage may vary.
+INFO: GPU available: True (cuda), used: True
+INFO:lightning.pytorch.utilities.rank_zero:GPU available: True (cuda), used: True
+INFO: TPU available: False, using: 0 TPU cores
+INFO:lightning.pytorch.utilities.rank_zero:TPU available: False, using: 0 TPU cores
+INFO: HPU available: False, using: 0 HPUs
+INFO:lightning.pytorch.utilities.rank_zero:HPU available: False, using: 0 HPUs
+INFO: `Trainer(limit_train_batches=1.0)` was configured so 100% of the batches per epoch will be used..
+INFO:lightning.pytorch.utilities.rank_zero:`Trainer(limit_train_batches=1.0)` was configured so 100% of the batches per epoch will be used..
+INFO: `Trainer(limit_val_batches=1.0)` was configured so 100% of the batches will be used..
+INFO:lightning.pytorch.utilities.rank_zero:`Trainer(limit_val_batches=1.0)` was configured so 100% of the batches will be used..
+INFO: `Trainer(limit_test_batches=1.0)` was configured so 100% of the batches will be used..
+INFO:lightning.pytorch.utilities.rank_zero:`Trainer(limit_test_batches=1.0)` was configured so 100% of the batches will be used..
+INFO: `Trainer(limit_predict_batches=1.0)` was configured so 100% of the batches will be used..
+INFO:lightning.pytorch.utilities.rank_zero:`Trainer(limit_predict_batches=1.0)` was configured so 100% of the batches will be used..
+/home/gderosa/miniconda3/envs/phyagisdk/lib/python3.10/site-packages/lightning/fabric/loggers/csv_logs.py:268: Experiment logs directory /home/gderosa/phyagi-sdk/docs/tutorials/gpt2-wt103/ exists and is not empty. Previous log files in this directory will be deleted when the new ones are saved!
+/home/gderosa/miniconda3/envs/phyagisdk/lib/python3.10/site-packages/lightning/pytorch/callbacks/model_checkpoint.py:654: Checkpoint directory /home/gderosa/phyagi-sdk/docs/tutorials/gpt2-wt103 exists and is not empty.
+INFO: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+INFO:lightning.pytorch.accelerators.cuda:LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+INFO:
+  | Name  | Type            | Params | Mode
+--------------------------------------------------
+0 | model | GPT2LMHeadModel | 11.6 M | train
+--------------------------------------------------
+11.6 M    Trainable params
+0         Non-trainable params
+11.6 M    Total params
+46.503    Total estimated model params size (MB)
+60        Modules in train mode
+0         Modules in eval mode
+INFO:lightning.pytorch.callbacks.model_summary:
+  | Name  | Type            | Params | Mode
+--------------------------------------------------
+0 | model | GPT2LMHeadModel | 11.6 M | train
+--------------------------------------------------
+11.6 M    Trainable params
+0         Non-trainable params
+11.6 M    Total params
+46.503    Total estimated model params size (MB)
+60        Modules in train mode
+0         Modules in eval mode
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "e9f80586477d40e6bbe211294af43e24", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/gderosa/miniconda3/envs/phyagisdk/lib/python3.10/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:476: Your `val_dataloader`&#39;s sampler has shuffling enabled, it is strongly recommended that you turn shuffling off for val/test dataloaders.
+/home/gderosa/miniconda3/envs/phyagisdk/lib/python3.10/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:425: The &#39;val_dataloader&#39; does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=127` in the `DataLoader` to improve performance.
+/home/gderosa/miniconda3/envs/phyagisdk/lib/python3.10/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:425: The &#39;train_dataloader&#39; does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=127` in the `DataLoader` to improve performance.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "e649e61780404338a5d8574464674d28", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+INFO: `Trainer.fit` stopped: `max_steps=1` reached.
+INFO:lightning.pytorch.utilities.rank_zero:`Trainer.fit` stopped: `max_steps=1` reached.
+</pre></div></div>
+</div>
+<p>PyTorch Lightnign does not require any launcher to be used for multi-GPU training. For instance, to train the model with 4 GPUs, you can execute the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>train.py
+</pre></div>
+</div>
+<p>Make sure to replace <code class="docutils literal notranslate"><span class="pre">train.py</span></code> with the appropriate Python script containing your training code.</p>
+</section>
+</section>
+</section>
+<section id="Customizing-the-training">
+<h1>Customizing the training<a class="headerlink" href="#Customizing-the-training" title="Link to this heading">#</a></h1>
+<p>PhyAGI is designed to be flexible and customizable, and training-related components are no exception. It also provides a <code class="docutils literal notranslate"><span class="pre">DsTrainer</span></code> class designed to be used with <a class="reference external" href="https://www.deepspeed.ai/">DeepSpeed</a>. In this tutorial, we will show you how to customize the training process with the <code class="docutils literal notranslate"><span class="pre">DsTrainer</span></code> class.</p>
+<p>Please note that the approach depicted below is extensible to any trainer in PhyAGI, such as <code class="docutils literal notranslate"><span class="pre">HfTrainer</span></code> and <code class="docutils literal notranslate"><span class="pre">DDLTrainer</span></code>.</p>
+<section id="Overriding-the-DeepSpeed-trainer">
+<h2>Overriding the DeepSpeed trainer<a class="headerlink" href="#Overriding-the-DeepSpeed-trainer" title="Link to this heading">#</a></h2>
+<p>As mentioned before, this tutorial will guide you in overriding the <code class="docutils literal notranslate"><span class="pre">DsTrainer</span></code> class. PhyAGI attempts to keep a unified structure between its trainers, following the style provided by the Hugging Face API. This means that the <code class="docutils literal notranslate"><span class="pre">DsTrainer</span></code> class has methods, such as <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>, <code class="docutils literal notranslate"><span class="pre">load_checkpoint</span></code>, <code class="docutils literal notranslate"><span class="pre">train_step</span></code> and <code class="docutils literal notranslate"><span class="pre">evaluate_step</span></code>.</p>
+<p>In this example, we will override the <code class="docutils literal notranslate"><span class="pre">train_step</span></code> function of the trainer and create a customized training loop. The <code class="docutils literal notranslate"><span class="pre">train_step</span></code> function is called by the <code class="docutils literal notranslate"><span class="pre">train</span></code> function, which is the main training loop of the trainer. The <code class="docutils literal notranslate"><span class="pre">train_step</span></code> function is called once per batch, and it is responsible for performing the forward and backward passes of the model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.optim.lr_scheduler</span><span class="w"> </span><span class="kn">import</span> <span class="n">LRScheduler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.optim.optimizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optimizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">Sampler</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.trainers.ds.ds_trainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">DsTrainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.trainers.ds.ds_trainer_callback</span><span class="w"> </span><span class="kn">import</span> <span class="n">DsTrainerCallback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.trainers.ds.ds_training_args</span><span class="w"> </span><span class="kn">import</span> <span class="n">DsTrainingArguments</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyDsTrainer</span><span class="p">(</span><span class="n">DsTrainer</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+        <span class="n">args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DsTrainingArguments</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data_collator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sampler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sampler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">train_dataset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dataset</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">eval_dataset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dataset</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">model_parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mpu</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dist_init_required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dist_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1800</span><span class="p">,</span>
+        <span class="n">callbacks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">DsTrainerCallback</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">optimizers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Optimizer</span><span class="p">,</span> <span class="n">LRScheduler</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">model</span><span class="p">,</span>
+            <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
+            <span class="n">data_collator</span><span class="o">=</span><span class="n">data_collator</span><span class="p">,</span>
+            <span class="n">sampler</span><span class="o">=</span><span class="n">sampler</span><span class="p">,</span>
+            <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+            <span class="n">eval_dataset</span><span class="o">=</span><span class="n">eval_dataset</span><span class="p">,</span>
+            <span class="n">model_parameters</span><span class="o">=</span><span class="n">model_parameters</span><span class="p">,</span>
+            <span class="n">mpu</span><span class="o">=</span><span class="n">mpu</span><span class="p">,</span>
+            <span class="n">dist_init_required</span><span class="o">=</span><span class="n">dist_init_required</span><span class="p">,</span>
+            <span class="n">dist_timeout</span><span class="o">=</span><span class="n">dist_timeout</span><span class="p">,</span>
+            <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span>
+            <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">train_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_iterator</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">gradient_accumulation_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">gradient_accumulation_steps</span><span class="p">()</span>
+        <span class="n">total_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gradient_accumulation_steps</span><span class="p">):</span>
+            <span class="n">input_ids</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_iterator</span><span class="p">)</span>
+
+            <span class="n">input_ids</span> <span class="o">=</span> <span class="n">input_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+            <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">(</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+            <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span>
+
+        <span class="k">return</span> <span class="n">total_loss</span> <span class="o">/</span> <span class="n">gradient_accumulation_steps</span>
+</pre></div>
+</div>
+</div>
+<p>The usage of the trainer follows the same procedure depicted by the training model section. The only difference is that we will use the <code class="docutils literal notranslate"><span class="pre">MyDsTrainer</span></code> class instead of the <code class="docutils literal notranslate"><span class="pre">DsTrainer</span></code> class. As mentioned before, every method from the <code class="docutils literal notranslate"><span class="pre">DsTrainer</span></code> class can be overriden and customized according to your needs. This is only a simple example that illustrates how to override the <code class="docutils literal notranslate"><span class="pre">train_step</span></code> function.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="model_architecture.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Model architecture</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sft.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Supervised Fine-Tuning (SFT)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Sections
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Training</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Tokenizing-and-loading-the-data">Tokenizing and loading the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Creating-the-model">Creating the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Training-the-model">Training the model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#DeepSpeed">DeepSpeed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Hugging-Face">Hugging Face</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#PyTorch-Lightning">PyTorch Lightning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Customizing-the-training">Customizing the training</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Overriding-the-DeepSpeed-trainer">Overriding the DeepSpeed trainer</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1089 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>phyagi.rl.tuners.grpo.grpo_tuner &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/phyagi/rl/tuners/grpo/grpo_tuner';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/_modules/phyagi/rl/tuners/grpo/grpo_tuner.html" />
+    <link rel="icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../../../../../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2F_modules/phyagi/rl/tuners/grpo/grpo_tuner.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for phyagi.rl.tuners.grpo.grpo_tuner</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) Microsoft Corporation.</span>
+<span class="c1"># Licensed under the MIT license.</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">ray</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">Dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreTrainedTokenizerBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">vllm</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompletionOutput</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.rl.formatting_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">patch_tokenizer_generation_tag</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.rl.packing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PackedBatch</span><span class="p">,</span> <span class="n">distribute_and_pack_sequences</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.distributed_layout</span><span class="w"> </span><span class="kn">import</span> <span class="n">DistributedLayout</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.ray_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_ray_logger</span><span class="p">,</span> <span class="n">ray_wandb_graceful_shutdown</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.rewards.reward</span><span class="w"> </span><span class="kn">import</span> <span class="n">Reward</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.rewards.reward_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">RewardManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.tuners.grpo.grpo_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">RayGRPOConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.tuners.grpo.grpo_worker</span><span class="w"> </span><span class="kn">import</span> <span class="n">RayGRPOWorker</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.trainers.trainer_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">RepeatingLoader</span><span class="p">,</span> <span class="n">StatefulDistributedSampler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.checkpoint</span><span class="w"> </span><span class="kn">import</span> <span class="n">CheckpointManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">is_checkpoint_available</span><span class="p">,</span>
+    <span class="n">load_json_file</span><span class="p">,</span>
+    <span class="n">save_json_file</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.logging_table</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalTableLogger</span><span class="p">,</span> <span class="n">TableLogger</span><span class="p">,</span> <span class="n">WandbTableLogger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.timer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Timer</span>
+
+
+<div class="viewcode-block" id="RayGRPOTuner">
+<a class="viewcode-back" href="../../../../../api/rl.html#phyagi.rl.tuners.grpo.grpo_tuner.RayGRPOTuner">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RayGRPOTuner</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ray GRPO tuner.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RayGRPOTuner.__init__">
+<a class="viewcode-back" href="../../../../../api/rl.html#phyagi.rl.tuners.grpo.grpo_tuner.RayGRPOTuner.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RayGRPOConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PreTrainedTokenizerBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data_collator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">train_dataset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dataset</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">eval_dataset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dataset</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">rewards</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Reward</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the tuner.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            args: GRPO tuning arguments.</span>
+<span class="sd">            tokenizer: Tokenizer used for encoding the dataset.</span>
+<span class="sd">            data_collator: Collate function used for creating a batch from ``train_dataset`` and ``eval_dataset``.</span>
+<span class="sd">            train_dataset: Dataset used for training.</span>
+<span class="sd">                If set to ``None``, :meth:`train` will not be available.</span>
+<span class="sd">            eval_dataset: Dataset used for evaluation.</span>
+<span class="sd">                If set to ``None``, will not perform evaluation.</span>
+<span class="sd">            rewards: Dictionary of reward functions.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ray</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">():</span>
+            <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">patch_tokenizer_generation_tag</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">)</span> <span class="k">if</span> <span class="n">tokenizer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_collator</span> <span class="o">=</span> <span class="n">data_collator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">train_dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_dataset</span> <span class="o">=</span> <span class="n">eval_dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rewards</span> <span class="o">=</span> <span class="n">RewardManager</span><span class="p">(</span><span class="n">rewards</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">reward_num_workers</span><span class="p">)</span>
+
+        <span class="n">wandb_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">wandb</span>
+        <span class="n">wandb_kwargs</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tuning_args&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">json_serialize</span><span class="o">=</span><span class="kc">True</span><span class="p">)}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_ray_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="o">**</span><span class="n">wandb_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table_logger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_completions_table</span><span class="p">(</span><span class="s2">&quot;eval_completions&quot;</span><span class="p">,</span> <span class="n">wandb</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">wandb</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_manager</span> <span class="o">=</span> <span class="n">CheckpointManager</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">checkpoint_mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dist_layout</span> <span class="o">=</span> <span class="n">DistributedLayout</span><span class="p">(</span>
+            <span class="n">n_nodes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">n_nodes</span><span class="p">,</span>
+            <span class="n">n_gpus_per_node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">n_gpus_per_node</span><span class="p">,</span>
+            <span class="n">actor_cp_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">context_parallel_size</span><span class="p">,</span>
+            <span class="n">actor_tp_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">tensor_parallel_size</span><span class="p">,</span>
+            <span class="n">rollout_tp_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">rollout</span><span class="o">.</span><span class="n">tensor_parallel_size</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">workers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">epochs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">training_steps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">train_batch_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">epochs</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">max_steps</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">epochs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;Both `epochs` and `max_steps` have been set. `max_steps` will be used for training.&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">training_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">max_steps</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_steps</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_steps</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">save_steps</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">save_steps</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">save_steps</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_steps</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_steps</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">eval_steps</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">eval_steps</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">eval_steps</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">train_batch_size</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_layout</span><span class="o">.</span><span class="n">world_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;`train_batch_size` must be divisible by `world_size`, but got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">train_batch_size</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot; and </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_layout</span><span class="o">.</span><span class="n">world_size</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tuning arguments: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">json_serialize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_completions_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wandb</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TableLogger</span><span class="p">:</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;step&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;question_idx&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;repetition&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;data_source&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;prompt&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ground_truth&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;completion&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;total_reward&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">wandb</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WandbTableLogger</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">columns</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">LocalTableLogger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">/</span> <span class="n">name</span><span class="p">,</span> <span class="n">columns</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_eval_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_dataset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">do_first_eval</span> <span class="o">=</span> <span class="p">(</span><span class="n">step</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">eval_before_training</span>
+        <span class="n">do_periodic_eval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_steps</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">step</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_steps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="n">do_final_eval</span> <span class="o">=</span> <span class="p">(</span><span class="n">step</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_steps</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">do_final_eval</span>
+
+        <span class="k">return</span> <span class="n">do_first_eval</span> <span class="ow">or</span> <span class="n">do_periodic_eval</span> <span class="ow">or</span> <span class="n">do_final_eval</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_checkpoint_save_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">resume_step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="c1"># We never save the first step after we just resumed from a checkpoint</span>
+        <span class="k">if</span> <span class="n">resume_step</span> <span class="ow">and</span> <span class="p">(</span><span class="n">step</span> <span class="o">==</span> <span class="n">resume_step</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">do_periodic_save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_steps</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">step</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_steps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="n">do_final_save</span> <span class="o">=</span> <span class="p">(</span><span class="n">step</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_steps</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">save_final_checkpoint</span>
+
+        <span class="k">return</span> <span class="n">do_periodic_save</span> <span class="ow">or</span> <span class="n">do_final_save</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_init_workers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">worker_cls</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">num_gpus</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)(</span><span class="n">RayGRPOWorker</span><span class="p">)</span>
+        <span class="n">worker_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span>
+            <span class="n">checkpoint_manager</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_manager</span><span class="p">,</span>
+            <span class="n">distributed_layout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_layout</span><span class="p">,</span>
+            <span class="n">tokenizer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">,</span>
+            <span class="n">total_training_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">training_steps</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">workers</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">worker_cls</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">runtime_env</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;env_vars&quot;</span><span class="p">:</span> <span class="n">worker_env</span><span class="p">})</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="o">**</span><span class="n">worker_kwargs</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">worker_env</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_layout</span><span class="o">.</span><span class="n">get_ray_worker_envs</span><span class="p">()</span>
+        <span class="p">]</span>
+
+        <span class="n">build_reference_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">kl_coeff</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="n">worker</span><span class="o">.</span><span class="n">configure_models</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">build_reference_model</span><span class="p">)</span> <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="p">])</span>
+
+<div class="viewcode-block" id="RayGRPOTuner.get_train_dataloader">
+<a class="viewcode-back" href="../../../../../api/rl.html#phyagi.rl.tuners.grpo.grpo_tuner.RayGRPOTuner.get_train_dataloader">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total_consumed_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataLoader</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the training dataloader.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            total_consumed_samples: Total number of samples consumed so far.</span>
+<span class="sd">            shuffle: Whether to shuffle the dataset.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Training dataloader.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Since `RayGRPOTuner` runs on a single process, we manually set the rank to 0</span>
+        <span class="n">sampler</span> <span class="o">=</span> <span class="n">StatefulDistributedSampler</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_dataset</span><span class="p">,</span>
+            <span class="n">num_replicas</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">rank</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">total_consumed_samples</span><span class="o">=</span><span class="n">total_consumed_samples</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_dataset</span><span class="p">,</span>
+            <span class="n">sampler</span><span class="o">=</span><span class="n">sampler</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">,</span>
+            <span class="n">num_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">dataloader_num_workers</span><span class="p">,</span>
+            <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">collate_fn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_collator</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RayGRPOTuner.generate_completions">
+<a class="viewcode-back" href="../../../../../api/rl.html#phyagi.rl.tuners.grpo.grpo_tuner.RayGRPOTuner.generate_completions">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_completions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">prompt_input_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">num_repetitions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">sync_weights</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">generation_kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">CompletionOutput</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate completions for the given prompts.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            prompt_input_ids: Input prompts to generate completions for.</span>
+<span class="sd">            num_repetitions: Number of repetitions for each prompt.</span>
+<span class="sd">            sync_weights: Whether to synchronize weights with the rollout model.</span>
+<span class="sd">            batch_size: Batch size for generation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of lists of completion outputs, where each inner list corresponds to a prompt and contains</span>
+<span class="sd">            the generated completions.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Distribute and possibly repeat data for worker TP groups</span>
+        <span class="n">worker_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_layout</span><span class="o">.</span><span class="n">distribute_data</span><span class="p">(</span><span class="n">prompt_input_ids</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;rollout&quot;</span><span class="p">)</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">worker</span><span class="o">.</span><span class="n">generate_completions</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span>
+                    <span class="n">worker_input</span><span class="p">,</span>
+                    <span class="n">num_repetitions</span><span class="o">=</span><span class="n">num_repetitions</span><span class="p">,</span>
+                    <span class="n">sync_weights</span><span class="o">=</span><span class="n">sync_weights</span><span class="p">,</span>
+                    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">generation_kwargs</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">worker</span><span class="p">,</span> <span class="n">worker_input</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="p">,</span> <span class="n">worker_inputs</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">worker_input</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">request_output</span><span class="o">.</span><span class="n">outputs</span> <span class="k">for</span> <span class="n">request_output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_layout</span><span class="o">.</span><span class="n">gather_data</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;rollout&quot;</span><span class="p">)]</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_reward_metrics</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">completions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">CompletionOutput</span><span class="p">]],</span>
+        <span class="n">calculated_rewards</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+        <span class="n">data_sources</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">prefix</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">data_sources</span> <span class="o">=</span> <span class="n">data_sources</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">completions</span><span class="p">)</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="n">repetition</span><span class="p">[</span><span class="s2">&quot;total_reward&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">repetition</span> <span class="ow">in</span> <span class="n">question_completions</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">question_completions</span> <span class="ow">in</span> <span class="n">calculated_rewards</span>
+            <span class="p">],</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Assumes a 0.5 threshold for correctness</span>
+        <span class="n">correct_questions</span> <span class="o">=</span> <span class="n">scores</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
+        <span class="n">generation_lengths</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">gen_output</span><span class="o">.</span><span class="n">token_ids</span><span class="p">)</span> <span class="k">for</span> <span class="n">gen_output</span> <span class="ow">in</span> <span class="n">question_completions</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">question_completions</span> <span class="ow">in</span> <span class="n">completions</span>
+            <span class="p">],</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Calculates statistics for each data source</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dedup_data_sources</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">data_sources</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">data_source</span> <span class="ow">in</span> <span class="n">dedup_data_sources</span><span class="p">:</span>
+            <span class="n">s_mask</span> <span class="o">=</span> <span class="p">[</span><span class="n">ds</span> <span class="o">==</span> <span class="n">data_source</span> <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">data_sources</span><span class="p">]</span>
+            <span class="n">s_prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_reward/</span><span class="si">{</span><span class="n">data_source</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">data_source</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">s_scores</span><span class="p">,</span> <span class="n">s_lengths</span><span class="p">,</span> <span class="n">s_correct</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">array</span><span class="p">[</span><span class="n">s_mask</span><span class="p">]</span> <span class="k">for</span> <span class="n">array</span> <span class="ow">in</span> <span class="p">[</span><span class="n">scores</span><span class="p">,</span> <span class="n">generation_lengths</span><span class="p">,</span> <span class="n">correct_questions</span><span class="p">]</span>
+            <span class="p">]</span>
+
+            <span class="n">metrics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s_prefix</span><span class="si">}</span><span class="s2">mean&quot;</span><span class="p">:</span> <span class="n">s_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s_prefix</span><span class="si">}</span><span class="s2">best_of_group&quot;</span><span class="p">:</span> <span class="n">s_scores</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s_prefix</span><span class="si">}</span><span class="s2">accuracy&quot;</span><span class="p">:</span> <span class="n">s_correct</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s_prefix</span><span class="si">}</span><span class="s2">avg_response_length&quot;</span><span class="p">:</span> <span class="n">s_lengths</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s_prefix</span><span class="si">}</span><span class="s2">avg_correct_response_length&quot;</span><span class="p">:</span> <span class="n">s_lengths</span><span class="p">[</span><span class="n">s_correct</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s_prefix</span><span class="si">}</span><span class="s2">avg_incorrect_response_length&quot;</span><span class="p">:</span> <span class="n">s_lengths</span><span class="p">[</span><span class="o">~</span><span class="n">s_correct</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">metrics</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_calculate_advantages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calculated_rewards</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+        <span class="n">total_rewards</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="n">repetition</span><span class="p">[</span><span class="s2">&quot;total_reward&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">repetition</span> <span class="ow">in</span> <span class="n">question_completions</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">question_completions</span> <span class="ow">in</span> <span class="n">calculated_rewards</span>
+            <span class="p">],</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">advantages</span> <span class="o">=</span> <span class="n">total_rewards</span> <span class="o">-</span> <span class="n">total_rewards</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">normalize_advantage_std</span><span class="p">:</span>
+            <span class="n">advantages</span> <span class="o">=</span> <span class="n">advantages</span> <span class="o">/</span> <span class="p">(</span><span class="n">total_rewards</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-4</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">advantages</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_pack_completions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">prompt_input_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">completions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">CompletionOutput</span><span class="p">]],</span>
+        <span class="n">advantages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">PackedBatch</span><span class="p">]]:</span>
+        <span class="n">interaction_tokens</span><span class="p">,</span> <span class="n">interaction_masks</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">prompt_tokens</span><span class="p">,</span> <span class="n">gen_outputs</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">prompt_input_ids</span><span class="p">,</span> <span class="n">completions</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">gen_outputs</span><span class="p">:</span>
+                <span class="n">interaction_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">prompt_tokens</span><span class="p">)</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">token_ids</span><span class="p">))</span>
+                <span class="n">interaction_masks</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">prompt_tokens</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">token_ids</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">distribute_and_pack_sequences</span><span class="p">(</span>
+            <span class="n">interaction_tokens</span><span class="p">,</span>
+            <span class="n">interaction_masks</span><span class="p">,</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">advantages</span><span class="p">)),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">rollout</span><span class="o">.</span><span class="n">prompt_length</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">rollout</span><span class="o">.</span><span class="n">response_length</span><span class="p">,</span>
+            <span class="n">dp_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_layout</span><span class="o">.</span><span class="n">actor_dp_size</span><span class="p">,</span>
+            <span class="n">cp_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_layout</span><span class="o">.</span><span class="n">actor_cp_size</span><span class="p">,</span>
+            <span class="n">tp_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_layout</span><span class="o">.</span><span class="n">actor_tp_size</span><span class="p">,</span>
+            <span class="n">pad_token_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">pad_token_id</span><span class="p">,</span>
+            <span class="n">micro_batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">train_max_micro_batch_size_per_gpu</span><span class="p">,</span>
+            <span class="n">pad_to_largest_micro_batch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_actor_policy</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">packed_batches</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">PackedBatch</span><span class="p">]],</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]]:</span>
+        <span class="n">futures</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">worker</span><span class="o">.</span><span class="n">update_actor_policy</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">packed_batches</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">worker</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">futures</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">k</span><span class="p">:</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">sum</span><span class="p">([</span><span class="n">m</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="RayGRPOTuner.save_checkpoint">
+<a class="viewcode-back" href="../../../../../api/rl.html#phyagi.rl.tuners.grpo.grpo_tuner.RayGRPOTuner.save_checkpoint">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">overwrite_reference_model</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save the current state of the tuner.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            output_dir: Directory to save the checkpoint.</span>
+<span class="sd">            overwrite_reference_model: Whether to overwrite the reference model if it already exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Save the current step as the latest</span>
+        <span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+        <span class="nb">open</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;latest&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_step</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">kl_coeff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">reference_dir</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;reference&quot;</span>
+            <span class="k">if</span> <span class="n">overwrite_reference_model</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">reference_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="n">reference_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="n">worker</span><span class="o">.</span><span class="n">save_reference_model</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">reference_dir</span><span class="p">)</span> <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="p">])</span>
+
+        <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_step</span><span class="p">)</span>
+        <span class="n">actor_dir</span> <span class="o">=</span> <span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;actor&quot;</span>
+
+        <span class="n">actor_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="n">worker</span><span class="o">.</span><span class="n">save_actor_model</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">actor_dir</span><span class="p">)</span> <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="p">])</span>
+
+        <span class="c1"># `total_consumed_samples` is `batch_size * (step - 1)` because we are saving the checkpoint before</span>
+        <span class="c1"># actually training on the samples from the current step</span>
+        <span class="n">trainer_state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;global_step&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span><span class="p">,</span>
+            <span class="s2">&quot;total_consumed_samples&quot;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">,</span>
+            <span class="s2">&quot;dataloader_shuffle&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">dataloader_shuffle</span><span class="p">,</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">save_json_file</span><span class="p">(</span><span class="n">trainer_state</span><span class="p">,</span> <span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;trainer_state.json&quot;</span><span class="p">)</span>
+        <span class="n">save_json_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">json_serialize</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;config.json&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RayGRPOTuner.load_checkpoint">
+<a class="viewcode-back" href="../../../../../api/rl.html#phyagi.rl.tuners.grpo.grpo_tuner.RayGRPOTuner.load_checkpoint">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_checkpoint</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">load_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">tag</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">load_optimizer_states</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">load_scheduler_states</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load a checkpoint from the specified directory.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            load_dir: Directory to load the checkpoint from.</span>
+<span class="sd">            tag: Tag of the checkpoint to load.</span>
+<span class="sd">                If set to ``None``, it will load the latest checkpoint available in the directory.</span>
+<span class="sd">            load_optimizer_states: Whether to load optimizer states from the checkpoint.</span>
+<span class="sd">            load_scheduler_states: Whether to load learning rate scheduler states from the checkpoint.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Trainer state dictionary containing the global step, total consumed samples,</span>
+<span class="sd">            dataloader shuffle state, and seed used for training.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">load_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">load_dir</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">load_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">load_dir</span><span class="si">}</span><span class="s2">&#39; is not a valid path.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">load_dir</span> <span class="o">/</span> <span class="s2">&quot;latest&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`tag` has not been provided and no &#39;latest&#39; file found in &#39;</span><span class="si">{</span><span class="n">load_dir</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">load_dir</span> <span class="o">/</span> <span class="s2">&quot;latest&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+        <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">load_dir</span> <span class="o">/</span> <span class="nb">str</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">checkpoint_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">checkpoint_dir</span><span class="si">}</span><span class="s2">&#39; is not a valid path.&quot;</span><span class="p">)</span>
+        <span class="n">trainer_state</span> <span class="o">=</span> <span class="n">load_json_file</span><span class="p">(</span><span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;trainer_state.json&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Load reference model</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">kl_coeff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">load_dir</span> <span class="o">/</span> <span class="s2">&quot;reference&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">load_dir</span><span class="si">}</span><span class="s2">&#39; does not contain a reference model.&quot;</span><span class="p">)</span>
+            <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="n">worker</span><span class="o">.</span><span class="n">load_reference_model</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">load_dir</span> <span class="o">/</span> <span class="s2">&quot;reference&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="p">])</span>
+
+        <span class="c1"># Load actor model checkpoint and, possibly, optimizer states</span>
+        <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">worker</span><span class="o">.</span><span class="n">load_actor_model</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;actor&quot;</span><span class="p">,</span> <span class="n">load_optimizer_states</span><span class="p">,</span> <span class="n">load_scheduler_states</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">workers</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">trainer_state</span></div>
+
+
+<div class="viewcode-block" id="RayGRPOTuner.evaluate">
+<a class="viewcode-back" href="../../../../../api/rl.html#phyagi.rl.tuners.grpo.grpo_tuner.RayGRPOTuner.evaluate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the model on the evaluation dataset.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Evaluation metrics containing the rewards and other statistics.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">n_eval_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_dataset</span><span class="p">)</span>
+        <span class="n">eval_samples</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_dataset</span><span class="p">)</span>
+
+        <span class="c1"># Shuffle dataset to better distribute data sources across workers</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">eval_samples</span><span class="p">)</span>
+
+        <span class="n">raw_prompts</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;raw_prompt&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">eval_samples</span><span class="p">]</span>
+        <span class="n">ground_truth</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">eval_samples</span><span class="p">]</span>
+        <span class="n">prompt_input_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;prompt_input_ids&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">eval_samples</span><span class="p">]</span>
+
+        <span class="n">data_sources</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="s2">&quot;dataset_name&quot;</span> <span class="ow">in</span> <span class="n">eval_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">data_sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;dataset_name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">eval_samples</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating evaluation completions...&quot;</span><span class="p">)</span>
+        <span class="n">eval_completions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_completions</span><span class="p">(</span>
+            <span class="n">prompt_input_ids</span><span class="p">,</span>
+            <span class="n">num_repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">eval_group_size</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">group_size</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">eval_batch_size</span><span class="p">,</span>
+            <span class="n">sync_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">detokenize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">use_tqdm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">rollout</span><span class="o">.</span><span class="n">eval_sampling_params</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Completions generated.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Calculating evaluation rewards...&quot;</span><span class="p">)</span>
+        <span class="n">eval_rewards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rewards</span><span class="o">.</span><span class="n">score</span><span class="p">(</span>
+            <span class="n">eval_completions</span><span class="p">,</span>
+            <span class="n">ground_truth</span><span class="p">,</span>
+            <span class="n">reward_names</span><span class="o">=</span><span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_collator</span><span class="p">,</span> <span class="s2">&quot;reward_names&quot;</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_eval_samples</span><span class="p">,</span>
+            <span class="n">reward_weights</span><span class="o">=</span><span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_collator</span><span class="p">,</span> <span class="s2">&quot;reward_weights&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)]</span> <span class="o">*</span> <span class="n">n_eval_samples</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">eval_total_rewards</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="n">repetition</span><span class="p">[</span><span class="s2">&quot;total_reward&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">repetition</span> <span class="ow">in</span> <span class="n">question_completions</span><span class="p">]</span> <span class="k">for</span> <span class="n">question_completions</span> <span class="ow">in</span> <span class="n">eval_rewards</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Rewards calculated.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">table_logger</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">log_n_eval_completions</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Logging evaluation completions...&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table_logger</span><span class="o">.</span><span class="n">add_data</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="p">[</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span><span class="p">,</span>
+                        <span class="n">question_idx</span><span class="p">,</span>
+                        <span class="n">repetition_idx</span><span class="p">,</span>
+                        <span class="n">data_sources</span><span class="p">[</span><span class="n">question_idx</span><span class="p">]</span> <span class="k">if</span> <span class="n">data_sources</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">raw_prompts</span><span class="p">[</span><span class="n">question_idx</span><span class="p">],</span>
+                        <span class="n">ground_truth</span><span class="p">[</span><span class="n">question_idx</span><span class="p">],</span>
+                        <span class="n">completion</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                        <span class="n">eval_total_rewards</span><span class="p">[</span><span class="n">question_idx</span><span class="p">][</span><span class="n">repetition_idx</span><span class="p">],</span>
+                    <span class="p">]</span>
+                    <span class="k">for</span> <span class="n">question_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">log_n_eval_completions</span><span class="p">,</span> <span class="n">n_eval_samples</span><span class="p">))</span>
+                    <span class="k">for</span> <span class="n">repetition_idx</span><span class="p">,</span> <span class="n">completion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eval_completions</span><span class="p">[</span><span class="n">question_idx</span><span class="p">])</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Evaluation completions logged.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_reward_metrics</span><span class="p">(</span><span class="s2">&quot;validation&quot;</span><span class="p">,</span> <span class="n">eval_completions</span><span class="p">,</span> <span class="n">eval_rewards</span><span class="p">,</span> <span class="n">data_sources</span><span class="o">=</span><span class="n">data_sources</span><span class="p">)</span></div>
+
+
+    <span class="nd">@ray_wandb_graceful_shutdown</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">resume_from_checkpoint</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">checkpoint_tag</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">resume_optimizer_states</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">resume_lr_scheduler_states</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">resume_dataset_states</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Train a model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resume_from_checkpoint: Resume training from a specific checkpoint.</span>
+<span class="sd">                If set to ``None``, training will start from scratch.</span>
+<span class="sd">                If different than ``None``, training will resume from the checkpoint.</span>
+<span class="sd">            checkpoint_tag: Resume training from a specific tag/step.</span>
+<span class="sd">                If set to ``None``, it will resume from the latest checkpoint.</span>
+<span class="sd">                If different than ``None``, training will resume from that tag.</span>
+<span class="sd">            resume_optimizer_states: Whether to resume optimizer state from checkpoint.</span>
+<span class="sd">                Only works if ``resume_from_checkpoint`` is provided.</span>
+<span class="sd">            resume_lr_scheduler_states: Whether to resume learning rate scheduler state from checkpoint.</span>
+<span class="sd">                Only works if ``resume_from_checkpoint`` is provided.</span>
+<span class="sd">            resume_dataset_states: Whether to resume the dataset state from the checkpoint.</span>
+<span class="sd">                Only works if ``resume_from_checkpoint`` is provided.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting training...&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">total_consumed_samples</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_workers</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">resume_from_checkpoint</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_checkpoint_available</span><span class="p">(</span><span class="n">resume_from_checkpoint</span><span class="p">,</span> <span class="n">checkpoint_tag</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Either </span><span class="si">{</span><span class="n">checkpoint_tag</span><span class="si">}</span><span class="s2"> or &#39;latest&#39; checkpoint not found in &#39;</span><span class="si">{</span><span class="n">resume_from_checkpoint</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">checkpoint_tag</span><span class="si">}</span><span class="s2"> or &#39;latest&#39; checkpoint found in &#39;</span><span class="si">{</span><span class="n">resume_from_checkpoint</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+                <span class="n">checkpoint_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_checkpoint</span><span class="p">(</span>
+                    <span class="n">resume_from_checkpoint</span><span class="p">,</span>
+                    <span class="n">tag</span><span class="o">=</span><span class="n">checkpoint_tag</span><span class="p">,</span>
+                    <span class="n">load_optimizer_states</span><span class="o">=</span><span class="n">resume_optimizer_states</span><span class="p">,</span>
+                    <span class="n">load_scheduler_states</span><span class="o">=</span><span class="n">resume_lr_scheduler_states</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">resume_dataset_states</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">checkpoint_state</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Checkpoint and configuration `seed` must be equal, but got </span><span class="si">{</span><span class="n">checkpoint_state</span><span class="p">[</span><span class="s1">&#39;seed&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="si">}</span><span class="s2">.&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">checkpoint_state</span><span class="p">[</span><span class="s2">&quot;dataloader_shuffle&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">dataloader_shuffle</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Checkpoint and configuration `dataloader_shuffle` must be equal, but got </span><span class="si">{</span><span class="n">checkpoint_state</span><span class="p">[</span><span class="s1">&#39;dataloader_shuffle&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">dataloader_shuffle</span><span class="si">}</span><span class="s2">.&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="n">total_consumed_samples</span> <span class="o">=</span> <span class="n">checkpoint_state</span><span class="p">[</span><span class="s2">&quot;total_consumed_samples&quot;</span><span class="p">]</span>
+                    <span class="n">checkpoint_tag</span> <span class="o">=</span> <span class="n">checkpoint_state</span><span class="p">[</span><span class="s2">&quot;global_step&quot;</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span> <span class="o">=</span> <span class="n">checkpoint_state</span><span class="p">[</span><span class="s2">&quot;global_step&quot;</span><span class="p">]</span>
+
+        <span class="n">train_dataloader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_train_dataloader</span><span class="p">(</span>
+            <span class="n">total_consumed_samples</span><span class="o">=</span><span class="n">total_consumed_samples</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">dataloader_shuffle</span>
+        <span class="p">)</span>
+        <span class="n">train_iterator</span> <span class="o">=</span> <span class="n">RepeatingLoader</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">,</span> <span class="n">use_batch_tracker</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_step</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)):</span>
+            <span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">train_iterator</span><span class="p">)</span>
+
+            <span class="n">eval_reward_metrics</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_eval_step</span><span class="p">(</span><span class="n">step</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[step=</span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">] Evaluating model...&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">timer</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="s2">&quot;timing/evaluation&quot;</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Evaluating model...&quot;</span><span class="p">)</span>
+                    <span class="n">eval_reward_metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Evaluation done.&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_checkpoint_save_step</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">checkpoint_tag</span><span class="p">):</span>
+                <span class="k">with</span> <span class="n">timer</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="s2">&quot;timing/checkpoint&quot;</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Saving checkpoint...&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">save_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Checkpoint saved (or scheduled to be saved).&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Generating completions...&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">timer</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="s2">&quot;timing/generation&quot;</span><span class="p">):</span>
+                <span class="n">completions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_completions</span><span class="p">(</span>
+                    <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;prompt_input_ids&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">group_size</span><span class="p">,</span> <span class="n">sync_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">detokenize</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Completions generated.&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Calculating rewards...&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">timer</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="s2">&quot;timing/reward&quot;</span><span class="p">):</span>
+                <span class="n">rewards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rewards</span><span class="o">.</span><span class="n">score</span><span class="p">(</span>
+                    <span class="n">completions</span><span class="p">,</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">],</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;reward_names&quot;</span><span class="p">],</span> <span class="n">batch</span><span class="p">[</span><span class="s2">&quot;reward_weights&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+                <span class="n">train_reward_metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_reward_metrics</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">completions</span><span class="p">,</span> <span class="n">rewards</span><span class="p">)</span>
+                <span class="n">advantages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_advantages</span><span class="p">(</span><span class="n">rewards</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Rewards calculated.&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Packing completions, masks and advantages...&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">timer</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="s2">&quot;timing/packing&quot;</span><span class="p">):</span>
+                <span class="n">packed_batches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pack_completions</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;prompt_input_ids&quot;</span><span class="p">],</span> <span class="n">completions</span><span class="p">,</span> <span class="n">advantages</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Packing done.&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updating actor model...&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">timer</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="s2">&quot;timing/actor_update&quot;</span><span class="p">):</span>
+                <span class="n">actor_metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_actor_policy</span><span class="p">(</span>
+                    <span class="n">packed_batches</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">rollout</span><span class="o">.</span><span class="n">sampling_params</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Actor model updated.&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;train/step&quot;</span><span class="p">:</span> <span class="n">step</span><span class="p">,</span>
+                    <span class="s2">&quot;train/epoch&quot;</span><span class="p">:</span> <span class="n">step</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">actor_metrics</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">train_reward_metrics</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">eval_reward_metrics</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">timer</span><span class="o">.</span><span class="n">metrics</span><span class="p">(</span><span class="n">total_key</span><span class="o">=</span><span class="s2">&quot;timing/grpo_step&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Training done.&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

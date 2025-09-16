@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Parameter-Efficient Techniques (PEFT) &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'advanced_tutorials/parameter_efficient';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/advanced_tutorials/parameter_efficient.html" />
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Batch tracking" href="batch_tracking.html" />
+    <link rel="prev" title="Optimizers" href="optimizers.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimizers.html">Optimizers</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2Fadvanced_tutorials/parameter_efficient.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Parameter-Efficient Techniques (PEFT)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Parameter-Efficient-Techniques-(PEFT)">
+<h1>Parameter-Efficient Techniques (PEFT)<a class="headerlink" href="#Parameter-Efficient-Techniques-(PEFT)" title="Link to this heading">#</a></h1>
+<p>PEFT lets you adapt a large model to a new task by training only a small set of <em>adapter</em> parameters instead of the full model. You save GPU memory, disk space, and—most importantly—time, while often matching the performance of full fine‑tuning.</p>
+<ul class="simple">
+<li><p><strong>Cost‑effective:</strong> only a few million parameters are updated instead of billions.</p></li>
+<li><p><strong>Faster iteration:</strong> shorter training cycles enable rapid experimentation.</p></li>
+<li><p><strong>Modularity:</strong> you can keep one base checkpoint and swap in adapters for different tasks or domains.</p></li>
+<li><p><strong>Easy deployment:</strong> the frozen base model stays intact; share or combine lightweight adapters as needed.</p></li>
+</ul>
+<p>In this notebook you will learn how to:</p>
+<ol class="arabic simple">
+<li><p>Load a pre‑trained model.</p></li>
+<li><p>Attach a <a class="reference external" href="https://arxiv.org/abs/2106.09685">LoRA</a> adapter.</p></li>
+<li><p>Train the adapter on your dataset.</p></li>
+<li><p>Save and reuse the adapter without touching the base weights.</p></li>
+</ol>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">peft</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_peft_model</span><span class="p">,</span> <span class="n">LoraConfig</span><span class="p">,</span> <span class="n">TaskType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoModelForCausalLM</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
+<span class="n">lora_config</span> <span class="o">=</span> <span class="n">LoraConfig</span><span class="p">(</span>
+    <span class="n">r</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">task_type</span><span class="o">=</span><span class="n">TaskType</span><span class="o">.</span><span class="n">CAUSAL_LM</span><span class="p">,</span>
+    <span class="n">lora_alpha</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="n">lora_dropout</span><span class="o">=</span><span class="mf">0.05</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">get_peft_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lora_config</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print_trainable_parameters</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+trainable params: 589,824 || all params: 125,029,632 || trainable%: 0.4717
+</pre></div></div>
+</div>
+<p>If you are using one of PhyAGI’s composable models such as <code class="docutils literal notranslate"><span class="pre">MixFormerSequential</span></code>, you need to tell PEFT <strong>which internal modules should receive LoRA layers</strong>. The snippet below shows a sensible default for decoder‑style transformers; feel free to adjust the <code class="docutils literal notranslate"><span class="pre">target_modules</span></code> list if your architecture uses different block names.</p>
+<p><strong>Tip:</strong> Use <code class="docutils literal notranslate"><span class="pre">model.named_modules()</span></code> and look for large <code class="docutils literal notranslate"><span class="pre">Linear</span></code> or <code class="docutils literal notranslate"><span class="pre">projection</span></code> layers to decide which modules carry most of the trainable parameters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">peft</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_peft_model</span><span class="p">,</span> <span class="n">LoraConfig</span><span class="p">,</span> <span class="n">TaskType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.modeling_mixformer_sequential</span><span class="w"> </span><span class="kn">import</span> <span class="n">MixFormerSequentialConfig</span><span class="p">,</span> <span class="n">MixFormerSequentialForCausalLM</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">MixFormerSequentialConfig</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">MixFormerSequentialForCausalLM</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="n">lora_config</span> <span class="o">=</span> <span class="n">LoraConfig</span><span class="p">(</span>
+    <span class="n">r</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">task_type</span><span class="o">=</span><span class="n">TaskType</span><span class="o">.</span><span class="n">CAUSAL_LM</span><span class="p">,</span>
+    <span class="n">lora_alpha</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="n">lora_dropout</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">target_modules</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Wqkv&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">get_peft_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lora_config</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">print_trainable_parameters</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+trainable params: 1,310,720 || all params: 356,269,184 || trainable%: 0.3679
+</pre></div></div>
+</div>
+<p>Once the adapter is injected, you can fit it with any training loop:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">HfTrainer</span></code>: quick experiments on a single GPU.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PlTrainer</span></code>: clean multi‑GPU / TPU scaling.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DsTrainer</span></code>: when you need to squeeze every last bit of memory.</p></li>
+</ul>
+<p>Because only the LoRA weights are trainable, <strong>use a higher learning rate</strong> (e.g. <code class="docutils literal notranslate"><span class="pre">2 × 10⁻⁴</span></code>) and shorten the schedule; adapters converge quickly.</p>
+<p><strong>Note</strong>: The base model remains frozen on disk. After training, only ≈ 5 MB of LoRA weights are saved. Distribute or chain them without redistributing the original checkpoint.</p>
+<p>For a deep dive into advanced adapter types (IA‑3, Prefix‑Tuning, Prompt Tuning, etc.) see the official <a class="reference external" href="https://huggingface.co/docs/peft">PEFT documentation</a>.</p>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="optimizers.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Optimizers</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="batch_tracking.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Batch tracking</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1655 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Reinforcement Learning from Human Feedback (RLHF) &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/rlhf';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/tutorials/rlhf.html" />
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Evaluation" href="evaluation.html" />
+    <link rel="prev" title="Supervised Fine-Tuning (SFT)" href="sft.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2Ftutorials/rlhf.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Reinforcement Learning from Human Feedback (RLHF)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Sections </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Resources">Resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Group Relative Policy Optimization-(GRPO)">Group Relative Policy Optimization (GRPO)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#How-it-works">How it works</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Command-line-script">Command-line script</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Interactive Supervised-Fine‑Tuning-(ISFT)">Interactive Supervised Fine‑Tuning (ISFT)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#When-does-ISFT-shine?">When does ISFT shine?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Command-line script</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Customization">Customization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Custom-datasets">Custom datasets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Custom-reward-functions">Custom reward functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Monitoring-&amp;-Evaluation">Monitoring &amp; Evaluation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Reinforcement-Learning-from-Human-Feedback-(RLHF)">
+<h1>Reinforcement Learning from Human Feedback (RLHF)<a class="headerlink" href="#Reinforcement-Learning-from-Human-Feedback-(RLHF)" title="Link to this heading">#</a></h1>
+<p>This tutorial provides a comprehensive overview on RLHF-based techniques implemented in <code class="docutils literal notranslate"><span class="pre">phyagi-sdk</span></code>. The explanations and examples are designed to help you understand how to use these techniques effectively, and based on the following scripts:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/microsoft/phyagi-sdk/blob/main/scripts/tune/ray_grpo_tune.py">ray_grpo_tune.py</a>.</p></li>
+<li><p><a class="reference external" href="https://github.com/microsoft/phyagi-sdk/blob/main/scripts/tune/ray_isft_tune.py">ray_isft_tune.py</a>.</p></li>
+</ul>
+<p><strong>Note</strong>: The code snippets provided in this guide highlight essential sections of the scripts for better understanding. For the complete implementation, refer to the linked scripts above.</p>
+<section id="Resources">
+<h2>Resources<a class="headerlink" href="#Resources" title="Link to this heading">#</a></h2>
+<p>All examples use the <strong>Phi‑3‑mini‑4k‑instruct</strong> checkpoint and the <strong>GSM8K</strong> dataset. You can download them from either storage account:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Resource</p></th>
+<th class="head"><p>aifshared (mlfoundations)</p></th>
+<th class="head"><p>aifrontiers (MSR-LIT)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Phi-3-mini-4k (MixFormer)</strong></p></td>
+<td><p><a class="reference external" href="https://aifshared.blob.core.windows.net/data/piero_checkpoints/phi-3-mini-4k-instruct/mixformer-sequential">Link</a></p></td>
+<td><p><a class="reference external" href="https://aifrontiers.blob.core.windows.net/phickpts/phi-3-mini-4k/mixformer-sequential">Link</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>GSM8k data files (train.parquet and test.parquet)</strong></p></td>
+<td><p><a class="reference external" href="https://aifshared.blob.core.windows.net/data/piero_data/gsm8k_formatted/gsm8k">Link</a></p></td>
+<td><p><a class="reference external" href="https://aifrontiers.blob.core.windows.net/phickpts/gsm8k">Link</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="Group Relative Policy Optimization-(GRPO)">
+<h2>Group Relative Policy Optimization (GRPO)<a class="headerlink" href="#Group Relative Policy Optimization-(GRPO)" title="Link to this heading">#</a></h2>
+<p><strong>GRPO</strong> is an RLHF algorithm that trains a policy from <em>relative rankings</em> inside a group of candidate completions instead of scalar rewards.</p>
+<section id="How-it-works">
+<h3>How it works<a class="headerlink" href="#How-it-works" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Generate k completions</strong> for the same prompt.</p></li>
+<li><p>A human (or heuristic) <strong>ranks the completions</strong> best to worst.</p></li>
+<li><p>Convert the ranking into a <strong>pair‑wise preference matrix</strong> and compute relative advantages.</p></li>
+<li><p>Update the policy with a <strong>PPO‑style objective</strong> that boosts the log‑probability of higher ranked completions while suppressing lower ranked ones.</p></li>
+</ol>
+<p>Because each ranking yields <em>k × (k‑1)/2</em> preference pairs, GRPO extracts <strong>far denser feedback</strong> than scalar reward PPO for the same annotation effort.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>PPO</p></th>
+<th class="head"><p><strong>GRPO</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Feedback</p></td>
+<td><p>scalar reward</p></td>
+<td><p>ranking of <em>k</em> completions</p></td>
+</tr>
+<tr class="row-odd"><td><p>Signal density</p></td>
+<td><p>1 value / prompt</p></td>
+<td><p><em>k(k‑1)/2</em> pairwise preferences / prompt</p></td>
+</tr>
+<tr class="row-even"><td><p>Annotation cost</p></td>
+<td><p>moderate</p></td>
+<td><p>identical</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">datasets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.rl.chat.chat_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.rl.rl_data_collator</span><span class="w"> </span><span class="kn">import</span> <span class="n">RewardDataCollator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.tuners.grpo.grpo_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">RayGRPOConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.tuners.grpo.grpo_tuner</span><span class="w"> </span><span class="kn">import</span> <span class="n">RayGRPOTuner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.models.actor_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActorConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.rollout.vllm_worker_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">VLLMWorkerConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.rewards.gsm8k</span><span class="w"> </span><span class="kn">import</span> <span class="n">GSM8kReward</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;WANDB_MODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;disabled&quot;</span>
+
+<span class="n">actor_config</span> <span class="o">=</span> <span class="n">ActorConfig</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pretrained_model_name_or_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/gderosa/models/Phi-3-mini-4k-instruct&quot;</span><span class="p">},</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;betas&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">],</span>
+        <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">scheduler</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;warmup_num_steps&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;warmup_max_lr&quot;</span><span class="p">:</span> <span class="mf">5.0e-6</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">rollout_config</span> <span class="o">=</span> <span class="n">VLLMWorkerConfig</span><span class="p">(</span>
+    <span class="n">prompt_length</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+    <span class="n">response_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;bfloat16&quot;</span><span class="p">,</span>
+    <span class="n">gpu_memory_utilization</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">enforce_eager</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">enable_prefix_caching</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">sampling_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">tuning_args</span> <span class="o">=</span> <span class="n">RayGRPOConfig</span><span class="p">(</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;/tmp/grpo_gsm8k&quot;</span><span class="p">,</span>
+    <span class="n">n_nodes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">n_gpus_per_node</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">max_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">train_batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">group_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">train_max_micro_batch_size_per_gpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">actor</span><span class="o">=</span><span class="n">actor_config</span><span class="p">,</span>
+    <span class="n">rollout</span><span class="o">=</span><span class="n">rollout_config</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;microsoft/Phi-3-mini-128k-instruct&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_answer</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="n">row</span><span class="p">[</span><span class="s2">&quot;answer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;reward_model&quot;</span><span class="p">][</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">row</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span>
+    <span class="s2">&quot;parquet&quot;</span><span class="p">,</span>
+    <span class="n">data_files</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/gderosa/datasets/gsm8k/train.parquet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/gderosa/datasets/gsm8k/test.parquet&quot;</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_extract_answer</span><span class="p">)</span>
+
+<span class="n">rewards</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;math_verifier&quot;</span><span class="p">:</span> <span class="n">GSM8kReward</span><span class="p">(</span><span class="n">format_score</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">correct_score</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">ChatDataset</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">messages_column_name</span><span class="o">=</span><span class="s2">&quot;prompt&quot;</span><span class="p">,</span>
+    <span class="n">ground_truth_column_name</span><span class="o">=</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span>
+    <span class="n">max_length</span><span class="o">=</span><span class="n">tuning_args</span><span class="o">.</span><span class="n">rollout</span><span class="o">.</span><span class="n">prompt_length</span><span class="p">,</span>
+    <span class="n">filter_max_length</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">eval_dataset</span> <span class="o">=</span> <span class="n">ChatDataset</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">],</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">messages_column_name</span><span class="o">=</span><span class="s2">&quot;prompt&quot;</span><span class="p">,</span>
+    <span class="n">ground_truth_column_name</span><span class="o">=</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span>
+    <span class="n">max_length</span><span class="o">=</span><span class="n">tuning_args</span><span class="o">.</span><span class="n">rollout</span><span class="o">.</span><span class="n">prompt_length</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">data_collator</span> <span class="o">=</span> <span class="n">RewardDataCollator</span><span class="p">(</span><span class="n">reward_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">rewards</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+<span class="n">tuner</span> <span class="o">=</span> <span class="n">RayGRPOTuner</span><span class="p">(</span>
+    <span class="n">args</span><span class="o">=</span><span class="n">tuning_args</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">data_collator</span><span class="o">=</span><span class="n">data_collator</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+    <span class="n">eval_dataset</span><span class="o">=</span><span class="n">eval_dataset</span><span class="p">,</span>
+    <span class="n">rewards</span><span class="o">=</span><span class="n">rewards</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">tuner</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2025-05-26 13:43:21,662 INFO worker.py:1888 -- Started a local Ray instance.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-26 13:43:22,793] [INFO] [grpo_tuner.py:107:__init__] Tuning arguments: {&#39;output_dir&#39;: &#39;/tmp/grpo_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;kl_coeff&#39;: 0.001, &#39;epsilon_low&#39;: 0.2, &#39;epsilon_high&#39;: 0.2, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {&#39;config&#39;: {&#39;tuning_args&#39;: {&#39;output_dir&#39;: &#39;/tmp/grpo_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;kl_coeff&#39;: 0.001, &#39;epsilon_low&#39;: 0.2, &#39;epsilon_high&#39;: 0.2, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {}}}}} [GPU memory allocated: 0.26 GB (1.0% of device)]
+[phyagi] [2025-05-26 13:43:22,793] [INFO] [grpo_tuner.py:107:__init__] Tuning arguments: {&#39;output_dir&#39;: &#39;/tmp/grpo_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;kl_coeff&#39;: 0.001, &#39;epsilon_low&#39;: 0.2, &#39;epsilon_high&#39;: 0.2, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {&#39;config&#39;: {&#39;tuning_args&#39;: {&#39;output_dir&#39;: &#39;/tmp/grpo_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;kl_coeff&#39;: 0.001, &#39;epsilon_low&#39;: 0.2, &#39;epsilon_high&#39;: 0.2, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {}}}}} [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)]
+[phyagi] [2025-05-26 13:43:22,793] [INFO] [grpo_tuner.py:107:__init__] Tuning arguments: {&#39;output_dir&#39;: &#39;/tmp/grpo_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;kl_coeff&#39;: 0.001, &#39;epsilon_low&#39;: 0.2, &#39;epsilon_high&#39;: 0.2, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {&#39;config&#39;: {&#39;tuning_args&#39;: {&#39;output_dir&#39;: &#39;/tmp/grpo_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;kl_coeff&#39;: 0.001, &#39;epsilon_low&#39;: 0.2, &#39;epsilon_high&#39;: 0.2, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {}}}}} [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)]
+[phyagi] [2025-05-26 13:43:22,793] [INFO] [grpo_tuner.py:107:__init__] Tuning arguments: {&#39;output_dir&#39;: &#39;/tmp/grpo_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;kl_coeff&#39;: 0.001, &#39;epsilon_low&#39;: 0.2, &#39;epsilon_high&#39;: 0.2, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {&#39;config&#39;: {&#39;tuning_args&#39;: {&#39;output_dir&#39;: &#39;/tmp/grpo_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;kl_coeff&#39;: 0.001, &#39;epsilon_low&#39;: 0.2, &#39;epsilon_high&#39;: 0.2, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {}}}}} [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)]
+[phyagi] [2025-05-26 13:43:22,793] [INFO] [grpo_tuner.py:107:__init__] Tuning arguments: {&#39;output_dir&#39;: &#39;/tmp/grpo_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;kl_coeff&#39;: 0.001, &#39;epsilon_low&#39;: 0.2, &#39;epsilon_high&#39;: 0.2, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {&#39;config&#39;: {&#39;tuning_args&#39;: {&#39;output_dir&#39;: &#39;/tmp/grpo_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;kl_coeff&#39;: 0.001, &#39;epsilon_low&#39;: 0.2, &#39;epsilon_high&#39;: 0.2, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {}}}}} [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)]
+[phyagi] [2025-05-26 13:43:22,796] [INFO] [grpo_tuner.py:449:train] Starting training... [GPU memory allocated: 0.26 GB (1.0% of device)]
+[phyagi] [2025-05-26 13:43:22,796] [INFO] [grpo_tuner.py:449:train] Starting training... [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)]
+[phyagi] [2025-05-26 13:43:22,796] [INFO] [grpo_tuner.py:449:train] Starting training... [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)]
+[phyagi] [2025-05-26 13:43:22,796] [INFO] [grpo_tuner.py:449:train] Starting training... [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)]
+[phyagi] [2025-05-26 13:43:22,796] [INFO] [grpo_tuner.py:449:train] Starting training... [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)] [GPU memory allocated: 0.26 GB (1.0% of device)]
+<span class="ansi-cyan-fg">(pid=2125361)</span> [2025-05-26 13:43:30,244] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+<span class="ansi-cyan-fg">(pid=2125361)</span> INFO 05-26 13:43:32 [importing.py:53] Triton module has been replaced with a placeholder.
+<span class="ansi-cyan-fg">(pid=2125361)</span> INFO 05-26 13:43:32 [__init__.py:239] Automatically detected platform cuda.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:43:34,765] [INFO] [ray_worker.py:64:configure_models] Initializing actor, reference (optional) and rollout models... [GPU memory allocated: 0.26 GB (1.0% of device)]
+<span class="ansi-cyan-fg">(pid=2125363)</span> [2025-05-26 13:43:30,435] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:43:35,250] [INFO] [model.py:93:get_model] Loading pre-trained model: /home/gderosa/models/Phi-3-mini-4k-instruct
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:43:35,250] [INFO] [model.py:94:get_model] Model configuration: {&#39;torch_dtype&#39;: torch.float32, &#39;model_type&#39;: &#39;mixformer-sequential&#39;, &#39;trust_remote_code&#39;: True}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Loading checkpoint shards:   0%|          | 0/2 [00:00&lt;?, ?it/s]
+Loading checkpoint shards:  50%|█████     | 1/2 [00:05&lt;00:05,  5.51s/it]
+Loading checkpoint shards:   0%|          | 0/2 [00:00&lt;?, ?it/s]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Loading checkpoint shards: 100%|██████████| 2/2 [00:08&lt;00:00,  4.23s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:43:44,034] [INFO] [model.py:93:get_model] Loading pre-trained model: /home/gderosa/models/Phi-3-mini-4k-instruct
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:43:44,034] [INFO] [model.py:94:get_model] Model configuration: {&#39;torch_dtype&#39;: None, &#39;model_type&#39;: &#39;mixformer-sequential&#39;, &#39;trust_remote_code&#39;: True}
+<span class="ansi-cyan-fg">(pid=2125363)</span> INFO 05-26 13:43:32 [importing.py:53] Triton module has been replaced with a placeholder.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(pid=2125363)</span> INFO 05-26 13:43:32 [__init__.py:239] Automatically detected platform cuda.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:43:34,766] [INFO] [ray_worker.py:64:configure_models] Initializing actor, reference (optional) and rollout models... [GPU memory allocated: 0.26 GB (1.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Loading checkpoint shards:  50%|█████     | 1/2 [00:05&lt;00:05,  5.46s/it]<span class="ansi-green-fg"> [repeated 4x across cluster]</span>
+Loading checkpoint shards:   0%|          | 0/2 [00:00&lt;?, ?it/s]<span class="ansi-green-fg"> [repeated 4x across cluster]</span>
+Loading checkpoint shards: 100%|██████████| 2/2 [00:08&lt;00:00,  4.29s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:44:01,327] [INFO] [parallel_mixformer_sequential.py:126:apply_fsdp_mixformer_sequential] Fully Sharded Data Parallelism (FSDP) has been applied to model blocks.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:44:01,839] [INFO] [parallel_mixformer_sequential.py:129:apply_fsdp_mixformer_sequential] Fully Sharded Data Parallelism (FSDP) has been applied to model.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:01 [config.py:2968] Downcasting torch.float32 to torch.bfloat16.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:10 [config.py:717] This model supports multiple tasks: {&#39;generate&#39;, &#39;embed&#39;, &#39;classify&#39;, &#39;reward&#39;, &#39;score&#39;}. Defaulting to &#39;generate&#39;.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:10 [config.py:1729] Disabling V1 multiprocessing for external launcher.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:10 [config.py:2003] Chunked prefill is enabled with max_num_batched_tokens=8192.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:44:01 [config.py:2968] Downcasting torch.float32 to torch.bfloat16.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:44:10 [config.py:717] This model supports multiple tasks: {&#39;reward&#39;, &#39;generate&#39;, &#39;score&#39;, &#39;classify&#39;, &#39;embed&#39;}. Defaulting to &#39;generate&#39;.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:44:10 [config.py:717] This model supports multiple tasks: {&#39;embed&#39;, &#39;score&#39;, &#39;reward&#39;, &#39;classify&#39;, &#39;generate&#39;}. Defaulting to &#39;generate&#39;.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:10 [core.py:58] Initializing a V1 LLM engine (v0.8.5.post1) with config: model=&#39;/tmp/grpo_gsm8k/initial_rollout&#39;, speculative_config=None, tokenizer=&#39;/tmp/grpo_gsm8k/initial_rollout&#39;, skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, override_neuron_config=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=768, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, disable_custom_all_reduce=True, quantization=None, enforce_eager=False, kv_cache_dtype=auto,  device_config=cuda, decoding_config=DecodingConfig(guided_decoding_backend=&#39;auto&#39;, reasoning_backend=None), observability_config=ObservabilityConfig(show_hidden_metrics=False, otlp_traces_endpoint=None, collect_model_forward_time=False, collect_model_execute_time=False), seed=1, served_model_name=/tmp/grpo_gsm8k/initial_rollout, num_scheduler_steps=1, multi_step_stream_outputs=True, enable_prefix_caching=True, chunked_prefill_enabled=True, use_async_output_proc=True, disable_mm_preprocessor_cache=False, mm_processor_kwargs=None, pooler_config=None, compilation_config={&#34;level&#34;:3,&#34;custom_ops&#34;:[&#34;none&#34;],&#34;splitting_ops&#34;:[&#34;vllm.unified_attention&#34;,&#34;vllm.unified_attention_with_output&#34;],&#34;use_inductor&#34;:true,&#34;compile_sizes&#34;:[],&#34;use_cudagraph&#34;:true,&#34;cudagraph_num_of_warmups&#34;:1,&#34;cudagraph_capture_sizes&#34;:[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],&#34;max_capture_size&#34;:512}
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> INFO 05-26 13:44:10 [config.py:717] This model supports multiple tasks: {&#39;classify&#39;, &#39;embed&#39;, &#39;generate&#39;, &#39;score&#39;, &#39;reward&#39;}. Defaulting to &#39;generate&#39;.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> WARNING 05-26 13:44:10 [utils.py:2522] Methods determine_num_available_blocks,device_config,get_cache_block_size_bytes,initialize_cache not implemented in &lt;vllm.v1.worker.gpu_worker.Worker object at 0x7ed8c831b010&gt;
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:11 [parallel_state.py:1004] rank 1 in world size 4 is assigned as DP rank 0, PP rank 0, TP rank 0
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:11 [cuda.py:221] Using Flash Attention backend on V1 engine.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> WARNING 05-26 13:44:11 [topk_topp_sampler.py:69] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p &amp; top-k sampling. For the best performance, please install FlashInfer.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:11 [gpu_model_runner.py:1329] Starting to load model /tmp/grpo_gsm8k/initial_rollout...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00&lt;?, ?it/s]
+Loading checkpoint shards:  50%|█████     | 1/2 [00:05&lt;00:05,  5.56s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Loading checkpoint shards: 100%|██████████| 2/2 [00:08&lt;00:00,  4.28s/it]<span class="ansi-green-fg"> [repeated 4x across cluster]</span>
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:02&lt;00:06,  2.02s/it]
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:04&lt;00:04,  2.10s/it]
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:04&lt;00:01,  1.31s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:06&lt;00:00,  1.61s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:06&lt;00:00,  1.65s/it]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span>
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:44:18 [loader.py:458] Loading weights took 6.77 seconds
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> INFO 05-26 13:44:10 [config.py:1729] Disabling V1 multiprocessing for external launcher.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> INFO 05-26 13:44:10 [config.py:2003] Chunked prefill is enabled with max_num_batched_tokens=8192.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> INFO 05-26 13:44:10 [core.py:58] Initializing a V1 LLM engine (v0.8.5.post1) with config: model=&#39;/tmp/grpo_gsm8k/initial_rollout&#39;, speculative_config=None, tokenizer=&#39;/tmp/grpo_gsm8k/initial_rollout&#39;, skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, override_neuron_config=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=768, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, disable_custom_all_reduce=True, quantization=None, enforce_eager=False, kv_cache_dtype=auto,  device_config=cuda, decoding_config=DecodingConfig(guided_decoding_backend=&#39;auto&#39;, reasoning_backend=None), observability_config=ObservabilityConfig(show_hidden_metrics=False, otlp_traces_endpoint=None, collect_model_forward_time=False, collect_model_execute_time=False), seed=2, served_model_name=/tmp/grpo_gsm8k/initial_rollout, num_scheduler_steps=1, multi_step_stream_outputs=True, enable_prefix_caching=True, chunked_prefill_enabled=True, use_async_output_proc=True, disable_mm_preprocessor_cache=False, mm_processor_kwargs=None, pooler_config=None, compilation_config={&#34;level&#34;:3,&#34;custom_ops&#34;:[&#34;none&#34;],&#34;splitting_ops&#34;:[&#34;vllm.unified_attention&#34;,&#34;vllm.unified_attention_with_output&#34;],&#34;use_inductor&#34;:true,&#34;compile_sizes&#34;:[],&#34;use_cudagraph&#34;:true,&#34;cudagraph_num_of_warmups&#34;:1,&#34;cudagraph_capture_sizes&#34;:[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],&#34;max_capture_size&#34;:512}<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> WARNING 05-26 13:44:10 [utils.py:2522] Methods determine_num_available_blocks,device_config,get_cache_block_size_bytes,initialize_cache not implemented in &lt;vllm.v1.worker.gpu_worker.Worker object at 0x7f19747ac490&gt;<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:44:11 [parallel_state.py:1004] rank 3 in world size 4 is assigned as DP rank 0, PP rank 0, TP rank 0<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:44:11 [cuda.py:221] Using Flash Attention backend on V1 engine.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> WARNING 05-26 13:44:11 [topk_topp_sampler.py:69] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p &amp; top-k sampling. For the best performance, please install FlashInfer.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:44:11 [gpu_model_runner.py:1329] Starting to load model /tmp/grpo_gsm8k/initial_rollout...<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:44:18 [gpu_model_runner.py:1347] Model loading took 7.1184 GiB and 6.935610 seconds
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:44:24 [backends.py:420] Using cache directory: /home/gderosa/.cache/vllm/torch_compile_cache/5c34a2b8bc/rank_0_0 for vLLM&#39;s torch.compile
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:44:24 [backends.py:430] Dynamo bytecode transform time: 6.30 s
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:18 [loader.py:458] Loading weights took 6.89 seconds<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:18 [gpu_model_runner.py:1347] Model loading took 7.1184 GiB and 7.028578 seconds<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:44:29 [backends.py:118] Directly load the compiled graph(s) for shape None from the cache, took 4.398 s
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:24 [backends.py:420] Using cache directory: /home/gderosa/.cache/vllm/torch_compile_cache/5c34a2b8bc/rank_1_0 for vLLM&#39;s torch.compile<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:24 [backends.py:430] Dynamo bytecode transform time: 6.42 s<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:44:30 [monitor.py:33] torch.compile takes 6.30 s in total
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:31 [kv_cache_utils.py:634] GPU KV cache size: 37,872 tokens
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:31 [kv_cache_utils.py:637] Maximum concurrency for 768 tokens per request: 49.31x
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:44:59 [gpu_model_runner.py:1686] Graph capturing finished in 28 secs, took 0.47 GiB
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:29 [backends.py:118] Directly load the compiled graph(s) for shape None from the cache, took 4.479 s<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:44:30 [monitor.py:33] torch.compile takes 6.42 s in total<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:44:31 [kv_cache_utils.py:634] GPU KV cache size: 37,872 tokens<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:44:31 [kv_cache_utils.py:637] Maximum concurrency for 768 tokens per request: 49.31x<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:44:59 [core.py:159] init engine (profile, create kv cache, warmup model) took 41.23 seconds
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:44:59 [block_pool.py:264] Successfully reset prefix cache
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:45:08 [gpu_worker.py:95] Sleep mode freed 21.28 GiB memory, 1.15 GiB memory is still in use.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:45:08 [executor_base.py:210] It took 8.396664 seconds to fall asleep.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:45:00 [gpu_model_runner.py:1686] Graph capturing finished in 29 secs, took 0.47 GiB<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:45:00 [core.py:159] init engine (profile, create kv cache, warmup model) took 42.20 seconds<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:45:00 [block_pool.py:264] Successfully reset prefix cache<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:45:10,766] [INFO] [parallel_mixformer_sequential.py:126:apply_fsdp_mixformer_sequential] Fully Sharded Data Parallelism (FSDP) has been applied to model blocks.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:45:10,919] [INFO] [parallel_mixformer_sequential.py:129:apply_fsdp_mixformer_sequential] Fully Sharded Data Parallelism (FSDP) has been applied to model.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:45:10,920] [INFO] [ray_worker.py:78:configure_models] Actor, reference (optional) and rollout models initialized. [GPU memory allocated: 5.74 GB (13.0% of device)]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+  0%|          | 0/1 [00:00&lt;?, ?it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-26 13:45:12,103] [INFO] [grpo_tuner.py:498:train] [step=1] Evaluating model... [GPU memory allocated: 5.74 GB (13.0% of device)]
+[phyagi] [2025-05-26 13:45:12,103] [INFO] [grpo_tuner.py:498:train] [step=1] Evaluating model... [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)]
+[phyagi] [2025-05-26 13:45:12,103] [INFO] [grpo_tuner.py:498:train] [step=1] Evaluating model... [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)]
+[phyagi] [2025-05-26 13:45:12,103] [INFO] [grpo_tuner.py:498:train] [step=1] Evaluating model... [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)]
+[phyagi] [2025-05-26 13:45:12,103] [INFO] [grpo_tuner.py:498:train] [step=1] Evaluating model... [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)]
+[phyagi] [2025-05-26 13:45:12,114] [INFO] [grpo_tuner.py:378:evaluate] Generating completions for validation set... [GPU memory allocated: 5.74 GB (13.0% of device)]
+[phyagi] [2025-05-26 13:45:12,114] [INFO] [grpo_tuner.py:378:evaluate] Generating completions for validation set... [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)]
+[phyagi] [2025-05-26 13:45:12,114] [INFO] [grpo_tuner.py:378:evaluate] Generating completions for validation set... [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)]
+[phyagi] [2025-05-26 13:45:12,114] [INFO] [grpo_tuner.py:378:evaluate] Generating completions for validation set... [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)]
+[phyagi] [2025-05-26 13:45:12,114] [INFO] [grpo_tuner.py:378:evaluate] Generating completions for validation set... [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)] [GPU memory allocated: 5.74 GB (13.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:45:12 [executor_base.py:226] It took 0.465633 seconds to wake up tags {&#39;kv_cache&#39;, &#39;weights&#39;}.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:45:12,616] [INFO] [ray_worker.py:184:generate_completions] Synchronizing actor weights with rollout... [GPU memory allocated: 25.52 GB (56.99999999999999% of device)]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Generating completions:   0%|          | 0/21 [00:00&lt;?, ?it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:45:13,060] [INFO] [ray_worker.py:186:generate_completions] Synchronization done. [GPU memory allocated: 26.20 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:45:13,061] [INFO] [ray_worker.py:191:generate_completions] Generating completions using 21 batches of 16 prompts... [GPU memory allocated: 26.20 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:45:09 [gpu_worker.py:95] Sleep mode freed 21.28 GiB memory, 0.89 GiB memory is still in use.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:45:09 [executor_base.py:210] It took 8.681329 seconds to fall asleep.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Generating completions:   5%|▍         | 1/21 [00:13&lt;04:28, 13.45s/it]
+Generating completions:   0%|          | 0/21 [00:00&lt;?, ?it/s]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:  10%|▉         | 2/21 [00:24&lt;03:50, 12.15s/it]<span class="ansi-green-fg"> [repeated 4x across cluster]</span>
+Generating completions:  10%|▉         | 2/21 [00:30&lt;04:44, 14.99s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:  14%|█▍        | 3/21 [00:36&lt;03:38, 12.16s/it]
+Generating completions:  14%|█▍        | 3/21 [00:40&lt;04:02, 13.50s/it]
+Generating completions:  19%|█▉        | 4/21 [00:48&lt;03:22, 11.94s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:  19%|█▉        | 4/21 [00:55&lt;03:52, 13.67s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  24%|██▍       | 5/21 [01:02&lt;03:23, 12.70s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  24%|██▍       | 5/21 [01:08&lt;03:30, 13.15s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  29%|██▊       | 6/21 [01:17&lt;03:23, 13.55s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  29%|██▊       | 6/21 [01:24&lt;03:27, 13.84s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:  33%|███▎      | 7/21 [01:31&lt;03:10, 13.58s/it]
+Generating completions:  33%|███▎      | 7/21 [01:31&lt;03:02, 13.01s/it]
+Generating completions:  33%|███▎      | 7/21 [01:37&lt;03:12, 13.78s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  38%|███▊      | 8/21 [01:45&lt;02:59, 13.84s/it]
+Generating completions:  38%|███▊      | 8/21 [01:46&lt;02:53, 13.37s/it]
+Generating completions:  43%|████▎     | 9/21 [01:58&lt;02:42, 13.57s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:  43%|████▎     | 9/21 [02:05&lt;02:45, 13.83s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:  48%|████▊     | 10/21 [02:14&lt;02:32, 13.84s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  52%|█████▏    | 11/21 [02:22&lt;02:08, 12.89s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:  52%|█████▏    | 11/21 [02:28&lt;02:19, 13.96s/it]
+Generating completions:  52%|█████▏    | 11/21 [02:30&lt;02:17, 13.75s/it]
+Generating completions:  57%|█████▋    | 12/21 [02:41&lt;02:02, 13.57s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:  62%|██████▏   | 13/21 [02:47&lt;01:43, 12.90s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:  62%|██████▏   | 13/21 [02:54&lt;01:48, 13.59s/it]
+Generating completions:  62%|██████▏   | 13/21 [02:58&lt;01:52, 14.04s/it]
+Generating completions:  67%|██████▋   | 14/21 [03:08&lt;01:34, 13.48s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:  71%|███████▏  | 15/21 [03:20&lt;01:19, 13.17s/it]<span class="ansi-green-fg"> [repeated 4x across cluster]</span>
+Generating completions:  76%|███████▌  | 16/21 [03:32&lt;01:04, 12.90s/it]<span class="ansi-green-fg"> [repeated 4x across cluster]</span>
+Generating completions:  81%|████████  | 17/21 [03:47&lt;00:53, 13.48s/it]<span class="ansi-green-fg"> [repeated 4x across cluster]</span>
+Generating completions:  86%|████████▌ | 18/21 [04:01&lt;00:41, 13.69s/it]<span class="ansi-green-fg"> [repeated 4x across cluster]</span>
+Generating completions:  90%|█████████ | 19/21 [04:15&lt;00:25, 12.75s/it]<span class="ansi-green-fg"> [repeated 4x across cluster]</span>
+Generating completions:  95%|█████████▌| 20/21 [04:17&lt;00:12, 12.95s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:49:40,109] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.20 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:45:12,010] [INFO] [ray_worker.py:78:configure_models] Actor, reference (optional) and rollout models initialized. [GPU memory allocated: 5.48 GB (12.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:45:12 [executor_base.py:226] It took 0.460750 seconds to wake up tags {&#39;kv_cache&#39;, &#39;weights&#39;}.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:45:12,618] [INFO] [ray_worker.py:184:generate_completions] Synchronizing actor weights with rollout... [GPU memory allocated: 25.52 GB (56.99999999999999% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:45:13,056] [INFO] [ray_worker.py:186:generate_completions] Synchronization done. [GPU memory allocated: 26.20 GB (59.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:45:13,057] [INFO] [ray_worker.py:191:generate_completions] Generating completions using 21 batches of 16 prompts... [GPU memory allocated: 26.20 GB (59.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:49:40 [block_pool.py:264] Successfully reset prefix cache
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Generating completions: 100%|██████████| 21/21 [04:27&lt;00:00, 12.72s/it]
+Generating completions:  90%|█████████ | 19/21 [04:18&lt;00:27, 13.67s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:49:40 [gpu_worker.py:95] Sleep mode freed 21.37 GiB memory, 4.83 GiB memory is still in use.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:49:40 [executor_base.py:210] It took 0.834118 seconds to fall asleep.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:49:40,946] [INFO] [ray_worker.py:206:generate_completions] vLLM is now asleep. [GPU memory allocated: 4.83 GB (11.0% of device)]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Generating completions:  95%|█████████▌| 20/21 [04:29&lt;00:12, 12.92s/it]
+Generating completions: 100%|██████████| 21/21 [04:39&lt;00:00, 13.32s/it]
+Generating completions:  95%|█████████▌| 20/21 [04:31&lt;00:13, 13.61s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions: 100%|██████████| 21/21 [04:39&lt;00:00, 13.32s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> [phyagi] [2025-05-26 13:49:52,739] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.20 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> INFO 05-26 13:49:52 [block_pool.py:264] Successfully reset prefix cache
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:49:52,852] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.20 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:49:52 [block_pool.py:264] Successfully reset prefix cache
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> INFO 05-26 13:49:53 [gpu_worker.py:95] Sleep mode freed 21.37 GiB memory, 4.83 GiB memory is still in use.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> INFO 05-26 13:49:53 [executor_base.py:210] It took 0.827318 seconds to fall asleep.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> [phyagi] [2025-05-26 13:49:53,569] [INFO] [ray_worker.py:206:generate_completions] vLLM is now asleep. [GPU memory allocated: 4.83 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:49:57,408] [INFO] [grpo_tuner.py:387:evaluate] Completions generated. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:49:57,408] [INFO] [grpo_tuner.py:387:evaluate] Completions generated. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:49:57,408] [INFO] [grpo_tuner.py:387:evaluate] Completions generated. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:49:57,408] [INFO] [grpo_tuner.py:387:evaluate] Completions generated. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:49:57,408] [INFO] [grpo_tuner.py:387:evaluate] Completions generated. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:49:57,414] [INFO] [grpo_tuner.py:389:evaluate] Calculating rewards for validation set... [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:49:57,414] [INFO] [grpo_tuner.py:389:evaluate] Calculating rewards for validation set... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:49:57,414] [INFO] [grpo_tuner.py:389:evaluate] Calculating rewards for validation set... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:49:57,414] [INFO] [grpo_tuner.py:389:evaluate] Calculating rewards for validation set... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:49:57,414] [INFO] [grpo_tuner.py:389:evaluate] Calculating rewards for validation set... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,208] [INFO] [grpo_tuner.py:399:evaluate] Rewards calculated. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,208] [INFO] [grpo_tuner.py:399:evaluate] Rewards calculated. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,208] [INFO] [grpo_tuner.py:399:evaluate] Rewards calculated. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,208] [INFO] [grpo_tuner.py:399:evaluate] Rewards calculated. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,208] [INFO] [grpo_tuner.py:399:evaluate] Rewards calculated. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,213] [INFO] [grpo_tuner.py:402:evaluate] Logging validation completions... [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,213] [INFO] [grpo_tuner.py:402:evaluate] Logging validation completions... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,213] [INFO] [grpo_tuner.py:402:evaluate] Logging validation completions... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,213] [INFO] [grpo_tuner.py:402:evaluate] Logging validation completions... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,213] [INFO] [grpo_tuner.py:402:evaluate] Logging validation completions... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,230] [INFO] [grpo_tuner.py:418:evaluate] Validation completions logged. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,230] [INFO] [grpo_tuner.py:418:evaluate] Validation completions logged. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,230] [INFO] [grpo_tuner.py:418:evaluate] Validation completions logged. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,230] [INFO] [grpo_tuner.py:418:evaluate] Validation completions logged. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,230] [INFO] [grpo_tuner.py:418:evaluate] Validation completions logged. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,271] [INFO] [grpo_tuner.py:500:train] Evaluation done. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,271] [INFO] [grpo_tuner.py:500:train] Evaluation done. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,271] [INFO] [grpo_tuner.py:500:train] Evaluation done. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,271] [INFO] [grpo_tuner.py:500:train] Evaluation done. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,271] [INFO] [grpo_tuner.py:500:train] Evaluation done. [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,276] [INFO] [grpo_tuner.py:508:train] [step=1] Saving sync checkpoint... [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,276] [INFO] [grpo_tuner.py:508:train] [step=1] Saving sync checkpoint... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,276] [INFO] [grpo_tuner.py:508:train] [step=1] Saving sync checkpoint... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,276] [INFO] [grpo_tuner.py:508:train] [step=1] Saving sync checkpoint... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:01,276] [INFO] [grpo_tuner.py:508:train] [step=1] Saving sync checkpoint... [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)] [GPU memory allocated: 5.09 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:50:01,283] [INFO] [ray_actor.py:221:save_checkpoint] Saving checkpoint: /tmp/grpo_gsm8k/reference [GPU memory allocated: 4.83 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:49:56,322] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.46 GB (60.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:49:56 [block_pool.py:264] Successfully reset prefix cache
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:49:57 [gpu_worker.py:95] Sleep mode freed 21.37 GiB memory, 5.09 GiB memory is still in use.<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> INFO 05-26 13:49:57 [executor_base.py:210] It took 0.838143 seconds to fall asleep.<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:49:57,163] [INFO] [ray_worker.py:206:generate_completions] vLLM is now asleep. [GPU memory allocated: 5.09 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:50:17,961] [INFO] [ray_actor.py:241:save_checkpoint] Checkpoint saved. [GPU memory allocated: 4.83 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:50:17,966] [INFO] [ray_actor.py:221:save_checkpoint] Saving checkpoint: /tmp/grpo_gsm8k/1/actor [GPU memory allocated: 4.83 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 4x across cluster]</span>
+[phyagi] [2025-05-26 13:50:37,530] [INFO] [grpo_tuner.py:511:train] Checkpoint saved. [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:37,530] [INFO] [grpo_tuner.py:511:train] Checkpoint saved. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:37,530] [INFO] [grpo_tuner.py:511:train] Checkpoint saved. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:37,530] [INFO] [grpo_tuner.py:511:train] Checkpoint saved. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:37,530] [INFO] [grpo_tuner.py:511:train] Checkpoint saved. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:37,535] [INFO] [grpo_tuner.py:513:train] Generating completions... [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:37,535] [INFO] [grpo_tuner.py:513:train] Generating completions... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:37,535] [INFO] [grpo_tuner.py:513:train] Generating completions... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:37,535] [INFO] [grpo_tuner.py:513:train] Generating completions... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:37,535] [INFO] [grpo_tuner.py:513:train] Generating completions... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:50:37,520] [INFO] [ray_actor.py:241:save_checkpoint] Checkpoint saved. [GPU memory allocated: 4.84 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 4x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:50:17,967] [INFO] [ray_actor.py:221:save_checkpoint] Saving checkpoint: /tmp/grpo_gsm8k/1/actor [GPU memory allocated: 4.83 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:50:37 [executor_base.py:226] It took 0.449340 seconds to wake up tags {&#39;kv_cache&#39;, &#39;weights&#39;}.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125360)</span> [phyagi] [2025-05-26 13:50:37,989] [INFO] [ray_worker.py:184:generate_completions] Synchronizing actor weights with rollout... [GPU memory allocated: 26.10 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:50:38,056] [INFO] [ray_worker.py:186:generate_completions] Synchronization done. [GPU memory allocated: 26.21 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:50:38,056] [INFO] [ray_worker.py:199:generate_completions] Generating completions for 4 prompts... [GPU memory allocated: 26.21 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:50:42,682] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.21 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:50:42 [block_pool.py:264] Successfully reset prefix cache
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:50:37,524] [INFO] [ray_actor.py:241:save_checkpoint] Checkpoint saved. [GPU memory allocated: 4.84 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:50:43 [gpu_worker.py:95] Sleep mode freed 21.37 GiB memory, 4.84 GiB memory is still in use.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> INFO 05-26 13:50:43 [executor_base.py:210] It took 0.807622 seconds to fall asleep.
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:50:43,491] [INFO] [ray_worker.py:206:generate_completions] vLLM is now asleep. [GPU memory allocated: 4.84 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> INFO 05-26 13:50:37 [executor_base.py:226] It took 0.448362 seconds to wake up tags {&#39;kv_cache&#39;, &#39;weights&#39;}.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:50:37,993] [INFO] [ray_worker.py:184:generate_completions] Synchronizing actor weights with rollout... [GPU memory allocated: 25.84 GB (57.99999999999999% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:50:38,053] [INFO] [ray_worker.py:186:generate_completions] Synchronization done. [GPU memory allocated: 26.21 GB (59.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:50:38,054] [INFO] [ray_worker.py:199:generate_completions] Generating completions for 4 prompts... [GPU memory allocated: 26.21 GB (59.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> [phyagi] [2025-05-26 13:50:48,115] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.21 GB (59.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> INFO 05-26 13:50:48 [block_pool.py:264] Successfully reset prefix cache<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+[phyagi] [2025-05-26 13:50:48,918] [INFO] [grpo_tuner.py:518:train] Completions generated. [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:48,918] [INFO] [grpo_tuner.py:518:train] Completions generated. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:48,918] [INFO] [grpo_tuner.py:518:train] Completions generated. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:48,918] [INFO] [grpo_tuner.py:518:train] Completions generated. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:48,918] [INFO] [grpo_tuner.py:518:train] Completions generated. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:48,924] [INFO] [grpo_tuner.py:520:train] Calculating rewards... [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:48,924] [INFO] [grpo_tuner.py:520:train] Calculating rewards... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:48,924] [INFO] [grpo_tuner.py:520:train] Calculating rewards... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:48,924] [INFO] [grpo_tuner.py:520:train] Calculating rewards... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:48,924] [INFO] [grpo_tuner.py:520:train] Calculating rewards... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> INFO 05-26 13:50:48 [gpu_worker.py:95] Sleep mode freed 21.37 GiB memory, 4.84 GiB memory is still in use.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> INFO 05-26 13:50:48 [executor_base.py:210] It took 0.798018 seconds to fall asleep.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125362)</span> [phyagi] [2025-05-26 13:50:48,914] [INFO] [ray_worker.py:206:generate_completions] vLLM is now asleep. [GPU memory allocated: 4.84 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+[phyagi] [2025-05-26 13:50:49,019] [INFO] [grpo_tuner.py:527:train] Rewards calculated. [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,019] [INFO] [grpo_tuner.py:527:train] Rewards calculated. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,019] [INFO] [grpo_tuner.py:527:train] Rewards calculated. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,019] [INFO] [grpo_tuner.py:527:train] Rewards calculated. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,019] [INFO] [grpo_tuner.py:527:train] Rewards calculated. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,023] [INFO] [grpo_tuner.py:529:train] Packing completions, masks and advantages... [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,023] [INFO] [grpo_tuner.py:529:train] Packing completions, masks and advantages... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,023] [INFO] [grpo_tuner.py:529:train] Packing completions, masks and advantages... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,023] [INFO] [grpo_tuner.py:529:train] Packing completions, masks and advantages... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,023] [INFO] [grpo_tuner.py:529:train] Packing completions, masks and advantages... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,046] [INFO] [grpo_tuner.py:532:train] Packing done. [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,046] [INFO] [grpo_tuner.py:532:train] Packing done. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,046] [INFO] [grpo_tuner.py:532:train] Packing done. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,046] [INFO] [grpo_tuner.py:532:train] Packing done. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,046] [INFO] [grpo_tuner.py:532:train] Packing done. [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,051] [INFO] [grpo_tuner.py:534:train] Updating actor model... [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,051] [INFO] [grpo_tuner.py:534:train] Updating actor model... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,051] [INFO] [grpo_tuner.py:534:train] Updating actor model... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,051] [INFO] [grpo_tuner.py:534:train] Updating actor model... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:50:49,051] [INFO] [grpo_tuner.py:534:train] Updating actor model... [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)] [GPU memory allocated: 5.10 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:50:49,076] [INFO] [grpo_worker.py:135:update_actor_policy] Updating actor policy with 13 batches... [GPU memory allocated: 4.84 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125361)</span> [phyagi] [2025-05-26 13:50:49,076] [INFO] [grpo_worker.py:136:update_actor_policy] Shapes: [torch.Size([1, 759]), torch.Size([1, 767]), torch.Size([1, 766]), torch.Size([1, 756]), torch.Size([1, 666]), torch.Size([1, 763]), torch.Size([1, 768]), torch.Size([1, 768]), torch.Size([1, 768]), torch.Size([1, 729]), torch.Size([1, 676]), torch.Size([1, 613]), torch.Size([1, 158])] [GPU memory allocated: 4.84 GB (11.0% of device)]
+[phyagi] [2025-05-26 13:51:19,629] [INFO] [grpo_tuner.py:539:train] Actor model updated. [GPU memory allocated: 16.93 GB (38.0% of device)]
+[phyagi] [2025-05-26 13:51:19,629] [INFO] [grpo_tuner.py:539:train] Actor model updated. [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)]
+[phyagi] [2025-05-26 13:51:19,629] [INFO] [grpo_tuner.py:539:train] Actor model updated. [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)]
+[phyagi] [2025-05-26 13:51:19,629] [INFO] [grpo_tuner.py:539:train] Actor model updated. [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)]
+[phyagi] [2025-05-26 13:51:19,629] [INFO] [grpo_tuner.py:539:train] Actor model updated. [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)]
+[phyagi] [2025-05-26 13:51:19,635] [INFO] [grpo_tuner.py:541:train] {&#39;train/step&#39;: 1, &#39;train/epoch&#39;: 1, &#39;train/loss&#39;: 0.004085940644682318, &#39;train/lr&#39;: 0.0, &#39;train/mean_kl&#39;: 0.0, &#39;train/clip_ratio&#39;: 0.0, &#39;train/grad_norm&#39;: 2.249732106924057, &#39;train_reward/mean&#39;: 0.4609375, &#39;train_reward/best_of_group&#39;: 0.9375, &#39;train_reward/accuracy&#39;: 0.4609375, &#39;train_reward/avg_response_length&#39;: 203.8515625, &#39;train_reward/avg_correct_response_length&#39;: 192.4915313720703, &#39;train_reward/avg_incorrect_response_length&#39;: 213.56521606445312, &#39;validation_reward/mean&#39;: 0.3974601924419403, &#39;validation_reward/best_of_group&#39;: 0.9226686954498291, &#39;validation_reward/accuracy&#39;: 0.3974601924419403, &#39;validation_reward/avg_response_length&#39;: 229.0703125, &#39;validation_reward/avg_correct_response_length&#39;: 218.969482421875, &#39;validation_reward/avg_incorrect_response_length&#39;: 235.73324584960938, &#39;timing/grpo_step&#39;: 367.5401611328125, &#39;timing/evaluation&#39;: 289.17327094078064, &#39;timing/checkpoint&#39;: 36.25947022438049, &#39;timing/generation&#39;: 11.376899003982544, &#39;timing/reward&#39;: 0.08980989456176758, &#39;timing/packing&#39;: 0.019704580307006836, &#39;timing/actor_update&#39;: 30.574605703353882}
+[phyagi] [2025-05-26 13:51:19,635] [INFO] [grpo_tuner.py:541:train] {&#39;train/step&#39;: 1, &#39;train/epoch&#39;: 1, &#39;train/loss&#39;: 0.004085940644682318, &#39;train/lr&#39;: 0.0, &#39;train/mean_kl&#39;: 0.0, &#39;train/clip_ratio&#39;: 0.0, &#39;train/grad_norm&#39;: 2.249732106924057, &#39;train_reward/mean&#39;: 0.4609375, &#39;train_reward/best_of_group&#39;: 0.9375, &#39;train_reward/accuracy&#39;: 0.4609375, &#39;train_reward/avg_response_length&#39;: 203.8515625, &#39;train_reward/avg_correct_response_length&#39;: 192.4915313720703, &#39;train_reward/avg_incorrect_response_length&#39;: 213.56521606445312, &#39;validation_reward/mean&#39;: 0.3974601924419403, &#39;validation_reward/best_of_group&#39;: 0.9226686954498291, &#39;validation_reward/accuracy&#39;: 0.3974601924419403, &#39;validation_reward/avg_response_length&#39;: 229.0703125, &#39;validation_reward/avg_correct_response_length&#39;: 218.969482421875, &#39;validation_reward/avg_incorrect_response_length&#39;: 235.73324584960938, &#39;timing/grpo_step&#39;: 367.5401611328125, &#39;timing/evaluation&#39;: 289.17327094078064, &#39;timing/checkpoint&#39;: 36.25947022438049, &#39;timing/generation&#39;: 11.376899003982544, &#39;timing/reward&#39;: 0.08980989456176758, &#39;timing/packing&#39;: 0.019704580307006836, &#39;timing/actor_update&#39;: 30.574605703353882}
+[phyagi] [2025-05-26 13:51:19,635] [INFO] [grpo_tuner.py:541:train] {&#39;train/step&#39;: 1, &#39;train/epoch&#39;: 1, &#39;train/loss&#39;: 0.004085940644682318, &#39;train/lr&#39;: 0.0, &#39;train/mean_kl&#39;: 0.0, &#39;train/clip_ratio&#39;: 0.0, &#39;train/grad_norm&#39;: 2.249732106924057, &#39;train_reward/mean&#39;: 0.4609375, &#39;train_reward/best_of_group&#39;: 0.9375, &#39;train_reward/accuracy&#39;: 0.4609375, &#39;train_reward/avg_response_length&#39;: 203.8515625, &#39;train_reward/avg_correct_response_length&#39;: 192.4915313720703, &#39;train_reward/avg_incorrect_response_length&#39;: 213.56521606445312, &#39;validation_reward/mean&#39;: 0.3974601924419403, &#39;validation_reward/best_of_group&#39;: 0.9226686954498291, &#39;validation_reward/accuracy&#39;: 0.3974601924419403, &#39;validation_reward/avg_response_length&#39;: 229.0703125, &#39;validation_reward/avg_correct_response_length&#39;: 218.969482421875, &#39;validation_reward/avg_incorrect_response_length&#39;: 235.73324584960938, &#39;timing/grpo_step&#39;: 367.5401611328125, &#39;timing/evaluation&#39;: 289.17327094078064, &#39;timing/checkpoint&#39;: 36.25947022438049, &#39;timing/generation&#39;: 11.376899003982544, &#39;timing/reward&#39;: 0.08980989456176758, &#39;timing/packing&#39;: 0.019704580307006836, &#39;timing/actor_update&#39;: 30.574605703353882}
+[phyagi] [2025-05-26 13:51:19,635] [INFO] [grpo_tuner.py:541:train] {&#39;train/step&#39;: 1, &#39;train/epoch&#39;: 1, &#39;train/loss&#39;: 0.004085940644682318, &#39;train/lr&#39;: 0.0, &#39;train/mean_kl&#39;: 0.0, &#39;train/clip_ratio&#39;: 0.0, &#39;train/grad_norm&#39;: 2.249732106924057, &#39;train_reward/mean&#39;: 0.4609375, &#39;train_reward/best_of_group&#39;: 0.9375, &#39;train_reward/accuracy&#39;: 0.4609375, &#39;train_reward/avg_response_length&#39;: 203.8515625, &#39;train_reward/avg_correct_response_length&#39;: 192.4915313720703, &#39;train_reward/avg_incorrect_response_length&#39;: 213.56521606445312, &#39;validation_reward/mean&#39;: 0.3974601924419403, &#39;validation_reward/best_of_group&#39;: 0.9226686954498291, &#39;validation_reward/accuracy&#39;: 0.3974601924419403, &#39;validation_reward/avg_response_length&#39;: 229.0703125, &#39;validation_reward/avg_correct_response_length&#39;: 218.969482421875, &#39;validation_reward/avg_incorrect_response_length&#39;: 235.73324584960938, &#39;timing/grpo_step&#39;: 367.5401611328125, &#39;timing/evaluation&#39;: 289.17327094078064, &#39;timing/checkpoint&#39;: 36.25947022438049, &#39;timing/generation&#39;: 11.376899003982544, &#39;timing/reward&#39;: 0.08980989456176758, &#39;timing/packing&#39;: 0.019704580307006836, &#39;timing/actor_update&#39;: 30.574605703353882}
+[phyagi] [2025-05-26 13:51:19,635] [INFO] [grpo_tuner.py:541:train] {&#39;train/step&#39;: 1, &#39;train/epoch&#39;: 1, &#39;train/loss&#39;: 0.004085940644682318, &#39;train/lr&#39;: 0.0, &#39;train/mean_kl&#39;: 0.0, &#39;train/clip_ratio&#39;: 0.0, &#39;train/grad_norm&#39;: 2.249732106924057, &#39;train_reward/mean&#39;: 0.4609375, &#39;train_reward/best_of_group&#39;: 0.9375, &#39;train_reward/accuracy&#39;: 0.4609375, &#39;train_reward/avg_response_length&#39;: 203.8515625, &#39;train_reward/avg_correct_response_length&#39;: 192.4915313720703, &#39;train_reward/avg_incorrect_response_length&#39;: 213.56521606445312, &#39;validation_reward/mean&#39;: 0.3974601924419403, &#39;validation_reward/best_of_group&#39;: 0.9226686954498291, &#39;validation_reward/accuracy&#39;: 0.3974601924419403, &#39;validation_reward/avg_response_length&#39;: 229.0703125, &#39;validation_reward/avg_correct_response_length&#39;: 218.969482421875, &#39;validation_reward/avg_incorrect_response_length&#39;: 235.73324584960938, &#39;timing/grpo_step&#39;: 367.5401611328125, &#39;timing/evaluation&#39;: 289.17327094078064, &#39;timing/checkpoint&#39;: 36.25947022438049, &#39;timing/generation&#39;: 11.376899003982544, &#39;timing/reward&#39;: 0.08980989456176758, &#39;timing/packing&#39;: 0.019704580307006836, &#39;timing/actor_update&#39;: 30.574605703353882}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 1/1 [06:07&lt;00:00, 367.55s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-26 13:51:19,642] [INFO] [grpo_tuner.py:554:train] Training done. [GPU memory allocated: 16.93 GB (38.0% of device)]
+[phyagi] [2025-05-26 13:51:19,642] [INFO] [grpo_tuner.py:554:train] Training done. [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)]
+[phyagi] [2025-05-26 13:51:19,642] [INFO] [grpo_tuner.py:554:train] Training done. [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)]
+[phyagi] [2025-05-26 13:51:19,642] [INFO] [grpo_tuner.py:554:train] Training done. [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)]
+[phyagi] [2025-05-26 13:51:19,642] [INFO] [grpo_tuner.py:554:train] Training done. [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)] [GPU memory allocated: 16.93 GB (38.0% of device)]
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:50:49,085] [INFO] [grpo_worker.py:135:update_actor_policy] Updating actor policy with 13 batches... [GPU memory allocated: 4.84 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayGRPOWorker pid=2125363)</span> [phyagi] [2025-05-26 13:50:49,086] [INFO] [grpo_worker.py:136:update_actor_policy] Shapes: [torch.Size([1, 763]), torch.Size([1, 764]), torch.Size([1, 767]), torch.Size([1, 748]), torch.Size([1, 670]), torch.Size([1, 748]), torch.Size([1, 767]), torch.Size([1, 768]), torch.Size([1, 768]), torch.Size([1, 731]), torch.Size([1, 683]), torch.Size([1, 617]), torch.Size([1, 165])] [GPU memory allocated: 4.84 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+Generating completions: 100%|██████████| 21/21 [04:43&lt;00:00, 13.49s/it]
+</pre></div></div>
+</div>
+</section>
+<section id="Command-line-script">
+<h3>Command-line script<a class="headerlink" href="#Command-line-script" title="Link to this heading">#</a></h3>
+<p>Instead of manually writing a script, one can use the pre-defined training script with an input YAML configuration file, e.g., <a class="reference external" href="https://github.com/microsoft/phyagi-sdk/blob/rl/scripts/tune/configs/ray_grpo.yaml">ray_grpo.yaml</a>, to configure the GRPO trainer:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/tune/ray_grpo_tune.py<span class="w"> </span>&lt;path_to_yaml_file&gt;<span class="w"> </span>--tuning_args.max_steps<span class="w"> </span><span class="m">200</span><span class="w"> </span>--output_dir<span class="w"> </span>/tmp/output
+</pre></div>
+</div>
+<p>Extra arguments can be passed to the script to override the configurations in the YAML file. For example, you can specify the <code class="docutils literal notranslate"><span class="pre">tuning_args.max_steps</span></code> and <code class="docutils literal notranslate"><span class="pre">output_dir</span></code> parameters directly in the command line.</p>
+<p>When the script starts it parses the YAML, spins up Ray, and begins training. <strong>Weights &amp; Biases</strong> dashboards update in real time:</p>
+<img alt="WandB GRPO metrics" src="../_images/grpo_metrics.png" />
+<p>Model completions are also logged according to <code class="docutils literal notranslate"><span class="pre">log_n_eval_completions</span></code>:</p>
+<img alt="WandB GRPO completions" src="../_images/grpo_completions.png" />
+</section>
+</section>
+<section id="Interactive Supervised-Fine‑Tuning-(ISFT)">
+<h2>Interactive Supervised Fine‑Tuning (ISFT)<a class="headerlink" href="#Interactive Supervised-Fine‑Tuning-(ISFT)" title="Link to this heading">#</a></h2>
+<p><strong>Interactive Supervised Fine‑Tuning (ISFT)</strong> bridges the gap between ordinary supervised fine‑tuning and full RLHF.</p>
+<p><strong>Feedback loop</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Generate new model completions</strong> at a fixed interval.</p></li>
+<li><p>Collect <strong>human labels</strong> indicating <em>the single best completion</em> (or whether any is correct).</p></li>
+<li><p><strong>Fine‑tune the model</strong> on the accepted completions with cross‑entropy loss.</p></li>
+</ol>
+<p>Because updates remain purely supervised, ISFT is <strong>stable and fast</strong>, yet it continually adapts to <em>model dependent</em> errors.</p>
+<section id="When-does-ISFT-shine?">
+<h3>When does ISFT shine?<a class="headerlink" href="#When-does-ISFT-shine?" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Tasks with an unambiguous “right answer” (math, code, factual QA).</p></li>
+<li><p>Teams that need quick iteration and cannot afford the complexity of RL.</p></li>
+<li><p>Early‑stage projects where exploration is less critical than correctness.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">datasets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.rl.chat.chat_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.rl.rl_data_collator</span><span class="w"> </span><span class="kn">import</span> <span class="n">RewardDataCollator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.tuners.isft.isft_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">RayISFTConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.tuners.isft.isft_tuner</span><span class="w"> </span><span class="kn">import</span> <span class="n">RayISFTTuner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.models.actor_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ActorConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.rollout.vllm_worker_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">VLLMWorkerConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.rewards.gsm8k</span><span class="w"> </span><span class="kn">import</span> <span class="n">GSM8kReward</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;WANDB_MODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;disabled&quot;</span>
+
+<span class="n">actor_config</span> <span class="o">=</span> <span class="n">ActorConfig</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pretrained_model_name_or_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/gderosa/models/Phi-3-mini-4k-instruct&quot;</span><span class="p">},</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;betas&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">],</span>
+        <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">scheduler</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;warmup_num_steps&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;warmup_max_lr&quot;</span><span class="p">:</span> <span class="mf">5.0e-6</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">rollout_config</span> <span class="o">=</span> <span class="n">VLLMWorkerConfig</span><span class="p">(</span>
+    <span class="n">prompt_length</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+    <span class="n">response_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;bfloat16&quot;</span><span class="p">,</span>
+    <span class="n">gpu_memory_utilization</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">enforce_eager</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">enable_prefix_caching</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">sampling_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">tuning_args</span> <span class="o">=</span> <span class="n">RayISFTConfig</span><span class="p">(</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;/tmp/isft_gsm8k&quot;</span><span class="p">,</span>
+    <span class="n">n_nodes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">n_gpus_per_node</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">max_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">train_batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">group_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">train_max_micro_batch_size_per_gpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">actor</span><span class="o">=</span><span class="n">actor_config</span><span class="p">,</span>
+    <span class="n">rollout</span><span class="o">=</span><span class="n">rollout_config</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;microsoft/Phi-3-mini-128k-instruct&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_answer</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="n">row</span><span class="p">[</span><span class="s2">&quot;answer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;reward_model&quot;</span><span class="p">][</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">row</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span>
+    <span class="s2">&quot;parquet&quot;</span><span class="p">,</span>
+    <span class="n">data_files</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/gderosa/datasets/gsm8k/train.parquet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/gderosa/datasets/gsm8k/test.parquet&quot;</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_extract_answer</span><span class="p">)</span>
+
+<span class="n">rewards</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;math_verifier&quot;</span><span class="p">:</span> <span class="n">GSM8kReward</span><span class="p">(</span><span class="n">format_score</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">correct_score</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">ChatDataset</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">messages_column_name</span><span class="o">=</span><span class="s2">&quot;prompt&quot;</span><span class="p">,</span>
+    <span class="n">ground_truth_column_name</span><span class="o">=</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span>
+    <span class="n">max_length</span><span class="o">=</span><span class="n">tuning_args</span><span class="o">.</span><span class="n">rollout</span><span class="o">.</span><span class="n">prompt_length</span><span class="p">,</span>
+    <span class="n">filter_max_length</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">eval_dataset</span> <span class="o">=</span> <span class="n">ChatDataset</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">],</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">messages_column_name</span><span class="o">=</span><span class="s2">&quot;prompt&quot;</span><span class="p">,</span>
+    <span class="n">ground_truth_column_name</span><span class="o">=</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span>
+    <span class="n">max_length</span><span class="o">=</span><span class="n">tuning_args</span><span class="o">.</span><span class="n">rollout</span><span class="o">.</span><span class="n">prompt_length</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">data_collator</span> <span class="o">=</span> <span class="n">RewardDataCollator</span><span class="p">(</span><span class="n">reward_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">rewards</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+<span class="n">tuner</span> <span class="o">=</span> <span class="n">RayISFTTuner</span><span class="p">(</span>
+    <span class="n">args</span><span class="o">=</span><span class="n">tuning_args</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">data_collator</span><span class="o">=</span><span class="n">data_collator</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+    <span class="n">eval_dataset</span><span class="o">=</span><span class="n">eval_dataset</span><span class="p">,</span>
+    <span class="n">rewards</span><span class="o">=</span><span class="n">rewards</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">tuner</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2025-05-26 13:53:56,442 INFO worker.py:1888 -- Started a local Ray instance.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-26 13:53:57,608] [INFO] [isft_tuner.py:107:__init__] Tuning arguments: {&#39;output_dir&#39;: &#39;/tmp/isft_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {&#39;config&#39;: {&#39;tuning_args&#39;: {&#39;output_dir&#39;: &#39;/tmp/isft_gsm8k&#39;, &#39;n_nodes&#39;: 1, &#39;n_gpus_per_node&#39;: 4, &#39;do_final_eval&#39;: True, &#39;eval_before_training&#39;: False, &#39;epochs&#39;: None, &#39;max_steps&#39;: 1, &#39;log_n_eval_completions&#39;: 20, &#39;save_steps&#39;: -1, &#39;save_final_checkpoint&#39;: True, &#39;eval_steps&#39;: 0, &#39;seed&#39;: 1, &#39;group_size&#39;: 8, &#39;train_batch_size&#39;: 16, &#39;train_max_micro_batch_size_per_gpu&#39;: 1, &#39;adv_length_bias_correction&#39;: True, &#39;num_policy_updates_per_batch&#39;: 1, &#39;actor&#39;: {&#39;model&#39;: {&#39;pretrained_model_name_or_path&#39;: &#39;/home/gderosa/models/Phi-3-mini-4k-instruct&#39;}, &#39;use_meta_tensor&#39;: False, &#39;optimizer&#39;: {&#39;betas&#39;: [0.9, 0.999], &#39;weight_decay&#39;: 0.01}, &#39;scheduler&#39;: {&#39;warmup_num_steps&#39;: 1, &#39;warmup_max_lr&#39;: 5e-06}, &#39;gradient_clipping&#39;: 1.0, &#39;manual_offload&#39;: False, &#39;fsdp_offload&#39;: False, &#39;activation_checkpointing&#39;: False, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;adam_8bit&#39;: False}, &#39;rollout&#39;: {&#39;prompt_length&#39;: 256, &#39;response_length&#39;: 512, &#39;tensor_parallel_size&#39;: 1, &#39;offload&#39;: True, &#39;dtype&#39;: &#39;bfloat16&#39;, &#39;gpu_memory_utilization&#39;: 0.5, &#39;swap_space&#39;: 64.0, &#39;enforce_eager&#39;: False, &#39;hf_overrides&#39;: None, &#39;enable_chunked_prefill&#39;: True, &#39;enable_prefix_caching&#39;: True, &#39;preemption_mode&#39;: None, &#39;max_num_batched_tokens&#39;: None, &#39;max_num_seqs&#39;: None, &#39;kv_cache_dtype&#39;: &#39;auto&#39;, &#39;sampling_params&#39;: {&#39;temperature&#39;: 1.0}, &#39;disable_log_stats&#39;: True, &#39;extra_kwargs&#39;: None}, &#39;dataloader_shuffle&#39;: True, &#39;dataloader_num_workers&#39;: 1, &#39;reward_num_workers&#39;: 1, &#39;wandb&#39;: {}}}}} [GPU memory allocated: 0.26 GB (1.0% of device)]
+[phyagi] [2025-05-26 13:53:57,640] [INFO] [isft_tuner.py:433:train] Starting training... [GPU memory allocated: 0.26 GB (1.0% of device)]
+<span class="ansi-cyan-fg">(pid=2135234)</span> [2025-05-26 13:54:05,091] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+<span class="ansi-cyan-fg">(pid=2135234)</span> INFO 05-26 13:54:06 [importing.py:53] Triton module has been replaced with a placeholder.
+<span class="ansi-cyan-fg">(pid=2135234)</span> INFO 05-26 13:54:06 [__init__.py:239] Automatically detected platform cuda.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 13:54:09,035] [INFO] [ray_worker.py:64:configure_models] Initializing actor, reference (optional) and rollout models... [GPU memory allocated: 0.52 GB (1.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 13:54:09,546] [INFO] [model.py:93:get_model] Loading pre-trained model: /home/gderosa/models/Phi-3-mini-4k-instruct
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 13:54:09,546] [INFO] [model.py:94:get_model] Model configuration: {&#39;torch_dtype&#39;: torch.float32, &#39;model_type&#39;: &#39;mixformer-sequential&#39;, &#39;trust_remote_code&#39;: True}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Loading checkpoint shards:   0%|          | 0/2 [00:00&lt;?, ?it/s]
+Loading checkpoint shards:  50%|█████     | 1/2 [00:05&lt;00:05,  5.48s/it]
+Loading checkpoint shards:   0%|          | 0/2 [00:00&lt;?, ?it/s]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Loading checkpoint shards: 100%|██████████| 2/2 [00:08&lt;00:00,  4.22s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:55:29 [config.py:2968] Downcasting torch.float32 to torch.bfloat16.
+<span class="ansi-cyan-fg">(pid=2135236)</span> [2025-05-26 13:54:05,275] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(pid=2135236)</span> INFO 05-26 13:54:07 [importing.py:53] Triton module has been replaced with a placeholder.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(pid=2135236)</span> INFO 05-26 13:54:07 [__init__.py:239] Automatically detected platform cuda.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 13:54:09,037] [INFO] [ray_worker.py:64:configure_models] Initializing actor, reference (optional) and rollout models... [GPU memory allocated: 0.26 GB (1.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:55:37 [config.py:717] This model supports multiple tasks: {&#39;embed&#39;, &#39;classify&#39;, &#39;score&#39;, &#39;generate&#39;, &#39;reward&#39;}. Defaulting to &#39;generate&#39;.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:55:37 [config.py:1729] Disabling V1 multiprocessing for external launcher.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:55:37 [config.py:2003] Chunked prefill is enabled with max_num_batched_tokens=8192.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:55:30 [config.py:2968] Downcasting torch.float32 to torch.bfloat16.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:55:37 [config.py:717] This model supports multiple tasks: {&#39;generate&#39;, &#39;embed&#39;, &#39;reward&#39;, &#39;score&#39;, &#39;classify&#39;}. Defaulting to &#39;generate&#39;.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 13:55:37 [config.py:717] This model supports multiple tasks: {&#39;generate&#39;, &#39;score&#39;, &#39;reward&#39;, &#39;embed&#39;, &#39;classify&#39;}. Defaulting to &#39;generate&#39;.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:55:37 [core.py:58] Initializing a V1 LLM engine (v0.8.5.post1) with config: model=&#39;/tmp/isft_gsm8k/initial_rollout&#39;, speculative_config=None, tokenizer=&#39;/tmp/isft_gsm8k/initial_rollout&#39;, skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, override_neuron_config=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=768, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, disable_custom_all_reduce=True, quantization=None, enforce_eager=False, kv_cache_dtype=auto,  device_config=cuda, decoding_config=DecodingConfig(guided_decoding_backend=&#39;auto&#39;, reasoning_backend=None), observability_config=ObservabilityConfig(show_hidden_metrics=False, otlp_traces_endpoint=None, collect_model_forward_time=False, collect_model_execute_time=False), seed=1, served_model_name=/tmp/isft_gsm8k/initial_rollout, num_scheduler_steps=1, multi_step_stream_outputs=True, enable_prefix_caching=True, chunked_prefill_enabled=True, use_async_output_proc=True, disable_mm_preprocessor_cache=False, mm_processor_kwargs=None, pooler_config=None, compilation_config={&#34;level&#34;:3,&#34;custom_ops&#34;:[&#34;none&#34;],&#34;splitting_ops&#34;:[&#34;vllm.unified_attention&#34;,&#34;vllm.unified_attention_with_output&#34;],&#34;use_inductor&#34;:true,&#34;compile_sizes&#34;:[],&#34;use_cudagraph&#34;:true,&#34;cudagraph_num_of_warmups&#34;:1,&#34;cudagraph_capture_sizes&#34;:[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],&#34;max_capture_size&#34;:512}
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> WARNING 05-26 13:55:37 [utils.py:2522] Methods determine_num_available_blocks,device_config,get_cache_block_size_bytes,initialize_cache not implemented in &lt;vllm.v1.worker.gpu_worker.Worker object at 0x7f94342b4790&gt;
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:55:38 [config.py:717] This model supports multiple tasks: {&#39;embed&#39;, &#39;score&#39;, &#39;generate&#39;, &#39;classify&#39;, &#39;reward&#39;}. Defaulting to &#39;generate&#39;.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:55:39 [parallel_state.py:1004] rank 0 in world size 4 is assigned as DP rank 0, PP rank 0, TP rank 0
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:55:39 [cuda.py:221] Using Flash Attention backend on V1 engine.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> WARNING 05-26 13:55:39 [topk_topp_sampler.py:69] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p &amp; top-k sampling. For the best performance, please install FlashInfer.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:55:39 [gpu_model_runner.py:1329] Starting to load model /tmp/isft_gsm8k/initial_rollout...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00&lt;?, ?it/s]
+Loading checkpoint shards:  50%|█████     | 1/2 [00:05&lt;00:05,  5.51s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Loading checkpoint shards: 100%|██████████| 2/2 [00:08&lt;00:00,  4.25s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:01&lt;00:05,  1.97s/it]
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:04&lt;00:04,  2.22s/it]
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:05&lt;00:01,  1.66s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 13:55:46 [loader.py:458] Loading weights took 6.41 seconds
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:55:38 [config.py:1729] Disabling V1 multiprocessing for external launcher.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:55:38 [config.py:2003] Chunked prefill is enabled with max_num_batched_tokens=8192.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:55:38 [core.py:58] Initializing a V1 LLM engine (v0.8.5.post1) with config: model=&#39;/tmp/isft_gsm8k/initial_rollout&#39;, speculative_config=None, tokenizer=&#39;/tmp/isft_gsm8k/initial_rollout&#39;, skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, override_neuron_config=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=768, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, disable_custom_all_reduce=True, quantization=None, enforce_eager=False, kv_cache_dtype=auto,  device_config=cuda, decoding_config=DecodingConfig(guided_decoding_backend=&#39;auto&#39;, reasoning_backend=None), observability_config=ObservabilityConfig(show_hidden_metrics=False, otlp_traces_endpoint=None, collect_model_forward_time=False, collect_model_execute_time=False), seed=0, served_model_name=/tmp/isft_gsm8k/initial_rollout, num_scheduler_steps=1, multi_step_stream_outputs=True, enable_prefix_caching=True, chunked_prefill_enabled=True, use_async_output_proc=True, disable_mm_preprocessor_cache=False, mm_processor_kwargs=None, pooler_config=None, compilation_config={&#34;level&#34;:3,&#34;custom_ops&#34;:[&#34;none&#34;],&#34;splitting_ops&#34;:[&#34;vllm.unified_attention&#34;,&#34;vllm.unified_attention_with_output&#34;],&#34;use_inductor&#34;:true,&#34;compile_sizes&#34;:[],&#34;use_cudagraph&#34;:true,&#34;cudagraph_num_of_warmups&#34;:1,&#34;cudagraph_capture_sizes&#34;:[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],&#34;max_capture_size&#34;:512}<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> WARNING 05-26 13:55:39 [utils.py:2522] Methods determine_num_available_blocks,device_config,get_cache_block_size_bytes,initialize_cache not implemented in &lt;vllm.v1.worker.gpu_worker.Worker object at 0x7f10007e0a60&gt;<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:55:39 [parallel_state.py:1004] rank 2 in world size 4 is assigned as DP rank 0, PP rank 0, TP rank 0<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:55:39 [cuda.py:221] Using Flash Attention backend on V1 engine.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> WARNING 05-26 13:55:39 [topk_topp_sampler.py:69] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p &amp; top-k sampling. For the best performance, please install FlashInfer.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:55:39 [gpu_model_runner.py:1329] Starting to load model /tmp/isft_gsm8k/initial_rollout...<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 13:55:46 [gpu_model_runner.py:1347] Model loading took 7.1184 GiB and 6.583881 seconds
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:07&lt;00:00,  1.78s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:07&lt;00:00,  1.83s/it]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span>
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 13:55:52 [backends.py:420] Using cache directory: /home/gderosa/.cache/vllm/torch_compile_cache/49dcf6ec0c/rank_3_0 for vLLM&#39;s torch.compile
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 13:55:52 [backends.py:430] Dynamo bytecode transform time: 6.41 s
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:55:47 [loader.py:458] Loading weights took 7.66 seconds<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:55:47 [gpu_model_runner.py:1347] Model loading took 7.1184 GiB and 7.834270 seconds<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 13:55:55 [backends.py:136] Cache the graph of shape None for later use
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 13:56:19 [backends.py:148] Compiling a graph for general shape takes 25.85 s
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:55:54 [backends.py:420] Using cache directory: /home/gderosa/.cache/vllm/torch_compile_cache/49dcf6ec0c/rank_2_0 for vLLM&#39;s torch.compile<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:55:54 [backends.py:430] Dynamo bytecode transform time: 6.44 s<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:55:57 [backends.py:136] Cache the graph of shape None for later use<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 13:56:28 [monitor.py:33] torch.compile takes 32.26 s in total
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:56:19 [backends.py:148] Compiling a graph for general shape takes 25.30 s<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:56:30 [kv_cache_utils.py:634] GPU KV cache size: 37,216 tokens
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:56:30 [kv_cache_utils.py:637] Maximum concurrency for 768 tokens per request: 48.46x
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:57:01 [gpu_model_runner.py:1686] Graph capturing finished in 31 secs, took 0.47 GiB
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:57:01 [core.py:159] init engine (profile, create kv cache, warmup model) took 73.85 seconds
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:57:01 [block_pool.py:264] Successfully reset prefix cache
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:56:29 [monitor.py:33] torch.compile takes 31.64 s in total<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:56:30 [kv_cache_utils.py:634] GPU KV cache size: 37,216 tokens<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:56:30 [kv_cache_utils.py:637] Maximum concurrency for 768 tokens per request: 48.46x<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:57:09 [gpu_worker.py:95] Sleep mode freed 21.09 GiB memory, 0.88 GiB memory is still in use.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 13:57:09 [executor_base.py:210] It took 8.384776 seconds to fall asleep.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:57:02 [gpu_model_runner.py:1686] Graph capturing finished in 33 secs, took 0.47 GiB<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:57:02 [core.py:159] init engine (profile, create kv cache, warmup model) took 75.29 seconds<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:57:02 [block_pool.py:264] Successfully reset prefix cache<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> [phyagi] [2025-05-26 13:57:12,705] [INFO] [ray_worker.py:78:configure_models] Actor, reference (optional) and rollout models initialized. [GPU memory allocated: 5.47 GB (12.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 13:57:14,075] [INFO] [parallel_mixformer_sequential.py:126:apply_fsdp_mixformer_sequential] Fully Sharded Data Parallelism (FSDP) has been applied to model blocks.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 13:57:14,209] [INFO] [parallel_mixformer_sequential.py:129:apply_fsdp_mixformer_sequential] Fully Sharded Data Parallelism (FSDP) has been applied to model.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+  0%|          | 0/1 [00:00&lt;?, ?it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-26 13:57:14,270] [INFO] [isft_tuner.py:482:train] [step=1] Evaluating model... [GPU memory allocated: 5.73 GB (13.0% of device)]
+[phyagi] [2025-05-26 13:57:14,275] [INFO] [isft_tuner.py:362:evaluate] Generating completions for validation set... [GPU memory allocated: 5.73 GB (13.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:57:14 [executor_base.py:226] It took 0.459948 seconds to wake up tags {&#39;kv_cache&#39;, &#39;weights&#39;}.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 13:57:14,762] [INFO] [ray_worker.py:184:generate_completions] Synchronizing actor weights with rollout... [GPU memory allocated: 25.59 GB (57.99999999999999% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 13:57:14 [executor_base.py:226] It took 0.462365 seconds to wake up tags {&#39;weights&#39;, &#39;kv_cache&#39;}.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Generating completions:   0%|          | 0/11 [00:00&lt;?, ?it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 13:57:15,208] [INFO] [ray_worker.py:186:generate_completions] Synchronization done. [GPU memory allocated: 26.26 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 13:57:15,208] [INFO] [ray_worker.py:191:generate_completions] Generating completions using 11 batches of 32 prompts... [GPU memory allocated: 26.26 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:57:11 [gpu_worker.py:95] Sleep mode freed 21.09 GiB memory, 1.14 GiB memory is still in use.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 13:57:11 [executor_base.py:210] It took 8.538833 seconds to fall asleep.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Generating completions:   9%|▉         | 1/11 [00:19&lt;03:15, 19.53s/it]
+Generating completions:   0%|          | 0/11 [00:00&lt;?, ?it/s]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:   9%|▉         | 1/11 [00:26&lt;04:23, 26.32s/it]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+Generating completions:  18%|█▊        | 2/11 [00:37&lt;02:48, 18.67s/it]
+Generating completions:  18%|█▊        | 2/11 [00:40&lt;03:01, 20.18s/it]
+Generating completions:  18%|█▊        | 2/11 [00:47&lt;03:28, 23.15s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  27%|██▋       | 3/11 [01:00&lt;02:41, 20.18s/it]
+Generating completions:  27%|██▋       | 3/11 [01:00&lt;02:45, 20.71s/it]
+Generating completions:  27%|██▋       | 3/11 [01:08&lt;02:57, 22.17s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  36%|███▋      | 4/11 [01:21&lt;02:24, 20.66s/it]
+Generating completions:  36%|███▋      | 4/11 [01:22&lt;02:26, 20.96s/it]
+Generating completions:  36%|███▋      | 4/11 [01:28&lt;02:29, 21.29s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  45%|████▌     | 5/11 [01:39&lt;01:58, 19.80s/it]
+Generating completions:  45%|████▌     | 5/11 [01:43&lt;02:03, 20.65s/it]
+Generating completions:  45%|████▌     | 5/11 [01:51&lt;02:11, 21.95s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  55%|█████▍    | 6/11 [01:58&lt;01:37, 19.52s/it]
+Generating completions:  55%|█████▍    | 6/11 [02:04&lt;01:44, 20.87s/it]
+Generating completions:  55%|█████▍    | 6/11 [02:13&lt;01:50, 22.14s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  64%|██████▎   | 7/11 [02:24&lt;01:22, 20.56s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  64%|██████▎   | 7/11 [02:33&lt;01:25, 21.47s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  73%|███████▎  | 8/11 [02:42&lt;00:59, 19.91s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  73%|███████▎  | 8/11 [02:53&lt;01:02, 20.89s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  82%|████████▏ | 9/11 [02:59&lt;00:40, 20.21s/it]
+Generating completions:  82%|████████▏ | 9/11 [03:05&lt;00:41, 20.73s/it]
+Generating completions:  82%|████████▏ | 9/11 [03:13&lt;00:40, 20.47s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions:  91%|█████████ | 10/11 [03:18&lt;00:19, 19.87s/it]
+Generating completions:  91%|█████████ | 10/11 [03:27&lt;00:20, 20.73s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> [phyagi] [2025-05-26 14:00:45,490] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.08 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 14:00:45 [block_pool.py:264] Successfully reset prefix cache
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 13:57:14,210] [INFO] [ray_worker.py:78:configure_models] Actor, reference (optional) and rollout models initialized. [GPU memory allocated: 5.73 GB (13.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 13:57:14 [executor_base.py:226] It took 0.457412 seconds to wake up tags {&#39;kv_cache&#39;, &#39;weights&#39;}.<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 13:57:14,765] [INFO] [ray_worker.py:184:generate_completions] Synchronizing actor weights with rollout... [GPU memory allocated: 25.33 GB (56.99999999999999% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 13:57:15,167] [INFO] [ray_worker.py:186:generate_completions] Synchronization done. [GPU memory allocated: 26.00 GB (59.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 13:57:15,168] [INFO] [ray_worker.py:191:generate_completions] Generating completions using 11 batches of 32 prompts... [GPU memory allocated: 26.00 GB (59.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Generating completions: 100%|██████████| 11/11 [03:30&lt;00:00, 19.12s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 14:00:46 [gpu_worker.py:95] Sleep mode freed 21.26 GiB memory, 4.83 GiB memory is still in use.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 14:00:46 [executor_base.py:210] It took 0.882834 seconds to fall asleep.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> [phyagi] [2025-05-26 14:00:46,375] [INFO] [ray_worker.py:206:generate_completions] vLLM is now asleep. [GPU memory allocated: 4.83 GB (11.0% of device)]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Generating completions:  91%|█████████ | 10/11 [03:31&lt;00:19, 19.91s/it]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+Generating completions: 100%|██████████| 11/11 [03:38&lt;00:00, 19.88s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 14:00:53,830] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.08 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 14:00:53 [block_pool.py:264] Successfully reset prefix cache
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Generating completions: 100%|██████████| 11/11 [03:38&lt;00:00, 19.90s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 14:00:54,083] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.34 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 14:00:54 [block_pool.py:264] Successfully reset prefix cache
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 14:00:54 [gpu_worker.py:95] Sleep mode freed 21.25 GiB memory, 4.83 GiB memory is still in use.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 14:00:54 [executor_base.py:210] It took 0.867121 seconds to fall asleep.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 14:00:54,700] [INFO] [ray_worker.py:206:generate_completions] vLLM is now asleep. [GPU memory allocated: 4.83 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:00:59,700] [INFO] [isft_tuner.py:371:evaluate] Completions generated. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:00:59,702] [INFO] [isft_tuner.py:373:evaluate] Calculating rewards for validation set... [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:03,436] [INFO] [isft_tuner.py:383:evaluate] Rewards calculated. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:03,437] [INFO] [isft_tuner.py:386:evaluate] Logging validation completions... [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:03,450] [INFO] [isft_tuner.py:402:evaluate] Validation completions logged. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:03,484] [INFO] [isft_tuner.py:484:train] Evaluation done. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:03,486] [INFO] [isft_tuner.py:492:train] [step=1] Saving sync checkpoint... [GPU memory allocated: 5.09 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 14:01:03,490] [INFO] [ray_actor.py:221:save_checkpoint] Saving checkpoint: /tmp/isft_gsm8k/1/actor [GPU memory allocated: 5.09 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> [phyagi] [2025-05-26 14:00:58,073] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.08 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 14:00:58 [block_pool.py:264] Successfully reset prefix cache
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 14:00:58 [gpu_worker.py:95] Sleep mode freed 21.26 GiB memory, 4.83 GiB memory is still in use.<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 14:00:58 [executor_base.py:210] It took 0.869186 seconds to fall asleep.<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> [phyagi] [2025-05-26 14:00:58,945] [INFO] [ray_worker.py:206:generate_completions] vLLM is now asleep. [GPU memory allocated: 4.83 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+[phyagi] [2025-05-26 14:01:23,047] [INFO] [isft_tuner.py:495:train] Checkpoint saved. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:23,048] [INFO] [isft_tuner.py:497:train] Generating completions... [GPU memory allocated: 5.09 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 14:01:23,034] [INFO] [ray_actor.py:241:save_checkpoint] Checkpoint saved. [GPU memory allocated: 5.09 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 14:01:03,490] [INFO] [ray_actor.py:221:save_checkpoint] Saving checkpoint: /tmp/isft_gsm8k/1/actor [GPU memory allocated: 4.83 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> INFO 05-26 14:01:23 [executor_base.py:226] It took 0.445400 seconds to wake up tags {&#39;kv_cache&#39;, &#39;weights&#39;}.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 14:01:23,497] [INFO] [ray_worker.py:184:generate_completions] Synchronizing actor weights with rollout... [GPU memory allocated: 25.90 GB (57.99999999999999% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 14:01:23,559] [INFO] [ray_worker.py:186:generate_completions] Synchronization done. [GPU memory allocated: 26.27 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 14:01:23,559] [INFO] [ray_worker.py:199:generate_completions] Generating completions for 4 prompts... [GPU memory allocated: 26.27 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135237)</span> INFO 05-26 14:01:23 [executor_base.py:226] It took 0.447947 seconds to wake up tags {&#39;weights&#39;, &#39;kv_cache&#39;}.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> [phyagi] [2025-05-26 14:01:28,819] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.01 GB (59.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 14:01:28 [block_pool.py:264] Successfully reset prefix cache
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 14:01:23,037] [INFO] [ray_actor.py:241:save_checkpoint] Checkpoint saved. [GPU memory allocated: 4.83 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 14:01:23 [executor_base.py:226] It took 0.441971 seconds to wake up tags {&#39;kv_cache&#39;, &#39;weights&#39;}.<span class="ansi-green-fg"> [repeated 2x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 14:01:23,495] [INFO] [ray_worker.py:184:generate_completions] Synchronizing actor weights with rollout... [GPU memory allocated: 25.64 GB (57.99999999999999% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 14:01:23,557] [INFO] [ray_worker.py:186:generate_completions] Synchronization done. [GPU memory allocated: 26.01 GB (59.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 14:01:23,557] [INFO] [ray_worker.py:199:generate_completions] Generating completions for 4 prompts... [GPU memory allocated: 26.01 GB (59.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 14:01:29 [gpu_worker.py:95] Sleep mode freed 21.18 GiB memory, 4.83 GiB memory is still in use.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> INFO 05-26 14:01:29 [executor_base.py:210] It took 0.860756 seconds to fall asleep.
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135235)</span> [phyagi] [2025-05-26 14:01:29,681] [INFO] [ray_worker.py:206:generate_completions] vLLM is now asleep. [GPU memory allocated: 4.83 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:34,677] [INFO] [isft_tuner.py:502:train] Completions generated. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:34,679] [INFO] [isft_tuner.py:504:train] Calculating rewards... [GPU memory allocated: 5.09 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 14:01:33,813] [INFO] [ray_worker.py:204:generate_completions] Completions generated. [GPU memory allocated: 26.01 GB (59.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 14:01:33 [block_pool.py:264] Successfully reset prefix cache<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 14:01:34 [gpu_worker.py:95] Sleep mode freed 21.18 GiB memory, 4.83 GiB memory is still in use.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> INFO 05-26 14:01:34 [executor_base.py:210] It took 0.858220 seconds to fall asleep.<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 14:01:34,673] [INFO] [ray_worker.py:206:generate_completions] vLLM is now asleep. [GPU memory allocated: 4.83 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+[phyagi] [2025-05-26 14:01:34,772] [INFO] [isft_tuner.py:511:train] Rewards calculated. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:34,773] [INFO] [isft_tuner.py:513:train] Packing completions, masks and advantages... [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:34,801] [INFO] [isft_tuner.py:516:train] Packing done. [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:34,802] [INFO] [isft_tuner.py:518:train] Updating actor model... [GPU memory allocated: 5.09 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 14:01:34,819] [INFO] [isft_worker.py:100:update_actor_policy] Updating actor policy with 13 batches... [GPU memory allocated: 5.09 GB (11.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135234)</span> [phyagi] [2025-05-26 14:01:34,819] [INFO] [isft_worker.py:101:update_actor_policy] Shapes: [torch.Size([1, 757]), torch.Size([1, 767]), torch.Size([1, 768]), torch.Size([1, 766]), torch.Size([1, 742]), torch.Size([1, 766]), torch.Size([1, 624]), torch.Size([1, 768]), torch.Size([1, 768]), torch.Size([1, 720]), torch.Size([1, 676]), torch.Size([1, 766]), torch.Size([1, 165])] [GPU memory allocated: 5.09 GB (11.0% of device)]
+[phyagi] [2025-05-26 14:01:55,859] [INFO] [isft_tuner.py:523:train] Actor model updated. [GPU memory allocated: 16.11 GB (36.0% of device)]
+[phyagi] [2025-05-26 14:01:55,861] [INFO] [isft_tuner.py:525:train] {&#39;train/step&#39;: 1, &#39;train/epoch&#39;: 1, &#39;train/loss&#39;: -0.0009156670421361923, &#39;train/lr&#39;: 0.0, &#39;train/grad_norm&#39;: 1.9598336815834045, &#39;train_reward/mean&#39;: 0.46875, &#39;train_reward/best_of_group&#39;: 1.0, &#39;train_reward/accuracy&#39;: 0.46875, &#39;train_reward/avg_response_length&#39;: 208.8828125, &#39;train_reward/avg_correct_response_length&#39;: 199.76666259765625, &#39;train_reward/avg_incorrect_response_length&#39;: 216.9264678955078, &#39;validation_reward/mean&#39;: 0.3971758782863617, &#39;validation_reward/best_of_group&#39;: 0.9264594316482544, &#39;validation_reward/accuracy&#39;: 0.3971758782863617, &#39;validation_reward/avg_response_length&#39;: 229.10643005371094, &#39;validation_reward/avg_correct_response_length&#39;: 216.8861846923828, &#39;validation_reward/avg_incorrect_response_length&#39;: 237.1578369140625, &#39;timing/isft_step&#39;: 281.6003556251526, &#39;timing/evaluation&#39;: 229.21555256843567, &#39;timing/checkpoint&#39;: 19.562641382217407, &#39;timing/generation&#39;: 11.627514600753784, &#39;timing/reward&#39;: 0.09160995483398438, &#39;timing/packing&#39;: 0.02730274200439453, &#39;timing/actor_update&#39;: 21.056451559066772}
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 1/1 [04:41&lt;00:00, 281.60s/it]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-26 14:01:55,865] [INFO] [isft_tuner.py:538:train] Training done. [GPU memory allocated: 16.11 GB (36.0% of device)]
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 14:01:34,827] [INFO] [isft_worker.py:100:update_actor_policy] Updating actor policy with 13 batches... [GPU memory allocated: 4.83 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+<span class="ansi-cyan-fg">(RayISFTWorker pid=2135236)</span> [phyagi] [2025-05-26 14:01:34,827] [INFO] [isft_worker.py:101:update_actor_policy] Shapes: [torch.Size([1, 768]), torch.Size([1, 760]), torch.Size([1, 767]), torch.Size([1, 763]), torch.Size([1, 736]), torch.Size([1, 668]), torch.Size([1, 628]), torch.Size([1, 768]), torch.Size([1, 768]), torch.Size([1, 732]), torch.Size([1, 690]), torch.Size([1, 620]), torch.Size([1, 515])] [GPU memory allocated: 4.83 GB (11.0% of device)]<span class="ansi-green-fg"> [repeated 3x across cluster]</span>
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+Generating completions: 100%|██████████| 11/11 [03:42&lt;00:00, 20.26s/it]
+</pre></div></div>
+</div>
+</section>
+<section id="id1">
+<h3>Command-line script<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>As mentioned in GRPO, instead of manually writing a script, one can use the pre-defined tuning script with an input YAML configuration file, e.g., <a class="reference external" href="https://github.com/microsoft/phyagi-sdk/blob/rl/scripts/tune/configs/ray_isft.yaml">ray_isft.yaml</a>, to configure the ISFT trainer:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/tune/ray_isft_tune.py<span class="w"> </span>&lt;path_to_yaml_file&gt;
+</pre></div>
+</div>
+</section>
+</section>
+<section id="Customization">
+<h2>Customization<a class="headerlink" href="#Customization" title="Link to this heading">#</a></h2>
+<p>In addition to the built-in datasets and reward functions, you can customize the RLHF process by using your own datasets and defining custom reward functions.</p>
+<section id="Custom-datasets">
+<h3>Custom datasets<a class="headerlink" href="#Custom-datasets" title="Link to this heading">#</a></h3>
+<p>To use a custom dataset, you can create a <code class="docutils literal notranslate"><span class="pre">ChatDataset</span></code> instance by providing the dataset, tokenizer, and necessary column names. Here’s an example using the <code class="docutils literal notranslate"><span class="pre">HuggingFaceH4/ultrachat_200k</span></code> dataset:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">datasets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.rl.chat.chat_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatDataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;HuggingFaceH4/ultrachat_200k&quot;</span><span class="p">)</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;microsoft/Phi-3-mini-128k-instruct&quot;</span><span class="p">)</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">ChatDataset</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">messages_column_name</span><span class="o">=</span><span class="s2">&quot;prompt&quot;</span><span class="p">,</span>
+    <span class="n">ground_truth_column_name</span><span class="o">=</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span>
+    <span class="n">max_length</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="Custom-reward-functions">
+<h3>Custom reward functions<a class="headerlink" href="#Custom-reward-functions" title="Link to this heading">#</a></h3>
+<p>Define a custom reward function by subclassing <code class="docutils literal notranslate"><span class="pre">phyagi.rewards.reward.Reward</span></code> and implementing the <code class="docutils literal notranslate"><span class="pre">__call__</span></code> method. This method should take the solution and ground truth as inputs and return a float representing the reward, as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.rewards.reward</span><span class="w"> </span><span class="kn">import</span> <span class="n">Reward</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UnitTestReward</span><span class="p">(</span><span class="n">Reward</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">run_pytests</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>You can use any combination of rewards since <code class="docutils literal notranslate"><span class="pre">RayGRPOTuner</span></code> and <code class="docutils literal notranslate"><span class="pre">RayISFTTuner</span></code> aggregates them under the hood.</p>
+</section>
+</section>
+<section id="Monitoring-&amp;-Evaluation">
+<h2>Monitoring &amp; Evaluation<a class="headerlink" href="#Monitoring-&-Evaluation" title="Link to this heading">#</a></h2>
+<p>Track these during training:</p>
+<ul class="simple">
+<li><p><strong>KL divergence</strong>: Should hover near your <code class="docutils literal notranslate"><span class="pre">kl_coeff</span></code>.</p></li>
+<li><p><strong>Reward moving average</strong>: Should rise then plateau.</p></li>
+<li><p><strong>Exact match / functional correctness</strong>: Evaluated on a <em>frozen</em> validation set.</p></li>
+</ul>
+<p>All metrics stream to <strong>Weights &amp; Biases</strong> out‑of‑the‑box. Open the W&amp;B run in your browser to monitor progress and catch regressions early.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sft.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Supervised Fine-Tuning (SFT)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="evaluation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Evaluation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Sections
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Resources">Resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Group Relative Policy Optimization-(GRPO)">Group Relative Policy Optimization (GRPO)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#How-it-works">How it works</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Command-line-script">Command-line script</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Interactive Supervised-Fine‑Tuning-(ISFT)">Interactive Supervised Fine‑Tuning (ISFT)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#When-does-ISFT-shine?">When does ISFT shine?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Command-line script</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Customization">Customization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Custom-datasets">Custom datasets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Custom-reward-functions">Custom reward functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Monitoring-&amp;-Evaluation">Monitoring &amp; Evaluation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

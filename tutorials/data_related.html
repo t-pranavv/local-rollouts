@@ -1,0 +1,1302 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Data‑related &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/data_related';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/tutorials/data_related.html" />
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Model architecture" href="model_architecture.html" />
+    <link rel="prev" title="Troubleshooting" href="../guides/troubleshooting.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2Ftutorials/data_related.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data‑related</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Sections </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data‑related</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Datasets">Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Dataset-providers">Dataset providers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Data-collators">Data collators</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Tokenizing-data">Tokenizing data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Class-style">Class-style</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Functional-style">Functional-style</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Loading-data">Loading data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#From-a-configuration-file">From a configuration file</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Data‑related">
+<h1>Data‑related<a class="headerlink" href="#Data‑related" title="Link to this heading">#</a></h1>
+<p>This tutorial provides a brief introduction to the <strong>data‑related datasets</strong> in PhyAGI and shows you <strong>how to load</strong> pre‑processed data with <code class="docutils literal notranslate"><span class="pre">phyagi-sdk</span></code>.</p>
+<p>After completing this tutorial, you will be able to:</p>
+<ul class="simple">
+<li><p>Understand the data‑handling features of <strong>PhyAGI</strong>.</p></li>
+<li><p>Tokenize a dataset from scratch (class‑style <em>and</em> functional‑style).</p></li>
+<li><p>Load pre‑processed data from configuration objects or YAML files.</p></li>
+</ul>
+<section id="Datasets">
+<h2>Datasets<a class="headerlink" href="#Datasets" title="Link to this heading">#</a></h2>
+<p>In PhyAGI (and PyTorch) a <strong>dataset</strong> is a <em>class</em> that implements the <code class="docutils literal notranslate"><span class="pre">__len__</span></code> and <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> methods. Each call to <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> should return a <strong>dictionary</strong> representing one sample.</p>
+<p>A dataset is responsible for:</p>
+<ul class="simple">
+<li><p>Loading the raw data.</p></li>
+<li><p>Applying processing or augmentation.</p></li>
+<li><p>Returning each example as a dictionary with the keys.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_ids</span></code>: sequence of input tokens.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">labels</span></code>: sequence of target tokens.</p></li>
+</ul>
+</li>
+</ul>
+<p><em>(Optional)</em> You can attach other fields (e.g. <code class="docutils literal notranslate"><span class="pre">attention_mask</span></code>) directly in the dataset class or add them later via a <strong>data collator</strong>.</p>
+<p>The following example builds an empty <code class="docutils literal notranslate"><span class="pre">LMDataset</span></code>. Each call to <code class="docutils literal notranslate"><span class="pre">dataset[i]</span></code> returns the dictionary described above:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.train.lm.lm_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMDataset</span>
+
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">LMDataset</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;input_ids&#39;: tensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0]), &#39;labels&#39;: tensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0])}
+</pre></div></div>
+</div>
+</section>
+<section id="Dataset-providers">
+<h2>Dataset providers<a class="headerlink" href="#Dataset-providers" title="Link to this heading">#</a></h2>
+<p>When you work with large corpora or multiple files, it is convenient to put all data‑loading logic inside a <strong>dataset provider</strong>. A provider knows how to:</p>
+<ol class="arabic simple">
+<li><p>Locate the raw data (local path, S3 bucket, or Hugging Face Hub).</p></li>
+<li><p>Load and cache it.</p></li>
+<li><p>Preprocess and tokenize it.</p></li>
+<li><p>Return ready‑to‑use <em>training</em> and <em>validation</em> datasets.</p></li>
+</ol>
+<p>The snippet below downloads a dataset from the Hugging Face Hub <strong>once</strong>, preprocesses it, and then reuses the same provider instance to obtain both splits:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.train.lm.lm_dataset_provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMDatasetProvider</span>
+
+<span class="n">dataset_provider</span> <span class="o">=</span> <span class="n">LMDatasetProvider</span><span class="o">.</span><span class="n">from_hub</span><span class="p">(</span>
+    <span class="n">dataset_path</span><span class="o">=</span><span class="s2">&quot;wikitext&quot;</span><span class="p">,</span>
+    <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;wikitext-2-raw-v1&quot;</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="s2">&quot;gpt2&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">dataset_provider</span><span class="o">.</span><span class="n">get_train_dataset</span><span class="p">()</span>
+<span class="n">val_dataset</span> <span class="o">=</span> <span class="n">dataset_provider</span><span class="o">.</span><span class="n">get_val_dataset</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">val_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 09:05:03,655] [INFO] [lm_dataset_provider.py:252:from_hub] Loading non-tokenized dataset...
+[phyagi] [2025-05-19 09:05:08,092] [WARNING] [lm_dataset_provider.py:270:from_hub] &#39;cache&#39; already exists and will be overritten.
+[phyagi] [2025-05-19 09:05:08,094] [INFO] [lm_dataset_provider.py:285:from_hub] Creating validation split (if necessary)...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "05e15d6008964751bab971501a207d2d", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "04769294c9b84c2f941aa3cfecf8ae60", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "1c7659c398e049e4bf525502352ab921", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 09:05:09,982] [INFO] [lm_dataset_provider.py:309:from_hub] Saving tokenized dataset: cache
+{&#39;input_ids&#39;: tensor([  796,   569, 18354,  ...,   373,  3194, 16385]), &#39;labels&#39;: tensor([  796,   569, 18354,  ...,   373,  3194, 16385])} {&#39;input_ids&#39;: tensor([  796,  8074, 20272,  ...,  7423,  1267,   837]), &#39;labels&#39;: tensor([  796,  8074, 20272,  ...,  7423,  1267,   837])}
+</pre></div></div>
+</div>
+</section>
+<section id="Data-collators">
+<h2>Data collators<a class="headerlink" href="#Data-collators" title="Link to this heading">#</a></h2>
+<p>Just before data enters the model you often need to perform <em>batch‑level</em> adjustments such as padding or masking. In PhyAGI you do this with a <strong>data collator</strong>.</p>
+<p>The example below constructs an <code class="docutils literal notranslate"><span class="pre">LMDataCollator</span></code> that ignores the token with <code class="docutils literal notranslate"><span class="pre">token_id = 796</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.train.train_data_collator</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMDataCollator</span>
+
+<span class="n">data_collator</span> <span class="o">=</span> <span class="n">LMDataCollator</span><span class="p">(</span><span class="n">ignore_token_ids</span><span class="o">=</span><span class="p">[</span><span class="mi">796</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=-</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">train_dataset</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+
+<span class="n">collated_samples</span> <span class="o">=</span> <span class="n">data_collator</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">collated_samples</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">100</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">collated_samples</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;input_ids&#39;: tensor([[  796,   569, 18354,  ...,   373,  3194, 16385],
+        [11308,   575, 10546,  ..., 13460,  5670,   319]]), &#39;labels&#39;: tensor([[ -100,   569, 18354,  ...,   373,  3194, 16385],
+        [11308,   575, 10546,  ..., 13460,  5670,   319]])}
+</pre></div></div>
+</div>
+<p><em>Note: ``796`` is used here only as an example, you can instruct the collator to ignore any token ID, or none at all.</em></p>
+<p>For more details about datasets, providers, and collators, consult the <a class="reference external" href="https://microsoft.github.io/phyagi/api/datasets.html">official documentation</a>.</p>
+</section>
+</section>
+<section id="Tokenizing-data">
+<h1>Tokenizing data<a class="headerlink" href="#Tokenizing-data" title="Link to this heading">#</a></h1>
+<p>PhyAGI offers <strong>two approaches</strong> to tokenize a dataset:</p>
+<ol class="arabic simple">
+<li><p><strong>Class‑style</strong> – wrap the entire workflow in an <code class="docutils literal notranslate"><span class="pre">LMDatasetProvider</span></code>. <em>Recommended for most users.</em></p></li>
+<li><p><strong>Functional‑style</strong> – call low level helper functions directly. <em>Useful when you need complete control over preprocessing.</em></p></li>
+</ol>
+<p>The sections below illustrate both approaches.</p>
+<section id="Class-style">
+<h2>Class-style<a class="headerlink" href="#Class-style" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">LMDatasetProvider</span></code> encapsulates the entire tokenization pipeline. Under the hood it leverages the Hugging Face <code class="docutils literal notranslate"><span class="pre">datasets</span></code> library, caches the processed data, and exposes a clean API:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.train.lm.lm_dataset_provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMDatasetProvider</span>
+
+<span class="n">dataset_provider</span> <span class="o">=</span> <span class="n">LMDatasetProvider</span><span class="o">.</span><span class="n">from_hub</span><span class="p">(</span>
+    <span class="n">dataset_path</span><span class="o">=</span><span class="s2">&quot;wikitext&quot;</span><span class="p">,</span>
+    <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;wikitext-2-raw-v1&quot;</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="s2">&quot;gpt2&quot;</span><span class="p">,</span>
+    <span class="n">cache_dir</span><span class="o">=</span><span class="s2">&quot;cache&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 09:05:10,858] [INFO] [lm_dataset_provider.py:252:from_hub] Loading non-tokenized dataset...
+[phyagi] [2025-05-19 09:05:15,888] [WARNING] [lm_dataset_provider.py:270:from_hub] &#39;cache&#39; already exists and will be overritten.
+[phyagi] [2025-05-19 09:05:15,890] [INFO] [lm_dataset_provider.py:285:from_hub] Creating validation split (if necessary)...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "ecc70787c2be4c758b99bedf40fb939d", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "7b342db2bf424d00a1ec09f5a688cee5", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "c93f32ce880742fd92d0a63e9122ae4f", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 09:05:18,372] [INFO] [lm_dataset_provider.py:309:from_hub] Saving tokenized dataset: cache
+</pre></div></div>
+</div>
+<p>The previous snippet tokenizes the entire Wikipedia dataset and stores the result in the <code class="docutils literal notranslate"><span class="pre">cache/</span></code> directory:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">train.npy</span></code>: Tokenized training split.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">validation.npy</span></code>: Tokenized validation split (if available).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tokenizer.pkl</span></code>: Serialized tokenizer object.</p></li>
+</ul>
+<p>You can customize the provider, for example, to change the column name (default is <code class="docutils literal notranslate"><span class="pre">text</span></code>), adjust block size, or supply a different tokenizer by passing the corresponding arguments:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;microsoft/phi-2&quot;</span><span class="p">)</span>
+<span class="n">dataset_provider</span> <span class="o">=</span> <span class="n">LMDatasetProvider</span><span class="o">.</span><span class="n">from_hub</span><span class="p">(</span>
+    <span class="n">dataset_path</span><span class="o">=</span><span class="s2">&quot;glue&quot;</span><span class="p">,</span>
+    <span class="n">dataset_name</span><span class="o">=</span><span class="s2">&quot;sst2&quot;</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">mapping_column_name</span><span class="o">=</span><span class="s2">&quot;sentence&quot;</span><span class="p">,</span>
+    <span class="n">cache_dir</span><span class="o">=</span><span class="s2">&quot;cache&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 09:05:18,925] [INFO] [lm_dataset_provider.py:252:from_hub] Loading non-tokenized dataset...
+[phyagi] [2025-05-19 09:05:20,718] [WARNING] [lm_dataset_provider.py:270:from_hub] &#39;cache&#39; already exists and will be overritten.
+[phyagi] [2025-05-19 09:05:20,719] [INFO] [lm_dataset_provider.py:285:from_hub] Creating validation split (if necessary)...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "69506bf5eddd429c9aa4ec81a0886f69", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "0a1efceff8824a258da085648f76f77f", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "4930523b465549a7b6e3c0a83071e182", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 09:05:21,556] [INFO] [lm_dataset_provider.py:309:from_hub] Saving tokenized dataset: cache
+</pre></div></div>
+</div>
+</section>
+<section id="Functional-style">
+<h2>Functional-style<a class="headerlink" href="#Functional-style" title="Link to this heading">#</a></h2>
+<p>If you prefer <em>not</em> to use a provider, you can call the low level tokenization utilities directly. The snippet below shows how to tokenize a dataset using plain functions:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.train.lm.lm_dataset_provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">_tokenize_concatenated</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;wikitext&quot;</span><span class="p">,</span> <span class="s2">&quot;wikitext-2-raw-v1&quot;</span><span class="p">)</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
+
+<span class="n">mapping_column_name</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
+<span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint16</span> <span class="k">if</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">vocab_size</span> <span class="o">&lt;</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">1024</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span>
+<span class="n">cache_dir</span> <span class="o">=</span> <span class="s2">&quot;cache&quot;</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+        <span class="n">_tokenize_concatenated</span><span class="p">,</span>
+        <span class="n">fn_kwargs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;tokenizer&quot;</span><span class="p">:</span> <span class="n">tokenizer</span><span class="p">,</span>
+            <span class="s2">&quot;mapping_column_name&quot;</span><span class="p">:</span> <span class="n">mapping_column_name</span><span class="p">,</span>
+            <span class="s2">&quot;use_eos_token&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">dtype</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">batched</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">num_proc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">remove_columns</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">column_names</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">save_to_disk</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "78005f536a3c4c03a13a8d7f9c5109c5", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "309198e621d948bfb8372273826a0f2d", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "e455a0d41c084aae8d1d607488715acf", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<p>Internally, the functional helpers still rely on the Hugging Face <code class="docutils literal notranslate"><span class="pre">datasets</span></code> library, so the tokenized dataset is saved as an <strong>Arrow</strong> file.</p>
+<p>If you need a NumPy array you can:</p>
+<ol class="arabic simple">
+<li><p>Load the Arrow dataset into memory with <code class="docutils literal notranslate"><span class="pre">process_dataset_to_memory</span></code>.</p></li>
+<li><p>Save it with <code class="docutils literal notranslate"><span class="pre">save_numpy_dataset</span></code>.</p></li>
+</ol>
+<p>Both helpers live in <code class="docutils literal notranslate"><span class="pre">phyagi.datasets.shared_memory_utils</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.shared_memory_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">process_dataset_to_memory</span><span class="p">,</span> <span class="n">save_memory_dataset</span>
+
+<span class="n">processed_dataset_dict</span> <span class="o">=</span> <span class="n">process_dataset_to_memory</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">,</span>
+    <span class="n">cache_dir</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">,</span>
+    <span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">],</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">use_shared_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">save_memory_dataset</span><span class="p">(</span><span class="n">processed_dataset_dict</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">cache_dir</span><span class="p">,</span> <span class="n">use_shared_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "3eef254dde9c42e0a0c0c36fba46ede5", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "1d390845ccee474da344390d45e41a69", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "489fee81b53747e5a8e988fffae97648", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;test_file&#39;: PosixPath(&#39;cache/test.npy&#39;),
+ &#39;train_file&#39;: PosixPath(&#39;cache/train.npy&#39;),
+ &#39;validation_file&#39;: PosixPath(&#39;cache/validation.npy&#39;),
+ &#39;tokenizer_file&#39;: PosixPath(&#39;cache/tokenizer.pkl&#39;)}
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Loading-data">
+<h1>Loading data<a class="headerlink" href="#Loading-data" title="Link to this heading">#</a></h1>
+<p>PhyAGI ships with a collection of <strong>providers</strong> and their respective <strong>configuration classes</strong>. These classes allow you to load pre‑tokenized datasets with a single call without need to repeat the preprocessing steps.</p>
+<p>The example below uses the default <code class="docutils literal notranslate"><span class="pre">LMProviderConfig</span></code> to load the dataset tokenized in the previous section.Every provider has its own config class, e.g., the parameters of <code class="docutils literal notranslate"><span class="pre">LMProviderConfig</span></code> can be customised as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.dataset_provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatasetProviderConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.train.lm.lm_dataset_provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMDatasetProvider</span>
+
+<span class="n">dataset_config</span> <span class="o">=</span> <span class="n">DatasetProviderConfig</span><span class="p">(</span><span class="n">cache_dir</span><span class="o">=</span><span class="s2">&quot;cache&quot;</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="mi">512</span><span class="p">)</span>
+<span class="n">dataset_provider</span> <span class="o">=</span> <span class="n">LMDatasetProvider</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">dataset_config</span><span class="p">)</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset_provider</span><span class="o">.</span><span class="n">get_train_dataset</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;input_ids&#39;: tensor([  796,   569, 18354,  7496, 17740,  6711,   796,   220,   198, 50256,
+         2311,    73, 13090,   645,   569, 18354,  7496,   513,  1058,   791,
+        47398, 17740,   357,  4960,  1058, 10545,   230,    99,   161,   254,
+          112,  5641, 44444,  9202, 25084, 24440, 12675, 11839,    18,   837,
+         6578,   764,   569, 18354,  7496,   286,   262, 30193,   513,  1267,
+          837,  8811,  6412,   284,   355,   569, 18354,  7496, 17740,  6711,
+         2354,  2869,   837,   318,   257, 16106,  2597,  2488,    12,    31,
+         2712,  2008,   983,  4166,   416, 29490,   290,  6343,    13, 44206,
+          329,   262, 14047, 44685,   764, 28728,   287,  3269,  2813,   287,
+         2869,   837,   340,   318,   262,  2368,   983,   287,   262,   569,
+        18354,  7496,  2168,   764, 12645,   278,   262,   976, 21748,   286,
+        16106,   290,  1103,  2488,    12,    31,   640, 11327,   355,   663,
+        27677,   837,   262,  1621,  4539, 10730,   284,   262,   717,   983,
+          290,  5679,   262,   366, 17871,  5321,   366,   837,   257, 23634,
+         2422,  4326,  7351,   262,  3277,   286,  7096,   544,  1141,   262,
+         5498,  1898,  6839,  1810,   508,  1620,  3200,  2042,  4560,   290,
+          389, 46852,  1028,   262, 11773,  4326,   366,  2199,   321,   265,
+           88, 12552,   366,   764,   220,   198, 50256,   383,   983,  2540,
+         2478,   287,  3050,   837,  6872,   625,   257,  1588,  6903,   286,
+          262,   670,  1760,   319,   569, 18354,  7496, 17740,  2873,   764,
+         2893,   340, 17383,   262,  3210,  3033,   286,   262,  2168,   837,
+          340,   635, 25289,  3294, 16895,   837,   884,   355,  1642,   262,
+          983,   517, 43486,   329,  2168, 29661,   764, 15684, 11915,   371,
+         4548,    64,  8835,    73,   280,   290, 26777,  7286, 13704, 13231,
+        43354,  1111,  4504,   422,  2180, 12784,   837,  1863,   351,   569,
+        18354,  7496, 17740,  2873,  3437, 33687,  5303, 18024,  6909,   764,
+          317,  1588,  1074,   286,  8786, 12118,   262,  4226,   764,   383,
+          983,   705,    82,  4756,  7505,   373, 23568,   416,  1737,   705,
+           77,   764,   220,   198, 50256,   632,  1138,   351,  3967,  4200,
+          287,  2869,   837,   290,   373, 15342,   416,  1111,  4960,   290,
+         8830,  9188,   764,  2293,  2650,   837,   340,  2722, 41496,  2695,
+          837,  1863,   351,   281,  9902,  8313,   287,  3389,   286,   326,
+          614,   764,   632,   373,   635, 16573,   656, 15911,   290,   281,
+         2656,  2008, 11034,  2168,   764, 14444,   284,  1877,  4200,   286,
+          569, 18354,  7496, 17740,  2873,   837,   569, 18354,  7496, 17740,
+         6711,   373,   407, 36618,   837,   475,   257,  4336, 11059, 11670,
+          351,   262,   983,   705,    82,  9902,  8313,   373,  2716,   287,
+         1946,   764,  6343,    13, 44206,   561,  1441,   284,   262,  8663,
+          351,   262,  2478,   286,   569, 18354,  7496,  1058, 22134,  9303,
+          329,   262, 14047,   604,   764,   220,   198, 50256,   796,   796,
+         3776,  1759,   796,   796,   220,   198, 50256,  1081,   351,  2180,
+          569, 18354,  8704, 17740,  1830,   837,   569, 18354,  7496, 17740,
+         6711,   318,   257, 16106,  2597,  2488,    12,    31,  2712,   983,
+          810,  1938,  1011,  1630,   286,   257,  2422,  4326,   290,  1011,
+          636,   287, 10566,  1028,  4472,  3386,   764, 18152,   389,  1297,
+          832,  9048,  1492,  2488,    12,    31,   588, 13043,   351, 15108,
+         2095, 31725,   837,   351,  3435,  5486, 12387,   832, 21346,  4046,
+        25037,   290, 12387,   832,   555, 13038,  3711,  2420,   764,   383,
+         2137, 33226,   832,   257,  2168,   286, 14174, 10566,   837, 11835,
+        14838,   355,  8739,   326,   460,   307, 12748, 28660,   832,   290,
+          302, 21542,   355,   484,   389, 14838,   764,   383,  6339,   284,
+         1123,  1621]), &#39;labels&#39;: tensor([  796,   569, 18354,  7496, 17740,  6711,   796,   220,   198, 50256,
+         2311,    73, 13090,   645,   569, 18354,  7496,   513,  1058,   791,
+        47398, 17740,   357,  4960,  1058, 10545,   230,    99,   161,   254,
+          112,  5641, 44444,  9202, 25084, 24440, 12675, 11839,    18,   837,
+         6578,   764,   569, 18354,  7496,   286,   262, 30193,   513,  1267,
+          837,  8811,  6412,   284,   355,   569, 18354,  7496, 17740,  6711,
+         2354,  2869,   837,   318,   257, 16106,  2597,  2488,    12,    31,
+         2712,  2008,   983,  4166,   416, 29490,   290,  6343,    13, 44206,
+          329,   262, 14047, 44685,   764, 28728,   287,  3269,  2813,   287,
+         2869,   837,   340,   318,   262,  2368,   983,   287,   262,   569,
+        18354,  7496,  2168,   764, 12645,   278,   262,   976, 21748,   286,
+        16106,   290,  1103,  2488,    12,    31,   640, 11327,   355,   663,
+        27677,   837,   262,  1621,  4539, 10730,   284,   262,   717,   983,
+          290,  5679,   262,   366, 17871,  5321,   366,   837,   257, 23634,
+         2422,  4326,  7351,   262,  3277,   286,  7096,   544,  1141,   262,
+         5498,  1898,  6839,  1810,   508,  1620,  3200,  2042,  4560,   290,
+          389, 46852,  1028,   262, 11773,  4326,   366,  2199,   321,   265,
+           88, 12552,   366,   764,   220,   198, 50256,   383,   983,  2540,
+         2478,   287,  3050,   837,  6872,   625,   257,  1588,  6903,   286,
+          262,   670,  1760,   319,   569, 18354,  7496, 17740,  2873,   764,
+         2893,   340, 17383,   262,  3210,  3033,   286,   262,  2168,   837,
+          340,   635, 25289,  3294, 16895,   837,   884,   355,  1642,   262,
+          983,   517, 43486,   329,  2168, 29661,   764, 15684, 11915,   371,
+         4548,    64,  8835,    73,   280,   290, 26777,  7286, 13704, 13231,
+        43354,  1111,  4504,   422,  2180, 12784,   837,  1863,   351,   569,
+        18354,  7496, 17740,  2873,  3437, 33687,  5303, 18024,  6909,   764,
+          317,  1588,  1074,   286,  8786, 12118,   262,  4226,   764,   383,
+          983,   705,    82,  4756,  7505,   373, 23568,   416,  1737,   705,
+           77,   764,   220,   198, 50256,   632,  1138,   351,  3967,  4200,
+          287,  2869,   837,   290,   373, 15342,   416,  1111,  4960,   290,
+         8830,  9188,   764,  2293,  2650,   837,   340,  2722, 41496,  2695,
+          837,  1863,   351,   281,  9902,  8313,   287,  3389,   286,   326,
+          614,   764,   632,   373,   635, 16573,   656, 15911,   290,   281,
+         2656,  2008, 11034,  2168,   764, 14444,   284,  1877,  4200,   286,
+          569, 18354,  7496, 17740,  2873,   837,   569, 18354,  7496, 17740,
+         6711,   373,   407, 36618,   837,   475,   257,  4336, 11059, 11670,
+          351,   262,   983,   705,    82,  9902,  8313,   373,  2716,   287,
+         1946,   764,  6343,    13, 44206,   561,  1441,   284,   262,  8663,
+          351,   262,  2478,   286,   569, 18354,  7496,  1058, 22134,  9303,
+          329,   262, 14047,   604,   764,   220,   198, 50256,   796,   796,
+         3776,  1759,   796,   796,   220,   198, 50256,  1081,   351,  2180,
+          569, 18354,  8704, 17740,  1830,   837,   569, 18354,  7496, 17740,
+         6711,   318,   257, 16106,  2597,  2488,    12,    31,  2712,   983,
+          810,  1938,  1011,  1630,   286,   257,  2422,  4326,   290,  1011,
+          636,   287, 10566,  1028,  4472,  3386,   764, 18152,   389,  1297,
+          832,  9048,  1492,  2488,    12,    31,   588, 13043,   351, 15108,
+         2095, 31725,   837,   351,  3435,  5486, 12387,   832, 21346,  4046,
+        25037,   290, 12387,   832,   555, 13038,  3711,  2420,   764,   383,
+         2137, 33226,   832,   257,  2168,   286, 14174, 10566,   837, 11835,
+        14838,   355,  8739,   326,   460,   307, 12748, 28660,   832,   290,
+          302, 21542,   355,   484,   389, 14838,   764,   383,  6339,   284,
+         1123,  1621])}
+4718
+</pre></div></div>
+</div>
+<section id="From-a-configuration-file">
+<h2>From a configuration file<a class="headerlink" href="#From-a-configuration-file" title="Link to this heading">#</a></h2>
+<p>You can also store the configuration as YAML and reload it later. The snippet below shows how to load an <code class="docutils literal notranslate"><span class="pre">LMProviderConfig</span></code> from <code class="docutils literal notranslate"><span class="pre">config.yaml</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the configuration and use it to instantiate the dataset configuration</span>
+<span class="c1"># config = load_config(&quot;config.yaml&quot;)</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;cache_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;cache&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;seq_len&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">dataset_config</span> <span class="o">=</span> <span class="n">DatasetProviderConfig</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">dataset_provider</span> <span class="o">=</span> <span class="n">LMDatasetProvider</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">dataset_config</span><span class="p">)</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset_provider</span><span class="o">.</span><span class="n">get_train_dataset</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;input_ids&#39;: tensor([  796,   569, 18354,  7496, 17740,  6711,   796,   220,   198, 50256,
+         2311,    73, 13090,   645,   569, 18354,  7496,   513,  1058,   791,
+        47398, 17740,   357,  4960,  1058, 10545,   230,    99,   161,   254,
+          112,  5641, 44444,  9202, 25084, 24440, 12675, 11839,    18,   837,
+         6578,   764,   569, 18354,  7496,   286,   262, 30193,   513,  1267,
+          837,  8811,  6412,   284,   355,   569, 18354,  7496, 17740,  6711,
+         2354,  2869,   837,   318,   257, 16106,  2597,  2488,    12,    31,
+         2712,  2008,   983,  4166,   416, 29490,   290,  6343,    13, 44206,
+          329,   262, 14047, 44685,   764, 28728,   287,  3269,  2813,   287,
+         2869,   837,   340,   318,   262,  2368,   983,   287,   262,   569,
+        18354,  7496,  2168,   764, 12645,   278,   262,   976, 21748,   286,
+        16106,   290,  1103,  2488,    12,    31,   640, 11327,   355,   663,
+        27677,   837,   262,  1621,  4539, 10730,   284,   262,   717,   983,
+          290,  5679,   262,   366, 17871,  5321,   366,   837,   257, 23634,
+         2422,  4326,  7351,   262,  3277,   286,  7096,   544,  1141,   262,
+         5498,  1898,  6839,  1810,   508,  1620,  3200,  2042,  4560,   290,
+          389, 46852,  1028,   262, 11773,  4326,   366,  2199,   321,   265,
+           88, 12552,   366,   764,   220,   198, 50256,   383,   983,  2540,
+         2478,   287,  3050,   837,  6872,   625,   257,  1588,  6903,   286,
+          262,   670,  1760,   319,   569, 18354,  7496, 17740,  2873,   764,
+         2893,   340, 17383,   262,  3210,  3033,   286,   262,  2168,   837,
+          340,   635, 25289,  3294, 16895,   837,   884,   355,  1642,   262,
+          983,   517, 43486,   329,  2168, 29661,   764, 15684, 11915,   371,
+         4548,    64,  8835,    73,   280,   290, 26777,  7286, 13704, 13231,
+        43354,  1111,  4504,   422,  2180, 12784,   837,  1863,   351,   569,
+        18354,  7496, 17740,  2873,  3437, 33687,  5303, 18024,  6909,   764,
+          317,  1588,  1074,   286,  8786, 12118,   262,  4226,   764,   383,
+          983,   705,    82,  4756,  7505,   373, 23568,   416,  1737,   705,
+           77,   764,   220,   198, 50256,   632,  1138,   351,  3967,  4200,
+          287,  2869,   837,   290,   373, 15342,   416,  1111,  4960,   290,
+         8830,  9188,   764,  2293,  2650,   837,   340,  2722, 41496,  2695,
+          837,  1863,   351,   281,  9902,  8313,   287,  3389,   286,   326,
+          614,   764,   632,   373,   635, 16573,   656, 15911,   290,   281,
+         2656,  2008, 11034,  2168,   764, 14444,   284,  1877,  4200,   286,
+          569, 18354,  7496, 17740,  2873,   837,   569, 18354,  7496, 17740,
+         6711,   373,   407, 36618,   837,   475,   257,  4336, 11059, 11670,
+          351,   262,   983,   705,    82,  9902,  8313,   373,  2716,   287,
+         1946,   764,  6343,    13, 44206,   561,  1441,   284,   262,  8663,
+          351,   262,  2478,   286,   569, 18354,  7496,  1058, 22134,  9303,
+          329,   262, 14047,   604,   764,   220,   198, 50256,   796,   796,
+         3776,  1759,   796,   796,   220,   198, 50256,  1081,   351,  2180,
+          569, 18354,  8704, 17740,  1830,   837,   569, 18354,  7496, 17740,
+         6711,   318,   257, 16106,  2597,  2488,    12,    31,  2712,   983,
+          810,  1938,  1011,  1630,   286,   257,  2422,  4326,   290,  1011,
+          636,   287, 10566,  1028,  4472,  3386,   764, 18152,   389,  1297,
+          832,  9048,  1492,  2488,    12,    31,   588, 13043,   351, 15108,
+         2095, 31725,   837,   351,  3435,  5486, 12387,   832, 21346,  4046,
+        25037,   290, 12387,   832,   555, 13038,  3711,  2420,   764,   383,
+         2137, 33226,   832,   257,  2168,   286, 14174, 10566,   837, 11835,
+        14838,   355,  8739,   326,   460,   307, 12748, 28660,   832,   290,
+          302, 21542,   355,   484,   389, 14838,   764,   383,  6339,   284,
+         1123,  1621]), &#39;labels&#39;: tensor([  796,   569, 18354,  7496, 17740,  6711,   796,   220,   198, 50256,
+         2311,    73, 13090,   645,   569, 18354,  7496,   513,  1058,   791,
+        47398, 17740,   357,  4960,  1058, 10545,   230,    99,   161,   254,
+          112,  5641, 44444,  9202, 25084, 24440, 12675, 11839,    18,   837,
+         6578,   764,   569, 18354,  7496,   286,   262, 30193,   513,  1267,
+          837,  8811,  6412,   284,   355,   569, 18354,  7496, 17740,  6711,
+         2354,  2869,   837,   318,   257, 16106,  2597,  2488,    12,    31,
+         2712,  2008,   983,  4166,   416, 29490,   290,  6343,    13, 44206,
+          329,   262, 14047, 44685,   764, 28728,   287,  3269,  2813,   287,
+         2869,   837,   340,   318,   262,  2368,   983,   287,   262,   569,
+        18354,  7496,  2168,   764, 12645,   278,   262,   976, 21748,   286,
+        16106,   290,  1103,  2488,    12,    31,   640, 11327,   355,   663,
+        27677,   837,   262,  1621,  4539, 10730,   284,   262,   717,   983,
+          290,  5679,   262,   366, 17871,  5321,   366,   837,   257, 23634,
+         2422,  4326,  7351,   262,  3277,   286,  7096,   544,  1141,   262,
+         5498,  1898,  6839,  1810,   508,  1620,  3200,  2042,  4560,   290,
+          389, 46852,  1028,   262, 11773,  4326,   366,  2199,   321,   265,
+           88, 12552,   366,   764,   220,   198, 50256,   383,   983,  2540,
+         2478,   287,  3050,   837,  6872,   625,   257,  1588,  6903,   286,
+          262,   670,  1760,   319,   569, 18354,  7496, 17740,  2873,   764,
+         2893,   340, 17383,   262,  3210,  3033,   286,   262,  2168,   837,
+          340,   635, 25289,  3294, 16895,   837,   884,   355,  1642,   262,
+          983,   517, 43486,   329,  2168, 29661,   764, 15684, 11915,   371,
+         4548,    64,  8835,    73,   280,   290, 26777,  7286, 13704, 13231,
+        43354,  1111,  4504,   422,  2180, 12784,   837,  1863,   351,   569,
+        18354,  7496, 17740,  2873,  3437, 33687,  5303, 18024,  6909,   764,
+          317,  1588,  1074,   286,  8786, 12118,   262,  4226,   764,   383,
+          983,   705,    82,  4756,  7505,   373, 23568,   416,  1737,   705,
+           77,   764,   220,   198, 50256,   632,  1138,   351,  3967,  4200,
+          287,  2869,   837,   290,   373, 15342,   416,  1111,  4960,   290,
+         8830,  9188,   764,  2293,  2650,   837,   340,  2722, 41496,  2695,
+          837,  1863,   351,   281,  9902,  8313,   287,  3389,   286,   326,
+          614,   764,   632,   373,   635, 16573,   656, 15911,   290,   281,
+         2656,  2008, 11034,  2168,   764, 14444,   284,  1877,  4200,   286,
+          569, 18354,  7496, 17740,  2873,   837,   569, 18354,  7496, 17740,
+         6711,   373,   407, 36618,   837,   475,   257,  4336, 11059, 11670,
+          351,   262,   983,   705,    82,  9902,  8313,   373,  2716,   287,
+         1946,   764,  6343,    13, 44206,   561,  1441,   284,   262,  8663,
+          351,   262,  2478,   286,   569, 18354,  7496,  1058, 22134,  9303,
+          329,   262, 14047,   604,   764,   220,   198, 50256,   796,   796,
+         3776,  1759,   796,   796,   220,   198, 50256,  1081,   351,  2180,
+          569, 18354,  8704, 17740,  1830,   837,   569, 18354,  7496, 17740,
+         6711,   318,   257, 16106,  2597,  2488,    12,    31,  2712,   983,
+          810,  1938,  1011,  1630,   286,   257,  2422,  4326,   290,  1011,
+          636,   287, 10566,  1028,  4472,  3386,   764, 18152,   389,  1297,
+          832,  9048,  1492,  2488,    12,    31,   588, 13043,   351, 15108,
+         2095, 31725,   837,   351,  3435,  5486, 12387,   832, 21346,  4046,
+        25037,   290, 12387,   832,   555, 13038,  3711,  2420,   764,   383,
+         2137, 33226,   832,   257,  2168,   286, 14174, 10566,   837, 11835,
+        14838,   355,  8739,   326,   460,   307, 12748, 28660,   832,   290,
+          302, 21542,   355,   484,   389, 14838,   764,   383,  6339,   284,
+         1123,  1621])}
+4718
+</pre></div></div>
+</div>
+<p>Alternatively, PhyAGI exposes a set of <strong>getter functions</strong> that handle provider creation, caching, and concatenation of multiple datasets behind the scenes.</p>
+<p><code class="docutils literal notranslate"><span class="pre">get_dataset</span></code> is especially handy when your training or fine‑tuning job involves more than one dataset. You can even oversample or undersample each dataset via the <code class="docutils literal notranslate"><span class="pre">weight</span></code> parameter, as demonstrated below:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_dataset</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;cache_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;cache&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;seq_len&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
+    <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">dataset</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">([</span><span class="n">config</span><span class="p">,</span> <span class="n">config</span><span class="p">],</span> <span class="n">dataset_concat</span><span class="o">=</span><span class="s2">&quot;random&quot;</span><span class="p">,</span> <span class="n">dataset_provider</span><span class="o">=</span><span class="s2">&quot;lm&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 09:05:29,029] [INFO] [dataset.py:108:get_dataset] Loading datasets...
+[phyagi] [2025-05-19 09:05:29,032] [INFO] [dataset.py:114:get_dataset] Datasets: [DatasetProviderConfig(cache_dir=PosixPath(&#39;/home/gderosa/phyagi-sdk/docs/tutorials/cache&#39;), train_file=PosixPath(&#39;/home/gderosa/phyagi-sdk/docs/tutorials/cache/train.npy&#39;), validation_file=PosixPath(&#39;/home/gderosa/phyagi-sdk/docs/tutorials/cache/validation.npy&#39;), validation_split=None, tokenizer_file=None, seq_len=512, shift_labels=False, weight=1.5, label=&#39;&#39;, ignore_token_id=-100, seed=42, random_mask_prob=None), DatasetProviderConfig(cache_dir=PosixPath(&#39;/home/gderosa/phyagi-sdk/docs/tutorials/cache&#39;), train_file=PosixPath(&#39;/home/gderosa/phyagi-sdk/docs/tutorials/cache/train.npy&#39;), validation_file=PosixPath(&#39;/home/gderosa/phyagi-sdk/docs/tutorials/cache/validation.npy&#39;), validation_split=None, tokenizer_file=None, seq_len=512, shift_labels=False, weight=1.5, label=&#39;&#39;, ignore_token_id=-100, seed=42, random_mask_prob=None)]
+[phyagi] [2025-05-19 09:05:29,032] [INFO] [dataset.py:115:get_dataset] Global weight multiplier: 1.0
+{&#39;input_ids&#39;: tensor([  796,   569, 18354,  7496, 17740,  6711,   796,   220,   198, 50256,
+         2311,    73, 13090,   645,   569, 18354,  7496,   513,  1058,   791,
+        47398, 17740,   357,  4960,  1058, 10545,   230,    99,   161,   254,
+          112,  5641, 44444,  9202, 25084, 24440, 12675, 11839,    18,   837,
+         6578,   764,   569, 18354,  7496,   286,   262, 30193,   513,  1267,
+          837,  8811,  6412,   284,   355,   569, 18354,  7496, 17740,  6711,
+         2354,  2869,   837,   318,   257, 16106,  2597,  2488,    12,    31,
+         2712,  2008,   983,  4166,   416, 29490,   290,  6343,    13, 44206,
+          329,   262, 14047, 44685,   764, 28728,   287,  3269,  2813,   287,
+         2869,   837,   340,   318,   262,  2368,   983,   287,   262,   569,
+        18354,  7496,  2168,   764, 12645,   278,   262,   976, 21748,   286,
+        16106,   290,  1103,  2488,    12,    31,   640, 11327,   355,   663,
+        27677,   837,   262,  1621,  4539, 10730,   284,   262,   717,   983,
+          290,  5679,   262,   366, 17871,  5321,   366,   837,   257, 23634,
+         2422,  4326,  7351,   262,  3277,   286,  7096,   544,  1141,   262,
+         5498,  1898,  6839,  1810,   508,  1620,  3200,  2042,  4560,   290,
+          389, 46852,  1028,   262, 11773,  4326,   366,  2199,   321,   265,
+           88, 12552,   366,   764,   220,   198, 50256,   383,   983,  2540,
+         2478,   287,  3050,   837,  6872,   625,   257,  1588,  6903,   286,
+          262,   670,  1760,   319,   569, 18354,  7496, 17740,  2873,   764,
+         2893,   340, 17383,   262,  3210,  3033,   286,   262,  2168,   837,
+          340,   635, 25289,  3294, 16895,   837,   884,   355,  1642,   262,
+          983,   517, 43486,   329,  2168, 29661,   764, 15684, 11915,   371,
+         4548,    64,  8835,    73,   280,   290, 26777,  7286, 13704, 13231,
+        43354,  1111,  4504,   422,  2180, 12784,   837,  1863,   351,   569,
+        18354,  7496, 17740,  2873,  3437, 33687,  5303, 18024,  6909,   764,
+          317,  1588,  1074,   286,  8786, 12118,   262,  4226,   764,   383,
+          983,   705,    82,  4756,  7505,   373, 23568,   416,  1737,   705,
+           77,   764,   220,   198, 50256,   632,  1138,   351,  3967,  4200,
+          287,  2869,   837,   290,   373, 15342,   416,  1111,  4960,   290,
+         8830,  9188,   764,  2293,  2650,   837,   340,  2722, 41496,  2695,
+          837,  1863,   351,   281,  9902,  8313,   287,  3389,   286,   326,
+          614,   764,   632,   373,   635, 16573,   656, 15911,   290,   281,
+         2656,  2008, 11034,  2168,   764, 14444,   284,  1877,  4200,   286,
+          569, 18354,  7496, 17740,  2873,   837,   569, 18354,  7496, 17740,
+         6711,   373,   407, 36618,   837,   475,   257,  4336, 11059, 11670,
+          351,   262,   983,   705,    82,  9902,  8313,   373,  2716,   287,
+         1946,   764,  6343,    13, 44206,   561,  1441,   284,   262,  8663,
+          351,   262,  2478,   286,   569, 18354,  7496,  1058, 22134,  9303,
+          329,   262, 14047,   604,   764,   220,   198, 50256,   796,   796,
+         3776,  1759,   796,   796,   220,   198, 50256,  1081,   351,  2180,
+          569, 18354,  8704, 17740,  1830,   837,   569, 18354,  7496, 17740,
+         6711,   318,   257, 16106,  2597,  2488,    12,    31,  2712,   983,
+          810,  1938,  1011,  1630,   286,   257,  2422,  4326,   290,  1011,
+          636,   287, 10566,  1028,  4472,  3386,   764, 18152,   389,  1297,
+          832,  9048,  1492,  2488,    12,    31,   588, 13043,   351, 15108,
+         2095, 31725,   837,   351,  3435,  5486, 12387,   832, 21346,  4046,
+        25037,   290, 12387,   832,   555, 13038,  3711,  2420,   764,   383,
+         2137, 33226,   832,   257,  2168,   286, 14174, 10566,   837, 11835,
+        14838,   355,  8739,   326,   460,   307, 12748, 28660,   832,   290,
+          302, 21542,   355,   484,   389, 14838,   764,   383,  6339,   284,
+         1123,  1621]), &#39;labels&#39;: tensor([  796,   569, 18354,  7496, 17740,  6711,   796,   220,   198, 50256,
+         2311,    73, 13090,   645,   569, 18354,  7496,   513,  1058,   791,
+        47398, 17740,   357,  4960,  1058, 10545,   230,    99,   161,   254,
+          112,  5641, 44444,  9202, 25084, 24440, 12675, 11839,    18,   837,
+         6578,   764,   569, 18354,  7496,   286,   262, 30193,   513,  1267,
+          837,  8811,  6412,   284,   355,   569, 18354,  7496, 17740,  6711,
+         2354,  2869,   837,   318,   257, 16106,  2597,  2488,    12,    31,
+         2712,  2008,   983,  4166,   416, 29490,   290,  6343,    13, 44206,
+          329,   262, 14047, 44685,   764, 28728,   287,  3269,  2813,   287,
+         2869,   837,   340,   318,   262,  2368,   983,   287,   262,   569,
+        18354,  7496,  2168,   764, 12645,   278,   262,   976, 21748,   286,
+        16106,   290,  1103,  2488,    12,    31,   640, 11327,   355,   663,
+        27677,   837,   262,  1621,  4539, 10730,   284,   262,   717,   983,
+          290,  5679,   262,   366, 17871,  5321,   366,   837,   257, 23634,
+         2422,  4326,  7351,   262,  3277,   286,  7096,   544,  1141,   262,
+         5498,  1898,  6839,  1810,   508,  1620,  3200,  2042,  4560,   290,
+          389, 46852,  1028,   262, 11773,  4326,   366,  2199,   321,   265,
+           88, 12552,   366,   764,   220,   198, 50256,   383,   983,  2540,
+         2478,   287,  3050,   837,  6872,   625,   257,  1588,  6903,   286,
+          262,   670,  1760,   319,   569, 18354,  7496, 17740,  2873,   764,
+         2893,   340, 17383,   262,  3210,  3033,   286,   262,  2168,   837,
+          340,   635, 25289,  3294, 16895,   837,   884,   355,  1642,   262,
+          983,   517, 43486,   329,  2168, 29661,   764, 15684, 11915,   371,
+         4548,    64,  8835,    73,   280,   290, 26777,  7286, 13704, 13231,
+        43354,  1111,  4504,   422,  2180, 12784,   837,  1863,   351,   569,
+        18354,  7496, 17740,  2873,  3437, 33687,  5303, 18024,  6909,   764,
+          317,  1588,  1074,   286,  8786, 12118,   262,  4226,   764,   383,
+          983,   705,    82,  4756,  7505,   373, 23568,   416,  1737,   705,
+           77,   764,   220,   198, 50256,   632,  1138,   351,  3967,  4200,
+          287,  2869,   837,   290,   373, 15342,   416,  1111,  4960,   290,
+         8830,  9188,   764,  2293,  2650,   837,   340,  2722, 41496,  2695,
+          837,  1863,   351,   281,  9902,  8313,   287,  3389,   286,   326,
+          614,   764,   632,   373,   635, 16573,   656, 15911,   290,   281,
+         2656,  2008, 11034,  2168,   764, 14444,   284,  1877,  4200,   286,
+          569, 18354,  7496, 17740,  2873,   837,   569, 18354,  7496, 17740,
+         6711,   373,   407, 36618,   837,   475,   257,  4336, 11059, 11670,
+          351,   262,   983,   705,    82,  9902,  8313,   373,  2716,   287,
+         1946,   764,  6343,    13, 44206,   561,  1441,   284,   262,  8663,
+          351,   262,  2478,   286,   569, 18354,  7496,  1058, 22134,  9303,
+          329,   262, 14047,   604,   764,   220,   198, 50256,   796,   796,
+         3776,  1759,   796,   796,   220,   198, 50256,  1081,   351,  2180,
+          569, 18354,  8704, 17740,  1830,   837,   569, 18354,  7496, 17740,
+         6711,   318,   257, 16106,  2597,  2488,    12,    31,  2712,   983,
+          810,  1938,  1011,  1630,   286,   257,  2422,  4326,   290,  1011,
+          636,   287, 10566,  1028,  4472,  3386,   764, 18152,   389,  1297,
+          832,  9048,  1492,  2488,    12,    31,   588, 13043,   351, 15108,
+         2095, 31725,   837,   351,  3435,  5486, 12387,   832, 21346,  4046,
+        25037,   290, 12387,   832,   555, 13038,  3711,  2420,   764,   383,
+         2137, 33226,   832,   257,  2168,   286, 14174, 10566,   837, 11835,
+        14838,   355,  8739,   326,   460,   307, 12748, 28660,   832,   290,
+          302, 21542,   355,   484,   389, 14838,   764,   383,  6339,   284,
+         1123,  1621])}
+14154
+</pre></div></div>
+</div>
+<p>Internally, <code class="docutils literal notranslate"><span class="pre">get_dataset</span></code> instantiates each provider, applies the requested sampling strategy, and concatenates the resulting datasets according to <code class="docutils literal notranslate"><span class="pre">dataset_concat</span></code>.</p>
+<p><em>In the example above, the final length</em> <strong>14154</strong> <em>reflects that each dataset was oversampled by</em> <strong>1.5×</strong> <em>before concatenation.</em></p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../guides/troubleshooting.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Troubleshooting</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="model_architecture.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Model architecture</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Sections
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data‑related</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Datasets">Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Dataset-providers">Dataset providers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Data-collators">Data collators</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Tokenizing-data">Tokenizing data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Class-style">Class-style</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Functional-style">Functional-style</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Loading-data">Loading data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#From-a-configuration-file">From a configuration file</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,886 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>phyagi.utils.checkpoint &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/phyagi/utils/checkpoint';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/_modules/phyagi/utils/checkpoint.html" />
+    <link rel="icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../../../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2F_modules/phyagi/utils/checkpoint.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for phyagi.utils.checkpoint</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) Microsoft Corporation.</span>
+<span class="c1"># Licensed under the MIT license.</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">gc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">argparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">Namespace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">namedtuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.distributed.checkpoint</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dcp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">deepspeed.checkpoint.ds_to_universal</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">main</span> <span class="k">as</span> <span class="n">_save_universal_from_ds_checkpoint</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">deepspeed.utils.zero_to_fp32</span><span class="w"> </span><span class="kn">import</span> <span class="n">_get_fp32_state_dict_from_zero_checkpoint</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">huggingface_hub</span><span class="w"> </span><span class="kn">import</span> <span class="n">split_torch_state_dict_into_shards</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lightning.fabric.utilities.load</span><span class="w"> </span><span class="kn">import</span> <span class="n">_load_distributed_checkpoint</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">safetensors.torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_file</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.distributed.checkpoint</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileSystemWriter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.distributed.checkpoint.state_dict</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">StateDictOptions</span><span class="p">,</span>
+    <span class="n">get_model_state_dict</span><span class="p">,</span>
+    <span class="n">get_optimizer_state_dict</span><span class="p">,</span>
+    <span class="n">set_model_state_dict</span><span class="p">,</span>
+    <span class="n">set_optimizer_state_dict</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.distributed.checkpoint.stateful</span><span class="w"> </span><span class="kn">import</span> <span class="n">Stateful</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optimizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.optim.lr_scheduler</span><span class="w"> </span><span class="kn">import</span> <span class="n">LRScheduler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_json_file</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_ModelState</span><span class="p">(</span><span class="n">Stateful</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">full_state_dict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">cpu_offload</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`model` must be initialized before saving/loading the state.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_full_state_dict</span> <span class="o">=</span> <span class="n">full_state_dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpu_offload</span> <span class="o">=</span> <span class="n">cpu_offload</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">get_model_state_dict</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">StateDictOptions</span><span class="p">(</span><span class="n">full_state_dict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_full_state_dict</span><span class="p">,</span> <span class="n">cpu_offload</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cpu_offload</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">set_model_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">,</span> <span class="n">model_state_dict</span><span class="o">=</span><span class="n">state_dict</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_OptimizerState</span><span class="p">(</span><span class="n">Stateful</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+        <span class="n">optimizer</span><span class="p">:</span> <span class="n">Optimizer</span><span class="p">,</span>
+        <span class="n">scheduler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LRScheduler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">full_state_dict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">cpu_offload</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`model` must be initialized before saving/loading the state.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">optimizer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`optimizer` must be initialized before saving/loading the state.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span> <span class="o">=</span> <span class="n">optimizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span> <span class="o">=</span> <span class="n">scheduler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_full_state_dict</span> <span class="o">=</span> <span class="n">full_state_dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpu_offload</span> <span class="o">=</span> <span class="n">cpu_offload</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">optimizer_state_dict</span> <span class="o">=</span> <span class="n">get_optimizer_state_dict</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="n">StateDictOptions</span><span class="p">(</span><span class="n">full_state_dict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_full_state_dict</span><span class="p">,</span> <span class="n">cpu_offload</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cpu_offload</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="n">state_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="n">optimizer_state_dict</span><span class="p">}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state_dict</span><span class="p">[</span><span class="s2">&quot;scheduler&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">state_dict</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">set_optimizer_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span><span class="p">,</span> <span class="n">optim_state_dict</span><span class="o">=</span><span class="n">state_dict</span><span class="p">[</span><span class="s2">&quot;optimizer&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;scheduler&quot;</span> <span class="ow">in</span> <span class="n">state_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scheduler</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">[</span><span class="s2">&quot;scheduler&quot;</span><span class="p">])</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_fp32_state_dict_from_universal_checkpoint</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OrderedDict</span><span class="p">:</span>
+    <span class="n">model_states</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+        <span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;zero_pp_rank_0_mp_rank_00_model_states.pt&quot;</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span> <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">all_param_shapes</span> <span class="o">=</span> <span class="n">model_states</span><span class="p">[</span><span class="s2">&quot;param_shapes&quot;</span><span class="p">]</span>
+
+    <span class="n">model_state_dict</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">param_shapes</span> <span class="ow">in</span> <span class="n">all_param_shapes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param_shape</span> <span class="ow">in</span> <span class="n">param_shapes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">param_folder</span> <span class="o">=</span> <span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;zero&quot;</span> <span class="o">/</span> <span class="n">param_name</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">param_folder</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">param_folder</span><span class="si">}</span><span class="s2">&#39; must be a directory.&quot;</span><span class="p">)</span>
+
+            <span class="n">param_file</span> <span class="o">=</span> <span class="n">param_folder</span> <span class="o">/</span> <span class="s2">&quot;fp32.pt&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">param_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">param_file</span><span class="si">}</span><span class="s2">&#39; must be a file.&quot;</span><span class="p">)</span>
+
+            <span class="n">flat_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">param_file</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+            <span class="n">reshaped_tensor</span> <span class="o">=</span> <span class="n">flat_tensor</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">param_shape</span><span class="p">)</span>
+
+            <span class="n">model_state_dict</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">reshaped_tensor</span>
+
+    <span class="k">return</span> <span class="n">model_state_dict</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_save_state_dict_with_safetensors</span><span class="p">(</span><span class="n">state_dict</span><span class="p">:</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">max_shard_size</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;5GB&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_torch_tensor</span><span class="p">(</span><span class="n">state_dict</span><span class="p">:</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">return_empty_tensor</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OrderedDict</span><span class="p">:</span>
+        <span class="n">torch_state_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">converted_tensors</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">tensor</span> <span class="ow">in</span> <span class="n">state_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">tensor_id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tensor_id</span> <span class="ow">in</span> <span class="n">converted_tensors</span><span class="p">:</span>
+                <span class="n">shared_tensor</span> <span class="o">=</span> <span class="n">torch_state_dict</span><span class="p">[</span><span class="n">converted_tensors</span><span class="p">[</span><span class="n">tensor_id</span><span class="p">]]</span>
+                <span class="n">torch_state_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">shared_tensor</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">converted_tensors</span><span class="p">[</span><span class="n">tensor_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+                <span class="k">if</span> <span class="n">return_empty_tensor</span><span class="p">:</span>
+                    <span class="n">torch_state_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">torch_state_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">torch_state_dict</span>
+
+    <span class="c1"># Shard the state dictionary if necessary</span>
+    <span class="n">weights_name</span> <span class="o">=</span> <span class="s2">&quot;model.safetensors&quot;</span>
+    <span class="k">if</span> <span class="n">max_shard_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">filename_pattern</span> <span class="o">=</span> <span class="n">weights_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.bin&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{suffix}</span><span class="s2">.bin&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.safetensors&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{suffix}</span><span class="s2">.safetensors&quot;</span><span class="p">)</span>
+        <span class="n">empty_state_dict</span> <span class="o">=</span> <span class="n">_to_torch_tensor</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="n">return_empty_tensor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">state_dict_split</span> <span class="o">=</span> <span class="n">split_torch_state_dict_into_shards</span><span class="p">(</span>
+            <span class="n">empty_state_dict</span><span class="p">,</span> <span class="n">filename_pattern</span><span class="o">=</span><span class="n">filename_pattern</span><span class="p">,</span> <span class="n">max_shard_size</span><span class="o">=</span><span class="n">max_shard_size</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">StateDictSplit</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;StateDictSplit&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;is_sharded&quot;</span><span class="p">,</span> <span class="s2">&quot;filename_to_tensors&quot;</span><span class="p">])</span>
+        <span class="n">state_dict_split</span> <span class="o">=</span> <span class="n">StateDictSplit</span><span class="p">(</span><span class="n">is_sharded</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filename_to_tensors</span><span class="o">=</span><span class="p">{</span><span class="n">weights_name</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">state_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())})</span>
+
+    <span class="c1"># Save the state dictionary shards</span>
+    <span class="n">filename_to_tensors</span> <span class="o">=</span> <span class="n">state_dict_split</span><span class="o">.</span><span class="n">filename_to_tensors</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">shard_file</span><span class="p">,</span> <span class="n">tensors</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">filename_to_tensors</span><span class="p">):</span>
+        <span class="n">shard_state_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">t</span><span class="p">:</span> <span class="n">state_dict</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tensors</span><span class="p">}</span>
+        <span class="n">shard_state_dict</span> <span class="o">=</span> <span class="n">_to_torch_tensor</span><span class="p">(</span><span class="n">shard_state_dict</span><span class="p">)</span>
+
+        <span class="n">save_file</span><span class="p">(</span><span class="n">shard_state_dict</span><span class="p">,</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="n">shard_file</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;pt&quot;</span><span class="p">})</span>
+
+        <span class="c1"># Clean up the memory of current shard</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">shard_state_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">del</span> <span class="n">state_dict</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">shard_state_dict</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">shard_state_dict</span>
+
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+    <span class="c1"># If the state dictionary has been sharded, save the index file</span>
+    <span class="k">if</span> <span class="n">state_dict_split</span><span class="o">.</span><span class="n">is_sharded</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="n">state_dict_split</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+            <span class="s2">&quot;weight_map&quot;</span><span class="p">:</span> <span class="n">state_dict_split</span><span class="o">.</span><span class="n">tensor_to_filename</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">index_file_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;model.safetensors.index.json&quot;</span>
+        <span class="n">save_json_file</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">index_file_path</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="CheckpointManager">
+<a class="viewcode-back" href="../../../api/utils.html#phyagi.utils.checkpoint.CheckpointManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CheckpointManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Checkpoint manager for saving and loading checkpoints.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;sync&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the checkpoint manager.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mode: Mode of the checkpoint manager, either ``sync`` or ``async``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;sync&quot;</span><span class="p">,</span> <span class="s2">&quot;async&quot;</span><span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`mode` must be &#39;sync&#39; or &#39;async&#39;, but got &#39;</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pg</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_async_future</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_wait_for_previous</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_future</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_async_future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_async_future</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="CheckpointManager.save">
+<a class="viewcode-back" href="../../../api/utils.html#phyagi.utils.checkpoint.CheckpointManager.save">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">checkpoint_id</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+        <span class="n">optimizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Optimizer</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">scheduler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LRScheduler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">full_state_dict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">cpu_offload</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save a checkpoint.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            checkpoint_id: Path to the checkpoint.</span>
+<span class="sd">            model: Model to save.</span>
+<span class="sd">            optimizer: Optimizer to save.</span>
+<span class="sd">            scheduler: Learning rate scheduler to save.</span>
+<span class="sd">            overwrite: Whether to overwrite the checkpoint if it already exists.</span>
+<span class="sd">            full_state_dict: Whether to save the full state dictionary.</span>
+<span class="sd">            cpu_offload: Whether to offload the model state to CPU.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_previous</span><span class="p">()</span>
+
+        <span class="n">state</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">_ModelState</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">full_state_dict</span><span class="o">=</span><span class="n">full_state_dict</span><span class="p">,</span> <span class="n">cpu_offload</span><span class="o">=</span><span class="n">cpu_offload</span><span class="p">)}</span>
+        <span class="k">if</span> <span class="n">optimizer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;optimizer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_OptimizerState</span><span class="p">(</span>
+                <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">,</span> <span class="n">full_state_dict</span><span class="o">=</span><span class="n">full_state_dict</span><span class="p">,</span> <span class="n">cpu_offload</span><span class="o">=</span><span class="n">cpu_offload</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;sync&quot;</span><span class="p">:</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">FileSystemWriter</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">checkpoint_id</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
+            <span class="n">dcp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">storage_writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span> <span class="n">checkpoint_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">checkpoint_id</span><span class="p">))</span>
+
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;async&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_pg</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">new_group</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s2">&quot;gloo&quot;</span><span class="p">)</span>
+
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">FileSystemWriter</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">checkpoint_id</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_async_future</span> <span class="o">=</span> <span class="n">dcp</span><span class="o">.</span><span class="n">async_save</span><span class="p">(</span>
+                <span class="n">state</span><span class="p">,</span>
+                <span class="n">storage_writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
+                <span class="n">checkpoint_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">checkpoint_id</span><span class="p">),</span>
+                <span class="n">process_group</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_pg</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="CheckpointManager.load">
+<a class="viewcode-back" href="../../../api/utils.html#phyagi.utils.checkpoint.CheckpointManager.load">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">checkpoint_id</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+        <span class="n">optimizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Optimizer</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">scheduler</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LRScheduler</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">full_state_dict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">cpu_offload</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load a distributed checkpoint.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            checkpoint_id: Path to the checkpoint.</span>
+<span class="sd">            model: Model to load the state into.</span>
+<span class="sd">            optimizer: Optimizer to load the state into.</span>
+<span class="sd">            scheduler: Learning rate scheduler to load the state into.</span>
+<span class="sd">            full_state_dict: Whether to load the full state dictionary.</span>
+<span class="sd">            cpu_offload: Whether to offload the model state to CPU.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">state</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">_ModelState</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">full_state_dict</span><span class="o">=</span><span class="n">full_state_dict</span><span class="p">,</span> <span class="n">cpu_offload</span><span class="o">=</span><span class="n">cpu_offload</span><span class="p">)}</span>
+        <span class="k">if</span> <span class="n">optimizer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;optimizer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_OptimizerState</span><span class="p">(</span>
+                <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">,</span> <span class="n">full_state_dict</span><span class="o">=</span><span class="n">full_state_dict</span><span class="p">,</span> <span class="n">cpu_offload</span><span class="o">=</span><span class="n">cpu_offload</span>
+            <span class="p">)</span>
+
+        <span class="n">dcp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">checkpoint_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">checkpoint_id</span><span class="p">))</span>
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="convert_ds_zero_checkpoint">
+<a class="viewcode-back" href="../../../api/utils.html#phyagi.utils.checkpoint.convert_ds_zero_checkpoint">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">convert_ds_zero_checkpoint</span><span class="p">(</span>
+    <span class="n">checkpoint_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">max_shard_size</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;5GB&quot;</span><span class="p">,</span>
+    <span class="n">exclude_frozen_parameters</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">use_universal_checkpoint</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a DeepSpeed ZeRO-2/3 checkpoint to a safe serialized checkpoint.</span>
+
+<span class="sd">    The converted checkpoint is based on ``*.safetensors`` files and can be loaded</span>
+<span class="sd">    directly with ``AutoModel.from_pretrained()``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        checkpoint_dir: Path to the checkpoint directory.</span>
+<span class="sd">        output_dir: Path to the output directory.</span>
+<span class="sd">        max_shard_size: Maximum shard size for the converted checkpoint.</span>
+<span class="sd">        exclude_frozen_parameters: Whether to exclude frozen parameters from the converted checkpoint.</span>
+<span class="sd">        use_universal_checkpoint: Whether to use a universal-based checkpoint conversion.</span>
+<span class="sd">            This is a hard-requirement if the checkpoint is split across multiple ranks, e.g., tensor parallelism.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">)</span>
+
+    <span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+    <span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Check whether configuration file is available</span>
+    <span class="n">config_file_path</span> <span class="o">=</span> <span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;config.json&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">config_file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;config.json&#39; must be available in &#39;</span><span class="si">{</span><span class="n">checkpoint_dir</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">config_file_path</span><span class="p">,</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;config.json&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">use_universal_checkpoint</span><span class="p">:</span>
+        <span class="c1"># To prevent any failure when converting the checkpoint to a universal checkpoint,</span>
+        <span class="c1"># we import the script directly from DeepSpeed and pass the arguments to it</span>
+        <span class="n">output_folder</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;universal_checkpoint&quot;</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span>
+            <span class="n">input_folder</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">),</span>
+            <span class="n">output_folder</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">output_folder</span><span class="p">),</span>
+            <span class="n">num_extract_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">num_merge_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">keep_temp_folder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">inject_missing_state</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">_save_universal_from_ds_checkpoint</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+        <span class="c1"># Since universal checkpoints still keep the model parallelism,</span>
+        <span class="c1"># we need to convert it to a state dictionary</span>
+        <span class="n">state_dict</span> <span class="o">=</span> <span class="n">_get_fp32_state_dict_from_universal_checkpoint</span><span class="p">(</span><span class="n">output_folder</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Convert the checkpoint to a state dictionary</span>
+        <span class="n">state_dict</span> <span class="o">=</span> <span class="n">_get_fp32_state_dict_from_zero_checkpoint</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">,</span> <span class="n">exclude_frozen_parameters</span><span class="p">)</span>
+
+    <span class="c1"># Save the state dictionary to a safe serialized checkpoint</span>
+    <span class="n">_save_state_dict_with_safetensors</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">max_shard_size</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="convert_pl_fsdp_checkpoint">
+<a class="viewcode-back" href="../../../api/utils.html#phyagi.utils.checkpoint.convert_pl_fsdp_checkpoint">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">convert_pl_fsdp_checkpoint</span><span class="p">(</span>
+    <span class="n">checkpoint_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">max_shard_size</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;5GB&quot;</span><span class="p">,</span>
+    <span class="n">dump_unused_keys</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a PyTorch Lightning FSDP checkpoint to a safe serialized checkpoint.</span>
+
+<span class="sd">    The converted checkpoint is based on ``*.safetensors`` files and can be loaded</span>
+<span class="sd">    directly with ``AutoModel.from_pretrained()``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        checkpoint_dir: Path to the checkpoint directory.</span>
+<span class="sd">        output_dir: Path to the output directory.</span>
+<span class="sd">        max_shard_size: Maximum shard size for the converted checkpoint.</span>
+<span class="sd">        dump_unused_keys: Whether to dump unused keys in the checkpoint.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_format_checkpoint</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">state_dict</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">state_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;state_dict&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state_dict</span>
+
+        <span class="n">optimizer_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">checkpoint</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;optimizer_[0-9]+&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">optimizer_keys</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">checkpoint</span>
+
+        <span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;optimizer_states&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">checkpoint</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;optimizer_</span><span class="si">{</span><span class="n">opt_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">opt_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">optimizer_keys</span><span class="p">))</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Since the model is wrapped by a `model` attribute in `PlLightningModule`,</span>
+        <span class="c1"># we need to remove the `model` prefix</span>
+        <span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;state_dict&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;model.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">):</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;state_dict&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+        <span class="k">return</span> <span class="n">checkpoint</span>
+
+    <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">)</span>
+
+    <span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+    <span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Check whether configuration file is available</span>
+    <span class="n">config_file_path</span> <span class="o">=</span> <span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;config.json&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">config_file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;config.json&#39; must be available in &#39;</span><span class="si">{</span><span class="n">checkpoint_dir</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">config_file_path</span><span class="p">,</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;config.json&quot;</span><span class="p">)</span>
+
+    <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">_load_distributed_checkpoint</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">)</span>
+    <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">_format_checkpoint</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">)</span>
+
+    <span class="n">state_dict</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;state_dict&quot;</span><span class="p">)</span>
+    <span class="n">_save_state_dict_with_safetensors</span><span class="p">(</span><span class="n">state_dict</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">max_shard_size</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">dump_unused_keys</span><span class="p">:</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">,</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;unused_keys.pt&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="convert_ray_actor_checkpoint">
+<a class="viewcode-back" href="../../../api/utils.html#phyagi.utils.checkpoint.convert_ray_actor_checkpoint">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">convert_ray_actor_checkpoint</span><span class="p">(</span>
+    <span class="n">checkpoint_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">output_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">max_shard_size</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;5GB&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a Ray actor checkpoint to a safe serialized checkpoint.</span>
+
+<span class="sd">    The converted checkpoint is based on ``*.safetensors`` files and can be loaded</span>
+<span class="sd">    directly with ``AutoModel.from_pretrained()``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        checkpoint_dir: Path to the checkpoint directory.</span>
+<span class="sd">        output_dir: Path to the output directory.</span>
+<span class="sd">        max_shard_size: Maximum shard size for the converted checkpoint.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">)</span>
+
+    <span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+    <span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Check whether configuration file is available</span>
+    <span class="n">actor_config_file_path</span> <span class="o">=</span> <span class="n">checkpoint_dir</span> <span class="o">/</span> <span class="s2">&quot;actor_config.json&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">actor_config_file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;actor_config.json&#39; file is not available in &#39;</span><span class="si">{</span><span class="n">checkpoint_dir</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="n">actor_config_file_path</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">save_json_file</span><span class="p">(</span><span class="n">model_config</span><span class="p">,</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;config.json&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Convert the checkpoint to a state dictionary and save it</span>
+    <span class="n">model_state_dict</span> <span class="o">=</span> <span class="n">_load_distributed_checkpoint</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">)[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Save the state dictionary shards</span>
+    <span class="n">_save_state_dict_with_safetensors</span><span class="p">(</span><span class="n">model_state_dict</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">max_shard_size</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,613 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Azure Storage Account &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'azure/storage_account';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/azure/storage_account.html" />
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Azure Virtual Machine (VM)" href="virtual_machine.html" />
+    <link rel="prev" title="Submiting jobs with Singularity" href="singularity.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2Fazure/storage_account.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Azure Storage Account</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Sections </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-access-via-azure-ad">Configure access via Azure AD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-storage-resources-without-keys">Accessing storage resources without keys</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mounting-storage-as-a-file-system">Mounting storage as a file system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional resources</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="azure-storage-account">
+<h1>Azure Storage Account<a class="headerlink" href="#azure-storage-account" title="Link to this heading">#</a></h1>
+<p>Accessing Azure storage securely without shared keys ensures better compliance with security policies by leveraging Azure Active Directory (AAD) and Role-Based Access Control (RBAC). This guide explains how to securely access storage resources and transfer files using Azure CLI or AzCopy.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Install the required tools:</p>
+<ul>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli">Azure CLI</a></p></li>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10">AzCopy</a></p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">storage</span> <span class="pre">copy</span></code> is an alias/replacement for <code class="docutils literal notranslate"><span class="pre">azcopy</span> <span class="pre">copy</span></code>.</p>
+</section>
+<section id="configure-access-via-azure-ad">
+<h2>Configure access via Azure AD<a class="headerlink" href="#configure-access-via-azure-ad" title="Link to this heading">#</a></h2>
+<ol class="arabic">
+<li><p>Use Azure CLI to authenticate:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>group<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>&lt;RESOURCE_GROUP_NAME&gt;<span class="w"> </span>--location<span class="w"> </span>&lt;LOCATION&gt;
+</pre></div>
+</div>
+<img alt="Azure CLI Log-In" src="../_images/az_login.png" />
+<img alt="Azure CLI Log-In Account" src="../_images/az_login_account.png" />
+<img alt="Azure CLI Log-In Code" src="../_images/az_login_code.png" />
+<img alt="Azure CLI Log-In Subscription Select" src="../_images/az_login_subscription_select.png" />
+</li>
+<li><p>Verify your access:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>storage<span class="w"> </span>container<span class="w"> </span>list<span class="w"> </span>--account-name<span class="w"> </span>&lt;storage-account-name&gt;<span class="w"> </span>--auth-mode<span class="w"> </span>login
+</pre></div>
+</div>
+<img alt="Azure CLI Storage List" src="../_images/az_storage_list.png" />
+</li>
+</ol>
+</section>
+<section id="accessing-storage-resources-without-keys">
+<h2>Accessing storage resources without keys<a class="headerlink" href="#accessing-storage-resources-without-keys" title="Link to this heading">#</a></h2>
+<p>You can interact with Azure Storage resources using Azure CLI commands without specifying account keys:</p>
+<ul>
+<li><p>List blobs in a container:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>storage<span class="w"> </span>blob<span class="w"> </span>list<span class="w"> </span>--container-name<span class="w"> </span>&lt;container-name&gt;<span class="w"> </span>--account-name<span class="w"> </span>&lt;storage-account-name&gt;<span class="w"> </span>--auth-mode<span class="w"> </span>login
+</pre></div>
+</div>
+<img alt="Azure CLI Storage Blob List" src="../_images/az_storage_blob_list.png" />
+</li>
+<li><p>Upload a file to a container:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>storage<span class="w"> </span>copy<span class="w"> </span>-s<span class="w"> </span>&lt;source-local-folder&gt;<span class="w"> </span>-d<span class="w"> </span>&lt;destination-remote-folder&gt;<span class="w"> </span>--auth-mode<span class="w"> </span>login
+</pre></div>
+</div>
+</li>
+<li><p>Download a file from a container:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>storage<span class="w"> </span>copy<span class="w"> </span>-s<span class="w"> </span>&lt;source-remote-folder&gt;<span class="w"> </span>-d<span class="w"> </span>&lt;destination-local-folder&gt;<span class="w"> </span>--auth-mode<span class="w"> </span>login
+</pre></div>
+</div>
+<img alt="Azure CLI Storage Copy" src="../_images/az_storage_copy.png" />
+</li>
+</ul>
+</section>
+<section id="mounting-storage-as-a-file-system">
+<h2>Mounting storage as a file system<a class="headerlink" href="#mounting-storage-as-a-file-system" title="Link to this heading">#</a></h2>
+<p>To mount a storage container as a file system using <strong>BlobFuse2</strong>, follow the steps below:</p>
+<ol class="arabic">
+<li><p><strong>Prepare the configuration file</strong>:</p>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> configuration file with the appropriate parameters to define your storage and caching settings.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">allow-other</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nt">logging</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">syslog</span>
+<span class="w">   </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">log_debug</span>
+
+<span class="nt">components</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">libfuse</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">file_cache</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">attr_cache</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azstorage</span>
+
+<span class="nt">libfuse</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">attribute-expiration-sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120</span>
+<span class="w">   </span><span class="nt">entry-expiration-sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120</span>
+<span class="w">   </span><span class="nt">negative-entry-expiration-sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">240</span>
+
+<span class="nt">file_cache</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;path-to-file-cache&gt;</span>
+<span class="w">   </span><span class="nt">timeout-sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120</span>
+<span class="w">   </span><span class="nt">max-size-mb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+
+<span class="nt">attr_cache</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">timeout-sec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7200</span>
+
+<span class="nt">azstorage</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">adls</span>
+<span class="w">   </span><span class="nt">account-name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;account-name&gt;</span>
+<span class="w">   </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;container&gt;</span>
+<span class="w">   </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azcli</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Run the mount command</strong>:</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">blobfuse2</span></code> utility to mount the storage container to a specified mount point.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>blobfuse2<span class="w"> </span>mount<span class="w"> </span>&lt;path-to-mount&gt;<span class="w"> </span>--config-file<span class="w"> </span>&lt;yaml-config-file&gt;
+</pre></div>
+</div>
+<p>If you plan to use the <code class="docutils literal notranslate"><span class="pre">--allow-other</span></code> option, ensure that the system is configured correctly:</p>
+<ul>
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">/etc/fuse.conf</span></code> with superuser privileges:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/fuse.conf
+</pre></div>
+</div>
+</li>
+<li><p>Uncomment or add the following line:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>user_allow_other
+</pre></div>
+</div>
+</li>
+<li><p>Save and exit the file.</p></li>
+<li><p>Re-run the mount command with <code class="docutils literal notranslate"><span class="pre">--allow-other</span></code> enabled.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="additional-resources">
+<h2>Additional resources<a class="headerlink" href="#additional-resources" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-cli">Azure CLI Storage Documentation</a></p></li>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10?tabs=dnf">AzCopy Documentation</a></p></li>
+<li><p><a class="reference external" href="https://learn.microsoft.com/en-us/azure/role-based-access-control/overview">Azure Role-Based Access Control (RBAC)</a></p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="singularity.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Submiting jobs with Singularity</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="virtual_machine.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Azure Virtual Machine (VM)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Sections
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-access-via-azure-ad">Configure access via Azure AD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-storage-resources-without-keys">Accessing storage resources without keys</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mounting-storage-as-a-file-system">Mounting storage as a file system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional resources</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

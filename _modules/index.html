@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overview: module code &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/index';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/_modules/index.html" />
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2F_modules/index.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>All modules for which code is available</h1>
+<ul><li><a href="phyagi/cli/convert.html">phyagi.cli.convert</a></li>
+<li><a href="phyagi/cli/evaluate.html">phyagi.cli.evaluate</a></li>
+<li><a href="phyagi/cli/speed_benchmark.html">phyagi.cli.speed_benchmark</a></li>
+<li><a href="phyagi/cli/start_ray_cluster.html">phyagi.cli.start_ray_cluster</a></li>
+<li><a href="phyagi/datasets/concat_dataset.html">phyagi.datasets.concat_dataset</a></li>
+<li><a href="phyagi/datasets/dataset_provider.html">phyagi.datasets.dataset_provider</a></li>
+<li><a href="phyagi/datasets/registry.html">phyagi.datasets.registry</a></li>
+<li><a href="phyagi/datasets/rl/chat/chat_dataset.html">phyagi.datasets.rl.chat.chat_dataset</a></li>
+<li><a href="phyagi/datasets/rl/chat/chat_dataset_provider.html">phyagi.datasets.rl.chat.chat_dataset_provider</a></li>
+<li><a href="phyagi/datasets/rl/formatting_utils.html">phyagi.datasets.rl.formatting_utils</a></li>
+<li><a href="phyagi/datasets/rl/packing.html">phyagi.datasets.rl.packing</a></li>
+<li><a href="phyagi/datasets/rl/rl_data_collator.html">phyagi.datasets.rl.rl_data_collator</a></li>
+<li><a href="phyagi/datasets/rl/special_tokens.html">phyagi.datasets.rl.special_tokens</a></li>
+<li><a href="phyagi/datasets/train/lm/lm_dataset.html">phyagi.datasets.train.lm.lm_dataset</a></li>
+<li><a href="phyagi/datasets/train/lm/lm_dataset_provider.html">phyagi.datasets.train.lm.lm_dataset_provider</a></li>
+<li><a href="phyagi/datasets/train/stream_lm/stream_lm_dataset.html">phyagi.datasets.train.stream_lm.stream_lm_dataset</a></li>
+<li><a href="phyagi/datasets/train/stream_lm/stream_lm_dataset_provider.html">phyagi.datasets.train.stream_lm.stream_lm_dataset_provider</a></li>
+<li><a href="phyagi/datasets/train/train_data_collator.html">phyagi.datasets.train.train_data_collator</a></li>
+<li><a href="phyagi/eval/generation.html">phyagi.eval.generation</a></li>
+<li><a href="phyagi/eval/log_likelihood_pipeline.html">phyagi.eval.log_likelihood_pipeline</a></li>
+<li><a href="phyagi/eval/loss_pipeline.html">phyagi.eval.loss_pipeline</a></li>
+<li><a href="phyagi/eval/registry.html">phyagi.eval.registry</a></li>
+<li><a href="phyagi/eval/tasks/agi_eval.html">phyagi.eval.tasks.agi_eval</a></li>
+<li><a href="phyagi/eval/tasks/arc.html">phyagi.eval.tasks.arc</a></li>
+<li><a href="phyagi/eval/tasks/arithmetic.html">phyagi.eval.tasks.arithmetic</a></li>
+<li><a href="phyagi/eval/tasks/completion.html">phyagi.eval.tasks.completion</a></li>
+<li><a href="phyagi/eval/tasks/glue.html">phyagi.eval.tasks.glue</a></li>
+<li><a href="phyagi/eval/tasks/gsm8k.html">phyagi.eval.tasks.gsm8k</a></li>
+<li><a href="phyagi/eval/tasks/hellaswag.html">phyagi.eval.tasks.hellaswag</a></li>
+<li><a href="phyagi/eval/tasks/human_eval.html">phyagi.eval.tasks.human_eval</a></li>
+<li><a href="phyagi/eval/tasks/human_eval_pack.html">phyagi.eval.tasks.human_eval_pack</a></li>
+<li><a href="phyagi/eval/tasks/lambada.html">phyagi.eval.tasks.lambada</a></li>
+<li><a href="phyagi/eval/tasks/loss.html">phyagi.eval.tasks.loss</a></li>
+<li><a href="phyagi/eval/tasks/math.html">phyagi.eval.tasks.math</a></li>
+<li><a href="phyagi/eval/tasks/math_qa.html">phyagi.eval.tasks.math_qa</a></li>
+<li><a href="phyagi/eval/tasks/mbpp.html">phyagi.eval.tasks.mbpp</a></li>
+<li><a href="phyagi/eval/tasks/medmcqa.html">phyagi.eval.tasks.medmcqa</a></li>
+<li><a href="phyagi/eval/tasks/mmlu.html">phyagi.eval.tasks.mmlu</a></li>
+<li><a href="phyagi/eval/tasks/natural_questions.html">phyagi.eval.tasks.natural_questions</a></li>
+<li><a href="phyagi/eval/tasks/openbookqa.html">phyagi.eval.tasks.openbookqa</a></li>
+<li><a href="phyagi/eval/tasks/p3.html">phyagi.eval.tasks.p3</a></li>
+<li><a href="phyagi/eval/tasks/piqa.html">phyagi.eval.tasks.piqa</a></li>
+<li><a href="phyagi/eval/tasks/race.html">phyagi.eval.tasks.race</a></li>
+<li><a href="phyagi/eval/tasks/siqa.html">phyagi.eval.tasks.siqa</a></li>
+<li><a href="phyagi/eval/tasks/squad.html">phyagi.eval.tasks.squad</a></li>
+<li><a href="phyagi/eval/tasks/super_glue.html">phyagi.eval.tasks.super_glue</a></li>
+<li><a href="phyagi/eval/tasks/trivia_qa.html">phyagi.eval.tasks.trivia_qa</a></li>
+<li><a href="phyagi/eval/tasks/winogrande.html">phyagi.eval.tasks.winogrande</a></li>
+<li><a href="phyagi/eval/text_generation_pipeline.html">phyagi.eval.text_generation_pipeline</a></li>
+<li><a href="phyagi/models/mixformer_sequential/blocks/embeddings/common.html">phyagi.models.mixformer_sequential.blocks.embeddings.common</a></li>
+<li><a href="phyagi/models/mixformer_sequential/blocks/embeddings/rotary.html">phyagi.models.mixformer_sequential.blocks.embeddings.rotary</a></li>
+<li><a href="phyagi/models/mixformer_sequential/blocks/heads/causal_lm.html">phyagi.models.mixformer_sequential.blocks.heads.causal_lm</a></li>
+<li><a href="phyagi/models/mixformer_sequential/blocks/heads/seq_cls.html">phyagi.models.mixformer_sequential.blocks.heads.seq_cls</a></li>
+<li><a href="phyagi/models/mixformer_sequential/blocks/mixers/mha.html">phyagi.models.mixformer_sequential.blocks.mixers.mha</a></li>
+<li><a href="phyagi/models/mixformer_sequential/blocks/mlps/glu.html">phyagi.models.mixformer_sequential.blocks.mlps.glu</a></li>
+<li><a href="phyagi/models/mixformer_sequential/blocks/mlps/mlp.html">phyagi.models.mixformer_sequential.blocks.mlps.mlp</a></li>
+<li><a href="phyagi/models/mixformer_sequential/blocks/norms/low_precision.html">phyagi.models.mixformer_sequential.blocks.norms.low_precision</a></li>
+<li><a href="phyagi/models/mixformer_sequential/blocks/norms/rms.html">phyagi.models.mixformer_sequential.blocks.norms.rms</a></li>
+<li><a href="phyagi/models/mixformer_sequential/blocks/parallel.html">phyagi.models.mixformer_sequential.blocks.parallel</a></li>
+<li><a href="phyagi/models/mixformer_sequential/blocks/sequential.html">phyagi.models.mixformer_sequential.blocks.sequential</a></li>
+<li><a href="phyagi/models/mixformer_sequential/configuration_mixformer_sequential.html">phyagi.models.mixformer_sequential.configuration_mixformer_sequential</a></li>
+<li><a href="phyagi/models/mixformer_sequential/modeling_mixformer_sequential.html">phyagi.models.mixformer_sequential.modeling_mixformer_sequential</a></li>
+<li><a href="phyagi/models/mixformer_sequential/parallel_mixformer_sequential.html">phyagi.models.mixformer_sequential.parallel_mixformer_sequential</a></li>
+<li><a href="phyagi/models/model_convert.html">phyagi.models.model_convert</a></li>
+<li><a href="phyagi/models/parallel_utils.html">phyagi.models.parallel_utils</a></li>
+<li><a href="phyagi/models/registry.html">phyagi.models.registry</a></li>
+<li><a href="phyagi/optimizers/dadaptation.html">phyagi.optimizers.dadaptation</a></li>
+<li><a href="phyagi/optimizers/lion.html">phyagi.optimizers.lion</a></li>
+<li><a href="phyagi/optimizers/registry.html">phyagi.optimizers.registry</a></li>
+<li><a href="phyagi/optimizers/schedulers/warmup_decay.html">phyagi.optimizers.schedulers.warmup_decay</a></li>
+<li><a href="phyagi/rl/models/actor.html">phyagi.rl.models.actor</a></li>
+<li><a href="phyagi/rl/models/actor_config.html">phyagi.rl.models.actor_config</a></li>
+<li><a href="phyagi/rl/models/reference.html">phyagi.rl.models.reference</a></li>
+<li><a href="phyagi/rl/rewards/gsm8k.html">phyagi.rl.rewards.gsm8k</a></li>
+<li><a href="phyagi/rl/rewards/phi4rp.html">phyagi.rl.rewards.phi4rp</a></li>
+<li><a href="phyagi/rl/rewards/python_code_executor.html">phyagi.rl.rewards.python_code_executor</a></li>
+<li><a href="phyagi/rl/rewards/registry.html">phyagi.rl.rewards.registry</a></li>
+<li><a href="phyagi/rl/rewards/reward.html">phyagi.rl.rewards.reward</a></li>
+<li><a href="phyagi/rl/rewards/reward_manager.html">phyagi.rl.rewards.reward_manager</a></li>
+<li><a href="phyagi/rl/rollout/vllm_worker_config.html">phyagi.rl.rollout.vllm_worker_config</a></li>
+<li><a href="phyagi/rl/tuners/grpo/grpo_config.html">phyagi.rl.tuners.grpo.grpo_config</a></li>
+<li><a href="phyagi/rl/tuners/grpo/grpo_tuner.html">phyagi.rl.tuners.grpo.grpo_tuner</a></li>
+<li><a href="phyagi/rl/tuners/grpo/grpo_worker.html">phyagi.rl.tuners.grpo.grpo_worker</a></li>
+<li><a href="phyagi/rl/tuners/isft/isft_config.html">phyagi.rl.tuners.isft.isft_config</a></li>
+<li><a href="phyagi/rl/tuners/isft/isft_tuner.html">phyagi.rl.tuners.isft.isft_tuner</a></li>
+<li><a href="phyagi/rl/tuners/isft/isft_worker.html">phyagi.rl.tuners.isft.isft_worker</a></li>
+<li><a href="phyagi/rl/tuners/ray_worker.html">phyagi.rl.tuners.ray_worker</a></li>
+<li><a href="phyagi/rl/tuners/ray_worker_config.html">phyagi.rl.tuners.ray_worker_config</a></li>
+<li><a href="phyagi/rl/tuners/registry.html">phyagi.rl.tuners.registry</a></li>
+<li><a href="phyagi/trainers/ds/ds_trainer.html">phyagi.trainers.ds.ds_trainer</a></li>
+<li><a href="phyagi/trainers/ds/ds_trainer_callback.html">phyagi.trainers.ds.ds_trainer_callback</a></li>
+<li><a href="phyagi/trainers/ds/ds_training_args.html">phyagi.trainers.ds.ds_training_args</a></li>
+<li><a href="phyagi/trainers/flops_utils.html">phyagi.trainers.flops_utils</a></li>
+<li><a href="phyagi/trainers/hf/hf_trainer.html">phyagi.trainers.hf.hf_trainer</a></li>
+<li><a href="phyagi/trainers/pl/pl_callbacks.html">phyagi.trainers.pl.pl_callbacks</a></li>
+<li><a href="phyagi/trainers/pl/pl_lightning_module.html">phyagi.trainers.pl.pl_lightning_module</a></li>
+<li><a href="phyagi/trainers/pl/pl_progress_bars.html">phyagi.trainers.pl.pl_progress_bars</a></li>
+<li><a href="phyagi/trainers/pl/pl_strategies.html">phyagi.trainers.pl.pl_strategies</a></li>
+<li><a href="phyagi/trainers/pl/pl_trainer.html">phyagi.trainers.pl.pl_trainer</a></li>
+<li><a href="phyagi/trainers/pl/pl_training_args.html">phyagi.trainers.pl.pl_training_args</a></li>
+<li><a href="phyagi/trainers/registry.html">phyagi.trainers.registry</a></li>
+<li><a href="phyagi/trainers/trainer_utils.html">phyagi.trainers.trainer_utils</a></li>
+<li><a href="phyagi/utils/checkpoint.html">phyagi.utils.checkpoint</a></li>
+<li><a href="phyagi/utils/config.html">phyagi.utils.config</a></li>
+<li><a href="phyagi/utils/download_utils.html">phyagi.utils.download_utils</a></li>
+<li><a href="phyagi/utils/file_utils.html">phyagi.utils.file_utils</a></li>
+<li><a href="phyagi/utils/hf_utils.html">phyagi.utils.hf_utils</a></li>
+<li><a href="phyagi/utils/import_utils.html">phyagi.utils.import_utils</a></li>
+<li><a href="phyagi/utils/logging_handlers.html">phyagi.utils.logging_handlers</a></li>
+<li><a href="phyagi/utils/logging_table.html">phyagi.utils.logging_table</a></li>
+<li><a href="phyagi/utils/logging_utils.html">phyagi.utils.logging_utils</a></li>
+<li><a href="phyagi/utils/timer.html">phyagi.utils.timer</a></li>
+<li><a href="phyagi/utils/type_utils.html">phyagi.utils.type_utils</a></li>
+</ul>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

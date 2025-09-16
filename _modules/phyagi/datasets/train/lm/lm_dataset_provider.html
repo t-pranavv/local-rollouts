@@ -1,0 +1,893 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>phyagi.datasets.train.lm.lm_dataset_provider &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/phyagi/datasets/train/lm/lm_dataset_provider';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/_modules/phyagi/datasets/train/lm/lm_dataset_provider.html" />
+    <link rel="icon" href="../../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../../../../../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorials/evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2F_modules/phyagi/datasets/train/lm/lm_dataset_provider.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for phyagi.datasets.train.lm.lm_dataset_provider</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) Microsoft Corporation.</span>
+<span class="c1"># Licensed under the MIT license.</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatasetDict</span><span class="p">,</span> <span class="n">load_dataset</span><span class="p">,</span> <span class="n">load_from_disk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">PreTrainedTokenizerBase</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.dataset_provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatasetProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.shared_memory_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">process_dataset_to_memory</span><span class="p">,</span>
+    <span class="n">save_memory_dataset</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.train.lm.lm_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">is_file_available</span><span class="p">,</span>
+    <span class="n">save_json_file</span><span class="p">,</span>
+    <span class="n">validate_file_extension</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.logging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.type_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">xor</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_create_val_split</span><span class="p">(</span>
+    <span class="n">dataset_dict</span><span class="p">:</span> <span class="n">DatasetDict</span><span class="p">,</span>
+    <span class="n">val_split</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DatasetDict</span><span class="p">:</span>
+    <span class="n">key_to_split</span><span class="p">,</span> <span class="n">key_to_assign</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;validation&quot;</span><span class="p">)</span>
+    <span class="n">are_keys_valid</span> <span class="o">=</span> <span class="n">key_to_split</span> <span class="ow">in</span> <span class="n">dataset_dict</span> <span class="ow">and</span> <span class="n">key_to_assign</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset_dict</span>
+
+    <span class="k">if</span> <span class="n">are_keys_valid</span> <span class="ow">and</span> <span class="n">val_split</span> <span class="ow">and</span> <span class="n">val_split</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="n">tmp_dataset_dict</span> <span class="o">=</span> <span class="n">dataset_dict</span><span class="p">[</span><span class="n">key_to_split</span><span class="p">]</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">test_size</span><span class="o">=</span><span class="n">val_split</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+        <span class="n">dataset_dict</span><span class="p">[</span><span class="n">key_to_split</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_dataset_dict</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span>
+        <span class="n">dataset_dict</span><span class="p">[</span><span class="n">key_to_assign</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_dataset_dict</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">dataset_dict</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_split_ndarray</span><span class="p">(</span>
+    <span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">split</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`array.ndim` must be &gt;= 1, but got </span><span class="si">{</span><span class="n">array</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span>
+
+    <span class="n">split</span> <span class="o">=</span> <span class="n">split</span> <span class="ow">or</span> <span class="mf">0.0</span>
+    <span class="n">n_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">split</span> <span class="o">*</span> <span class="n">length</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">split</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">else</span> <span class="n">split</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">n_idx</span> <span class="o">&lt;=</span> <span class="n">length</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;`n_idx` must be in [0, </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">], but got </span><span class="si">{</span><span class="n">n_idx</span><span class="si">}</span><span class="s2">. `split` needs to be adjusted to a valid value.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+        <span class="c1"># Set the random seed, which is used to persist shuffled indexes across multiple calls</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+
+        <span class="n">selected_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">idx</span><span class="p">[:</span><span class="n">n_idx</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+        <span class="n">remaining_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">idx</span><span class="p">[</span><span class="n">n_idx</span><span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">selected_array</span><span class="p">,</span> <span class="n">remaining_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="p">[</span><span class="n">n_idx</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">remaining_array</span><span class="p">,</span> <span class="n">selected_array</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_tokenize_concatenated</span><span class="p">(</span>
+    <span class="n">examples</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">PreTrainedTokenizerBase</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">mapping_column_name</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_eos_token</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">tokenizer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`tokenizer` must be provided, but got None.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mapping_column_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`mapping_column_name` must be provided, but got None.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_eos_token</span><span class="p">(</span><span class="n">examples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">example</span> <span class="o">+</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">eos_token</span> <span class="k">if</span> <span class="n">example</span> <span class="k">else</span> <span class="n">example</span> <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">]</span>
+
+    <span class="n">examples_mapping</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+        <span class="n">_add_eos_token</span><span class="p">(</span><span class="n">examples</span><span class="p">[</span><span class="n">column_name</span><span class="p">])</span> <span class="k">if</span> <span class="n">use_eos_token</span> <span class="k">else</span> <span class="n">examples</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">mapping_column_name</span>
+    <span class="p">)</span>
+
+    <span class="n">tokenized_examples</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="o">*</span><span class="n">examples_mapping</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">concat_tokenized_examples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">tokenized_examples</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;input_ids&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">concat_tokenized_examples</span><span class="p">],</span> <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">concat_tokenized_examples</span><span class="p">)]}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_tokenize_dataset</span><span class="p">(</span>
+    <span class="n">dataset_dict</span><span class="p">:</span> <span class="n">DatasetDict</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">PreTrainedTokenizerBase</span><span class="p">,</span>
+    <span class="n">mapping_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">mapping_fn_kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">mapping_column_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="n">use_eos_token</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DatasetDict</span><span class="p">:</span>
+    <span class="n">mapping_column_name</span> <span class="o">=</span> <span class="n">mapping_column_name</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mapping_column_name</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">mapping_column_name</span><span class="p">]</span>
+    <span class="n">mapping_fn</span> <span class="o">=</span> <span class="n">mapping_fn</span> <span class="ow">or</span> <span class="n">_tokenize_concatenated</span>
+    <span class="n">mapping_fn_kwargs</span> <span class="o">=</span> <span class="n">mapping_fn_kwargs</span> <span class="ow">or</span> <span class="p">{</span>
+        <span class="s2">&quot;tokenizer&quot;</span><span class="p">:</span> <span class="n">tokenizer</span><span class="p">,</span>
+        <span class="s2">&quot;mapping_column_name&quot;</span><span class="p">:</span> <span class="n">mapping_column_name</span><span class="p">,</span>
+        <span class="s2">&quot;use_eos_token&quot;</span><span class="p">:</span> <span class="n">use_eos_token</span><span class="p">,</span>
+        <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="n">dtype</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">dataset_dict</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+        <span class="n">mapping_fn</span><span class="p">,</span>
+        <span class="n">fn_kwargs</span><span class="o">=</span><span class="n">mapping_fn_kwargs</span><span class="p">,</span>
+        <span class="n">batched</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">num_proc</span><span class="o">=</span><span class="n">num_workers</span><span class="p">,</span>
+        <span class="n">remove_columns</span><span class="o">=</span><span class="n">dataset_dict</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">column_names</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Tokenizing dataset...&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="LMDatasetProvider">
+<a class="viewcode-back" href="../../../../../api/datasets.html#phyagi.datasets.train.lm.lm_dataset_provider.LMDatasetProvider">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LMDatasetProvider</span><span class="p">(</span><span class="n">DatasetProvider</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Language modeling dataset provider.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LMDatasetProvider.__init__">
+<a class="viewcode-back" href="../../../../../api/datasets.html#phyagi.datasets.train.lm.lm_dataset_provider.LMDatasetProvider.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">train_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">validation_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">validation_split</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tokenizer_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">seq_len</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">,</span>
+        <span class="n">shift_labels</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">ignore_token_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">random_mask_prob</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the dataset provider.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_file: Path to the ``.npy`` training array file.</span>
+<span class="sd">            validation_file: Path to the ``.npy`` validation array file.</span>
+<span class="sd">            validation_split: Part of the training dataset to be used for dynamic validation dataset creation.</span>
+<span class="sd">                If type is ``int``, will use number of tokens from the training dataset.</span>
+<span class="sd">                If type is ``float``, will use fraction of the training dataset.</span>
+<span class="sd">            tokenizer_file: Path to the ``.pkl`` tokenizer file.</span>
+<span class="sd">            seq_len: Sequence length.</span>
+<span class="sd">            shift_labels: Whether to shift labels.</span>
+<span class="sd">            weight: Weight for the dataset.</span>
+<span class="sd">            label: Label for the dataset.</span>
+<span class="sd">            ignore_token_id: Index to be ignored in the labels.</span>
+<span class="sd">            random_mask_prob: Probability of applying a mask that ignores random samples (sequence lengths).</span>
+<span class="sd">                If ``None``, ignores masking.</span>
+<span class="sd">            seed: Seed for the mask random number generator.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># `input_ids` attributes are used to avoid loading the files multiple times</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_train_input_ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_labels</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validation_input_ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validation_labels</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_train_file</span> <span class="o">=</span> <span class="n">train_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validation_file</span> <span class="o">=</span> <span class="n">validation_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validation_split</span> <span class="o">=</span> <span class="n">validation_split</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer_file</span> <span class="o">=</span> <span class="n">tokenizer_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_seq_len</span> <span class="o">=</span> <span class="n">seq_len</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shift_labels</span> <span class="o">=</span> <span class="n">shift_labels</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weight</span> <span class="o">=</span> <span class="n">weight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ignore_token_id</span> <span class="o">=</span> <span class="n">ignore_token_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_random_mask_prob</span> <span class="o">=</span> <span class="n">random_mask_prob</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_seed</span> <span class="o">=</span> <span class="n">seed</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weight</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label</span>
+
+<div class="viewcode-block" id="LMDatasetProvider.from_hub">
+<a class="viewcode-back" href="../../../../../api/datasets.html#phyagi.datasets.train.lm.lm_dataset_provider.LMDatasetProvider.from_hub">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_hub</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="n">LMDatasetProvider</span><span class="p">,</span>
+        <span class="n">dataset_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dataset_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">disk_file_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data_files</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">revision</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tokenizer</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">PreTrainedTokenizerBase</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mapping_fn</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mapping_fn_kwargs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mapping_column_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">validation_split</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+        <span class="n">num_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">use_eos_token</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">use_shared_memory</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">cache_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;cache&quot;</span><span class="p">,</span>
+        <span class="n">raw_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LMDatasetProvider</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load a dataset provider by downloading and tokenizing data from Hugging Face hub.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset_path: Path of the dataset when loading with ``load_dataset()``.</span>
+<span class="sd">            dataset_name: Name of the dataset when loading with ``load_dataset()``.</span>
+<span class="sd">            disk_file_path: Path of the disk file when loading with ``load_from_disk()``.</span>
+<span class="sd">                If different than ``None``, will override dataset downloaded from Hugging Face hub.</span>
+<span class="sd">            data_dir: Path to the data directory.</span>
+<span class="sd">            data_files: Path to the source data files.</span>
+<span class="sd">            revision: Version of the dataset.</span>
+<span class="sd">            tokenizer: Instance of tokenizer to use.</span>
+<span class="sd">                If type is ``str``, will use :class:`transformers.AutoTokenizer` to load the tokenizer.</span>
+<span class="sd">            mapping_fn: A function that maps the dataset.</span>
+<span class="sd">                If set to ``None``, :func:`phyagi.datasets.train.lm.lm_dataset_provider._tokenize_concatenated` will be used.</span>
+<span class="sd">            mapping_fn_kwargs: Keyword arguments to be passed to ``mapping_fn``.</span>
+<span class="sd">            mapping_column_name: Columns in the dataset to be tokenized.</span>
+<span class="sd">                If type is ``str``, only one column will be tokenized.</span>
+<span class="sd">                If type is ``List[str]``, multiple columns will be tokenized.</span>
+<span class="sd">            validation_split: Fraction of the dataset to be used for validation.</span>
+<span class="sd">                If set to ``0.0``, it will not create additional validation split.</span>
+<span class="sd">            shuffle: Whether to shuffle the dataset.</span>
+<span class="sd">            seed: Random seed.</span>
+<span class="sd">            num_workers: Number of workers to use for tokenizing.</span>
+<span class="sd">            use_eos_token: Whether to use the EOS token to separate sequences.</span>
+<span class="sd">            use_shared_memory: Whether to use the shared memory for caching.</span>
+<span class="sd">            cache_dir: Output directory where dataset will be cached.</span>
+<span class="sd">            raw_dir: Output directory where raw dataset will be saved.</span>
+<span class="sd">                If set to ``None``, the raw dataset will not be saved.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dataset provider.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">xor</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">disk_file_path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`dataset_path` and `disk_file_path` are mutually exclusive.&quot;</span><span class="p">)</span>
+
+        <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">tokenizer</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">,</span> <span class="n">PreTrainedTokenizerBase</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`tokenizer` must be an instance of PreTrainedTokenizerBase, but got &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="n">mapping_column_name</span> <span class="o">=</span> <span class="n">mapping_column_name</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
+        <span class="n">processing_column_name</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint16</span> <span class="k">if</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">vocab_size</span> <span class="o">&lt;</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">1024</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading non-tokenized dataset...&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">disk_file_path</span><span class="p">:</span>
+            <span class="n">dataset_dict</span> <span class="o">=</span> <span class="n">load_from_disk</span><span class="p">(</span><span class="n">disk_file_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dataset_dict</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+                <span class="n">dataset_path</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">dataset_name</span><span class="p">,</span>
+                <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span><span class="p">,</span>
+                <span class="n">data_files</span><span class="o">=</span><span class="n">data_files</span><span class="p">,</span>
+                <span class="n">revision</span><span class="o">=</span><span class="n">revision</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="c1"># `cache_dir` must be created after loading the dataset since a user can provide a relative path</span>
+        <span class="c1"># and it will break when trying to load the dataset from that path</span>
+        <span class="k">if</span> <span class="n">cache_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`cache_dir` must be provided, but got None.&quot;</span><span class="p">)</span>
+        <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cache_dir</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s2">&#39; already exists and will be overritten.&quot;</span><span class="p">)</span>
+        <span class="n">cache_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">raw_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">raw_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">raw_dir</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">raw_dir</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">raw_dir</span><span class="si">}</span><span class="s2">&#39; already exists and will be overritten.&quot;</span><span class="p">)</span>
+            <span class="n">dataset_dict</span><span class="o">.</span><span class="n">save_to_disk</span><span class="p">(</span><span class="n">raw_dir</span><span class="p">)</span>
+
+        <span class="c1"># Ensure dataset is always a dictionary with at least `train` split since the</span>
+        <span class="c1"># following functions expect it to be a dictionary</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_dict</span><span class="p">,</span> <span class="n">DatasetDict</span><span class="p">):</span>
+            <span class="n">dataset_dict</span> <span class="o">=</span> <span class="n">DatasetDict</span><span class="p">({</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">dataset_dict</span><span class="p">})</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Creating validation split (if necessary)...&quot;</span><span class="p">)</span>
+        <span class="n">dataset_dict</span> <span class="o">=</span> <span class="n">_create_val_split</span><span class="p">(</span><span class="n">dataset_dict</span><span class="p">,</span> <span class="n">val_split</span><span class="o">=</span><span class="n">validation_split</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+        <span class="n">tokenized_dataset_dict</span> <span class="o">=</span> <span class="n">_tokenize_dataset</span><span class="p">(</span>
+            <span class="n">dataset_dict</span><span class="p">,</span>
+            <span class="n">tokenizer</span><span class="p">,</span>
+            <span class="n">mapping_fn</span><span class="p">,</span>
+            <span class="n">mapping_fn_kwargs</span><span class="p">,</span>
+            <span class="n">mapping_column_name</span><span class="p">,</span>
+            <span class="n">use_eos_token</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="p">,</span>
+            <span class="n">num_workers</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">processed_dataset_dict</span> <span class="o">=</span> <span class="n">process_dataset_to_memory</span><span class="p">(</span>
+            <span class="n">tokenized_dataset_dict</span><span class="p">,</span>
+            <span class="n">cache_dir</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="p">,</span>
+            <span class="n">processing_column_name</span><span class="p">,</span>
+            <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">,</span>
+            <span class="n">use_shared_memory</span><span class="o">=</span><span class="n">use_shared_memory</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving tokenized dataset: </span><span class="si">{</span><span class="n">cache_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">cache_files</span> <span class="o">=</span> <span class="n">save_memory_dataset</span><span class="p">(</span>
+            <span class="n">processed_dataset_dict</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">cache_dir</span><span class="p">,</span> <span class="n">use_shared_memory</span><span class="o">=</span><span class="n">use_shared_memory</span>
+        <span class="p">)</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;dataset_path&quot;</span><span class="p">:</span> <span class="n">dataset_path</span><span class="p">,</span>
+            <span class="s2">&quot;dataset_name&quot;</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
+            <span class="s2">&quot;disk_file_path&quot;</span><span class="p">:</span> <span class="n">disk_file_path</span><span class="p">,</span>
+            <span class="s2">&quot;data_dir&quot;</span><span class="p">:</span> <span class="n">data_dir</span><span class="p">,</span>
+            <span class="s2">&quot;data_files&quot;</span><span class="p">:</span> <span class="n">data_files</span><span class="p">,</span>
+            <span class="s2">&quot;revision&quot;</span><span class="p">:</span> <span class="n">revision</span><span class="p">,</span>
+            <span class="s2">&quot;tokenizer&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;name_or_path&quot;</span><span class="p">:</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">name_or_path</span><span class="p">,</span>
+                <span class="s2">&quot;model_max_length&quot;</span><span class="p">:</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">model_max_length</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;mapping_column_name&quot;</span><span class="p">:</span> <span class="n">mapping_column_name</span><span class="p">,</span>
+            <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="n">shuffle</span><span class="p">,</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span><span class="p">,</span>
+            <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="n">num_workers</span><span class="p">,</span>
+            <span class="s2">&quot;use_eos_token&quot;</span><span class="p">:</span> <span class="n">use_eos_token</span><span class="p">,</span>
+            <span class="s2">&quot;use_shared_memory&quot;</span><span class="p">:</span> <span class="n">use_shared_memory</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">save_json_file</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">cache_dir</span> <span class="o">/</span> <span class="s2">&quot;config.json&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">cache_files</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LMDatasetProvider.from_cache">
+<a class="viewcode-back" href="../../../../../api/datasets.html#phyagi.datasets.train.lm.lm_dataset_provider.LMDatasetProvider.from_cache">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_cache</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">LMDatasetProvider</span><span class="p">,</span> <span class="n">cache_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LMDatasetProvider</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load a dataset provider from a cache directory.</span>
+
+<span class="sd">        If a cached file (``train.npy``, ``validation.npy`` or ``tokenizer.pkl``)</span>
+<span class="sd">        is missing, it will be set to ``None``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cache_dir: Cached dataset directory.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dataset provider.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
+        <span class="n">cache_files</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">split</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;validation&quot;</span><span class="p">]:</span>
+            <span class="n">cache_file</span> <span class="o">=</span> <span class="n">cache_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s2">.npy&quot;</span>
+            <span class="n">cache_files</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s2">_file&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cache_file</span> <span class="k">if</span> <span class="n">cache_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
+
+        <span class="n">tokenizer_file</span> <span class="o">=</span> <span class="n">cache_dir</span> <span class="o">/</span> <span class="s2">&quot;tokenizer.pkl&quot;</span>
+        <span class="n">cache_files</span><span class="p">[</span><span class="s2">&quot;tokenizer_file&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tokenizer_file</span> <span class="k">if</span> <span class="n">tokenizer_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">cache_files</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LMDatasetProvider.get_train_dataset">
+<a class="viewcode-back" href="../../../../../api/datasets.html#phyagi.datasets.train.lm.lm_dataset_provider.LMDatasetProvider.get_train_dataset">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_train_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LMDataset</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">validate_file_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_train_file</span><span class="p">,</span> <span class="s2">&quot;.npy&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_train_input_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_train_file</span><span class="p">,</span> <span class="n">mmap_mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_input_ids</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_train_input_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_input_ids</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+            <span class="n">labels_file</span> <span class="o">=</span> <span class="n">is_file_available</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_train_file</span><span class="p">,</span> <span class="n">file_extension</span><span class="o">=</span><span class="s2">&quot;_labels.npy&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">labels_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_train_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">labels_file</span><span class="p">),</span> <span class="n">mmap_mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+            <span class="n">type_info</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_train_input_ids</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="n">random_mask_offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">type_info</span><span class="o">.</span><span class="n">max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+            <span class="c1"># If we are creating a dynamic validation file, we need to ensure that</span>
+            <span class="c1"># the `train_input_ids` do not overlap with the `validation_input_ids`</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_validation_split</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_train_input_ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validation_input_ids</span> <span class="o">=</span> <span class="n">_split_ndarray</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_train_input_ids</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_validation_split</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_train_labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validation_labels</span> <span class="o">=</span> <span class="n">_split_ndarray</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_train_labels</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_validation_split</span>
+                    <span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">LMDataset</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_train_input_ids</span><span class="p">,</span>
+                <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_train_labels</span><span class="p">,</span>
+                <span class="n">seq_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_seq_len</span><span class="p">,</span>
+                <span class="n">shift_labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_shift_labels</span><span class="p">,</span>
+                <span class="n">ignore_token_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ignore_token_id</span><span class="p">,</span>
+                <span class="n">random_mask_prob</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_random_mask_prob</span><span class="p">,</span>
+                <span class="n">random_mask_offset</span><span class="o">=</span><span class="n">random_mask_offset</span><span class="p">,</span>
+                <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_seed</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="LMDatasetProvider.get_val_dataset">
+<a class="viewcode-back" href="../../../../../api/datasets.html#phyagi.datasets.train.lm.lm_dataset_provider.LMDatasetProvider.get_val_dataset">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_val_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LMDataset</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">validate_file_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_validation_file</span><span class="p">,</span> <span class="s2">&quot;.npy&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_validation_input_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_validation_file</span><span class="p">,</span> <span class="n">mmap_mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validation_input_ids</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validation_input_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validation_input_ids</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+            <span class="n">labels_file</span> <span class="o">=</span> <span class="n">is_file_available</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_validation_file</span><span class="p">,</span> <span class="n">file_extension</span><span class="o">=</span><span class="s2">&quot;_labels.npy&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">labels_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validation_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">labels_file</span><span class="p">),</span> <span class="n">mmap_mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validation_input_ids</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">type_info</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_validation_input_ids</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="n">random_mask_offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">type_info</span><span class="o">.</span><span class="n">max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+            <span class="k">return</span> <span class="n">LMDataset</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validation_input_ids</span><span class="p">,</span>
+                <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_validation_labels</span><span class="p">,</span>
+                <span class="n">seq_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_seq_len</span><span class="p">,</span>
+                <span class="n">shift_labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_shift_labels</span><span class="p">,</span>
+                <span class="n">ignore_token_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ignore_token_id</span><span class="p">,</span>
+                <span class="n">random_mask_prob</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_random_mask_prob</span><span class="p">,</span>
+                <span class="n">random_mask_offset</span><span class="o">=</span><span class="n">random_mask_offset</span><span class="p">,</span>
+                <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_seed</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="LMDatasetProvider.get_tokenizer">
+<a class="viewcode-back" href="../../../../../api/datasets.html#phyagi.datasets.train.lm.lm_dataset_provider.LMDatasetProvider.get_tokenizer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tokenizer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PreTrainedTokenizerBase</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">validate_file_extension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer_file</span><span class="p">,</span> <span class="s2">&quot;.pkl&quot;</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer_file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

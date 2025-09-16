@@ -1,0 +1,746 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>phyagi.datasets.rl.packing &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/phyagi/datasets/rl/packing';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/_modules/phyagi/datasets/rl/packing.html" />
+    <link rel="icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../../../../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2F_modules/phyagi/datasets/rl/packing.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for phyagi.datasets.rl.packing</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) Microsoft Corporation.</span>
+<span class="c1"># Licensed under the MIT license.</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
+
+<div class="viewcode-block" id="PackedBatch">
+<a class="viewcode-back" href="../../../../api/datasets.html#phyagi.datasets.rl.packing.PackedBatch">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PackedBatch</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Packed batch.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tokens: 2D tensor (rows x padded_length) of token identifiers.</span>
+<span class="sd">        masks: 2D tensor (rows x padded_length) of boolean masks.</span>
+<span class="sd">        advantages: 2D tensor (rows x padded_length) of advantages.</span>
+<span class="sd">        cu_seqlens: 1D tensor of cumulative sequence lengths.</span>
+<span class="sd">        valid_seqlens: 1D tensor of valid (mask=True) token lengths.</span>
+<span class="sd">        position_ids: 2D tensor (rows x padded_length) of position identifiers.</span>
+<span class="sd">        boundaries: Boundaries for each row in the packed batch.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">tokens</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;2D tensor of token identifiers.&quot;</span><span class="p">})</span>
+
+    <span class="n">masks</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">BoolTensor</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;2D tensor of boolean masks.&quot;</span><span class="p">})</span>
+
+    <span class="n">advantages</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;2D tensor of advantages.&quot;</span><span class="p">})</span>
+
+    <span class="n">cu_seqlens</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">IntTensor</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;1D tensor of cumulative sequence lengths.&quot;</span><span class="p">})</span>
+
+    <span class="n">valid_seqlens</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">IntTensor</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;1D tensor of valid (mask=True) token lengths.&quot;</span><span class="p">})</span>
+
+    <span class="n">position_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">LongTensor</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;2D tensor of position identifiers.&quot;</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="n">boundaries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;Boundaries for each row in the packed batch.&quot;</span><span class="p">},</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="PackedBatch.to">
+<a class="viewcode-back" href="../../../../api/datasets.html#phyagi.datasets.rl.packing.PackedBatch.to">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PackedBatch</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move the packed batch to the specified device.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device: Target device (e.g., &#39;cuda&#39; or &#39;cpu&#39;).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Instance with tensors moved to the specified device.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">masks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">masks</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">advantages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">advantages</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cu_seqlens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cu_seqlens</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid_seqlens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_seqlens</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">position_ids</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">position_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="PackedBatch.to_dict">
+<a class="viewcode-back" href="../../../../api/datasets.html#phyagi.datasets.rl.packing.PackedBatch.to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the packed batch to a dictionary of tensors.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with attributes as keys and tensors as values.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;tokens&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">,</span>
+            <span class="s2">&quot;masks&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">masks</span><span class="p">,</span>
+            <span class="s2">&quot;advantages&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">advantages</span><span class="p">,</span>
+            <span class="s2">&quot;cu_seqlens&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cu_seqlens</span><span class="p">,</span>
+            <span class="s2">&quot;valid_seqlens&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_seqlens</span><span class="p">,</span>
+            <span class="s2">&quot;position_ids&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">position_ids</span><span class="p">,</span>
+            <span class="s2">&quot;boundaries&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">boundaries</span><span class="p">,</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="PackedBatch.from_dict">
+<a class="viewcode-back" href="../../../../api/datasets.html#phyagi.datasets.rl.packing.PackedBatch.from_dict">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">PackedBatch</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]]])</span> <span class="o">-&gt;</span> <span class="n">PackedBatch</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a packed batch from a dictionary of tensors.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: Dictionary with attributes as keys and tensors as values.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Instance with tensors set from the dictionary.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">tokens</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;tokens&quot;</span><span class="p">],</span>
+            <span class="n">masks</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;masks&quot;</span><span class="p">],</span>
+            <span class="n">advantages</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;advantages&quot;</span><span class="p">],</span>
+            <span class="n">cu_seqlens</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;cu_seqlens&quot;</span><span class="p">],</span>
+            <span class="n">valid_seqlens</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;valid_seqlens&quot;</span><span class="p">],</span>
+            <span class="n">position_ids</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;position_ids&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">boundaries</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;boundaries&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_build_padded_tensor_and_flattened_cu_seqlens</span><span class="p">(</span>
+    <span class="n">bucket</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]]],</span>
+    <span class="n">pad_token_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">max_seq_len</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PackedBatch</span><span class="p">:</span>
+    <span class="n">tokens_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">masks_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">advs_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">per_row_boundaries</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">bucket</span><span class="p">:</span>
+        <span class="n">row_data</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
+        <span class="n">row_boundaries</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;boundaries&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">row_data</span><span class="p">:</span>
+            <span class="n">tokens</span><span class="p">,</span> <span class="n">masks</span><span class="p">,</span> <span class="n">advs</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">row_data</span><span class="p">)</span>
+            <span class="n">tokens</span><span class="p">,</span> <span class="n">masks</span><span class="p">,</span> <span class="n">advs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">masks</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">advs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tokens</span><span class="p">,</span> <span class="n">masks</span><span class="p">,</span> <span class="n">advs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+
+        <span class="n">pad_length</span> <span class="o">=</span> <span class="n">max_seq_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="n">tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">pad_token_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">pad_length</span><span class="p">)</span>
+        <span class="n">masks</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">pad_length</span><span class="p">)</span>
+        <span class="n">advs</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">pad_length</span><span class="p">)</span>
+
+        <span class="n">tokens_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="n">masks_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">masks</span><span class="p">)</span>
+        <span class="n">advs_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">advs</span><span class="p">)</span>
+
+        <span class="c1"># Ensure boundaries include the padded region</span>
+        <span class="k">if</span> <span class="n">row_boundaries</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">max_seq_len</span><span class="p">:</span>
+            <span class="n">row_boundaries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_seq_len</span><span class="p">)</span>
+        <span class="n">per_row_boundaries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_boundaries</span><span class="p">)</span>
+
+    <span class="n">tokens_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">tokens_list</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+    <span class="n">masks_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">masks_list</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+    <span class="n">advs_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">advs_list</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+
+    <span class="c1"># Compute flattened cumulative sequence lengths</span>
+    <span class="n">flattened_cu</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">boundaries</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">per_row_boundaries</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">flattened_cu</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">b</span> <span class="o">+</span> <span class="n">offset</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">boundaries</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Skip the duplicate boundary at the start of each row</span>
+            <span class="n">flattened_cu</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">b</span> <span class="o">+</span> <span class="n">offset</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">boundaries</span><span class="p">[</span><span class="mi">1</span><span class="p">:]])</span>
+        <span class="n">offset</span> <span class="o">+=</span> <span class="n">max_seq_len</span>
+    <span class="n">cu_seqlens_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">flattened_cu</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+    <span class="c1"># Compute number of valid tokens per sequence</span>
+    <span class="n">valid_seqlens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row_idx</span><span class="p">,</span> <span class="n">boundaries</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">per_row_boundaries</span><span class="p">):</span>
+        <span class="n">row_masks</span> <span class="o">=</span> <span class="n">masks_tensor</span><span class="p">[</span><span class="n">row_idx</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">boundaries</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span> <span class="o">=</span> <span class="n">boundaries</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">boundaries</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">valid_seqlens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">row_masks</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span><span class="n">end_idx</span><span class="p">])</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+    <span class="n">valid_seqlens_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">valid_seqlens</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">PackedBatch</span><span class="p">(</span>
+        <span class="n">tokens</span><span class="o">=</span><span class="n">tokens_tensor</span><span class="p">,</span>
+        <span class="n">masks</span><span class="o">=</span><span class="n">masks_tensor</span><span class="p">,</span>
+        <span class="n">advantages</span><span class="o">=</span><span class="n">advs_tensor</span><span class="p">,</span>
+        <span class="n">cu_seqlens</span><span class="o">=</span><span class="n">cu_seqlens_tensor</span><span class="p">,</span>
+        <span class="n">valid_seqlens</span><span class="o">=</span><span class="n">valid_seqlens_tensor</span><span class="p">,</span>
+        <span class="n">boundaries</span><span class="o">=</span><span class="n">per_row_boundaries</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="distribute_and_pack_sequences">
+<a class="viewcode-back" href="../../../../api/datasets.html#phyagi.datasets.rl.packing.distribute_and_pack_sequences">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">distribute_and_pack_sequences</span><span class="p">(</span>
+    <span class="n">sequences</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+    <span class="n">assistant_masks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">]],</span>
+    <span class="n">advantages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">dp_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">cp_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">tp_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">pad_token_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">normalize_adv_num_tokens</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">micro_batch_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">pad_to_largest_micro_batch</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">PackedBatch</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pack token sequences into GPU buckets and (if requested) splits each bucket into micro batches.</span>
+
+<span class="sd">    The input sequences (with matching ``assistant_masks`` and ``advantages``) are first processed by pairing</span>
+<span class="sd">    each token with its corresponding mask and advantage (normalized if needed). The sequences are then</span>
+<span class="sd">    packed into GPU buckets (each bucket is a list of rows containing one or more packed sequences).</span>
+
+<span class="sd">    If ``micro_batch_size`` is provided, each GPU bucket&#39;s rows are split into micro batches (each micro batch</span>
+<span class="sd">    is a sublist of rows of ``length &lt;= micro_batch_size``). For each micro batch, padded tensors and a</span>
+<span class="sd">    flattened cumulative sequence length vector (``cu_seqlens``) are created.</span>
+
+<span class="sd">    If ``pad_to_largest_micro_batch=True``, the micro batches are padded so each device receives the same number of</span>
+<span class="sd">    micro batches. This is useful for distributed training to avoid gradient synchronization issues with FSDP.</span>
+<span class="sd">    The extra micro batches added will contain just 2 padding tokens.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sequences: List of sequences (each sequence is a list of token identifiers).</span>
+<span class="sd">        assistant_masks: List of boolean masks indicating which tokens are valid.</span>
+<span class="sd">        advantages: List of advantage values for each token.</span>
+<span class="sd">        max_length: Maximum length of sequences (used for padding).</span>
+<span class="sd">        dp_size: Number of data parallel workers.</span>
+<span class="sd">        cp_size: Number of context parallel workers.</span>
+<span class="sd">        tp_size: Number of tensor parallel workers.</span>
+<span class="sd">        pad_token_id: Token identifier used for padding.</span>
+<span class="sd">        normalize_adv_num_tokens: Whether to normalize the advantage by the number of valid tokens.</span>
+<span class="sd">        micro_batch_size: Size of micro batches.</span>
+<span class="sd">            If ``None``, no micro batching is applied.</span>
+<span class="sd">        pad_to_largest_micro_batch: Whether to pad micro batches to the largest size across GPUs.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      Dictionary mapping GPU index to a list of ``PackedBatch`` instances (one per micro batch). Even if</span>
+<span class="sd">      micro batching is not applied, the GPU index will map to a list containing a single ``PackedBatch``.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">max_length</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;`sequences` must not exceed `max_length`, but got </span><span class="si">{</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">seq</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">sequences</span><span class="p">]</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">max_length</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">assistant_masks</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">advantages</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;`sequences`, `assistant_masks`, and `advantages` must have the same length, but got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">assistant_masks</span><span class="p">)</span><span class="si">}</span><span class="s2">, and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">advantages</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">processed_seqs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">seq</span><span class="p">,</span> <span class="n">mask_seq</span><span class="p">,</span> <span class="n">adv</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">assistant_masks</span><span class="p">,</span> <span class="n">advantages</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">seq</span> <span class="o">=</span> <span class="n">seq</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="n">n_valid</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">mask_seq</span><span class="p">)</span>
+        <span class="n">adv</span> <span class="o">=</span> <span class="n">adv</span> <span class="o">/</span> <span class="n">n_valid</span> <span class="k">if</span> <span class="p">(</span><span class="n">normalize_adv_num_tokens</span> <span class="ow">and</span> <span class="n">n_valid</span><span class="p">)</span> <span class="k">else</span> <span class="n">adv</span>
+
+        <span class="n">processed_seqs</span><span class="o">.</span><span class="n">append</span><span class="p">([(</span><span class="n">token</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">adv</span> <span class="k">if</span> <span class="n">mask</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span> <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">mask</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">mask_seq</span><span class="p">)])</span>
+
+    <span class="n">sorted_idxs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">processed_seqs</span><span class="p">)),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">processed_seqs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_pack_for_one_worker</span><span class="p">(</span><span class="n">idx_subset</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;PackedBatch&quot;</span><span class="p">]:</span>
+        <span class="n">bucket</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;rows&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;boundaries&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]}],</span> <span class="s2">&quot;current_length&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+        <span class="n">remaining</span> <span class="o">=</span> <span class="n">idx_subset</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="n">remaining</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">bucket</span><span class="p">[</span><span class="s2">&quot;rows&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">added</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">remaining</span><span class="p">:</span>
+                <span class="n">seq</span> <span class="o">=</span> <span class="n">processed_seqs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">bucket</span><span class="p">[</span><span class="s2">&quot;current_length&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">max_length</span><span class="p">:</span>
+                    <span class="n">row</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+                    <span class="n">row</span><span class="p">[</span><span class="s2">&quot;boundaries&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;boundaries&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">))</span>
+                    <span class="n">bucket</span><span class="p">[</span><span class="s2">&quot;current_length&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+                    <span class="n">remaining</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="n">added</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">added</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="n">remaining</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">seq</span> <span class="o">=</span> <span class="n">processed_seqs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">bucket</span><span class="p">[</span><span class="s2">&quot;rows&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">seq</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="s2">&quot;boundaries&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)]})</span>
+                <span class="n">bucket</span><span class="p">[</span><span class="s2">&quot;current_length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">bucket</span><span class="p">[</span><span class="s2">&quot;rows&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">micro_batch_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">micro_batches</span> <span class="o">=</span> <span class="p">[</span><span class="n">rows</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">micro_batches</span> <span class="o">=</span> <span class="p">[</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">micro_batch_size</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">),</span> <span class="n">micro_batch_size</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">_build_padded_tensor_and_flattened_cu_seqlens</span><span class="p">(</span><span class="n">mb</span><span class="p">,</span> <span class="n">pad_token_id</span><span class="p">,</span> <span class="n">max_length</span><span class="p">)</span> <span class="k">for</span> <span class="n">mb</span> <span class="ow">in</span> <span class="n">micro_batches</span><span class="p">]</span>
+
+    <span class="n">dp_chunks</span> <span class="o">=</span> <span class="p">[</span><span class="n">sorted_idxs</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="n">dp_size</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dp_size</span><span class="p">)]</span>
+    <span class="n">dp_packs</span> <span class="o">=</span> <span class="p">[</span><span class="n">_pack_for_one_worker</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">dp_chunks</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">pad_to_largest_micro_batch</span><span class="p">:</span>
+        <span class="n">global_max_mb</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">packs</span><span class="p">)</span> <span class="k">for</span> <span class="n">packs</span> <span class="ow">in</span> <span class="n">dp_packs</span><span class="p">)</span>
+
+        <span class="n">dummy_row</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="n">pad_token_id</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;boundaries&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]}</span>
+        <span class="n">dummy_batch</span> <span class="o">=</span> <span class="n">_build_padded_tensor_and_flattened_cu_seqlens</span><span class="p">([</span><span class="n">dummy_row</span><span class="p">],</span> <span class="n">pad_token_id</span><span class="p">,</span> <span class="n">max_length</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">packs</span> <span class="ow">in</span> <span class="n">dp_packs</span><span class="p">:</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">packs</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">global_max_mb</span><span class="p">:</span>
+                <span class="n">packs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">dummy_batch</span><span class="p">))</span>
+
+    <span class="n">gpu_batches</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">dp_rank</span><span class="p">,</span> <span class="n">packs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dp_packs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">cp_rank</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cp_size</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">tp_rank</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tp_size</span><span class="p">):</span>
+                <span class="n">global_rank</span> <span class="o">=</span> <span class="p">(</span><span class="n">dp_rank</span> <span class="o">*</span> <span class="n">cp_size</span> <span class="o">+</span> <span class="n">cp_rank</span><span class="p">)</span> <span class="o">*</span> <span class="n">tp_size</span> <span class="o">+</span> <span class="n">tp_rank</span>
+                <span class="n">gpu_batches</span><span class="p">[</span><span class="n">global_rank</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">packs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">gpu_batches</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

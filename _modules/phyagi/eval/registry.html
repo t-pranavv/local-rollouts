@@ -1,0 +1,729 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>phyagi.eval.registry &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/phyagi/eval/registry';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/_modules/phyagi/eval/registry.html" />
+    <link rel="icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../../../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2F_modules/phyagi/eval/registry.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for phyagi.eval.registry</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) Microsoft Corporation.</span>
+<span class="c1"># Licensed under the MIT license.</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreTrainedTokenizerBase</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.agi_eval</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AGIMATH</span><span class="p">,</span>
+    <span class="n">LSATAR</span><span class="p">,</span>
+    <span class="n">LSATLR</span><span class="p">,</span>
+    <span class="n">LSATRC</span><span class="p">,</span>
+    <span class="n">AQuARAT</span><span class="p">,</span>
+    <span class="n">LogiQAEn</span><span class="p">,</span>
+    <span class="n">SATEn</span><span class="p">,</span>
+    <span class="n">SATMath</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.arc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ARCChallenge</span><span class="p">,</span> <span class="n">ARCEasy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.arithmetic</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Arithmetic1DC</span><span class="p">,</span>
+    <span class="n">Arithmetic2DA</span><span class="p">,</span>
+    <span class="n">Arithmetic2DM</span><span class="p">,</span>
+    <span class="n">Arithmetic2DS</span><span class="p">,</span>
+    <span class="n">Arithmetic3DA</span><span class="p">,</span>
+    <span class="n">Arithmetic3DS</span><span class="p">,</span>
+    <span class="n">Arithmetic4DA</span><span class="p">,</span>
+    <span class="n">Arithmetic4DS</span><span class="p">,</span>
+    <span class="n">Arithmetic5DA</span><span class="p">,</span>
+    <span class="n">Arithmetic5DS</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.completion</span><span class="w"> </span><span class="kn">import</span> <span class="n">Completion</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.glue</span><span class="w"> </span><span class="kn">import</span> <span class="n">MNLI</span><span class="p">,</span> <span class="n">MRPC</span><span class="p">,</span> <span class="n">QNLI</span><span class="p">,</span> <span class="n">QQP</span><span class="p">,</span> <span class="n">RTE</span><span class="p">,</span> <span class="n">SST2</span><span class="p">,</span> <span class="n">WNLI</span><span class="p">,</span> <span class="n">CoLA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.gsm8k</span><span class="w"> </span><span class="kn">import</span> <span class="n">GSM8K</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.hellaswag</span><span class="w"> </span><span class="kn">import</span> <span class="n">HellaSwag</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.human_eval</span><span class="w"> </span><span class="kn">import</span> <span class="n">HumanEval</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.human_eval_pack</span><span class="w"> </span><span class="kn">import</span> <span class="n">HumanEvalPackJS</span><span class="p">,</span> <span class="n">HumanEvalPackPython</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.lambada</span><span class="w"> </span><span class="kn">import</span> <span class="n">LAMBADA</span><span class="p">,</span> <span class="n">LAMBADAOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.loss</span><span class="w"> </span><span class="kn">import</span> <span class="n">LossHFHubDataset</span><span class="p">,</span> <span class="n">LossNumpyDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">MATH</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.math_qa</span><span class="w"> </span><span class="kn">import</span> <span class="n">MathQA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.mbpp</span><span class="w"> </span><span class="kn">import</span> <span class="n">MBPP</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.medmcqa</span><span class="w"> </span><span class="kn">import</span> <span class="n">MedMCQA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.mmlu</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AbstractAlgebra</span><span class="p">,</span>
+    <span class="n">Anatomy</span><span class="p">,</span>
+    <span class="n">Astronomy</span><span class="p">,</span>
+    <span class="n">BusinessEthics</span><span class="p">,</span>
+    <span class="n">ClinicalKnowledge</span><span class="p">,</span>
+    <span class="n">CollegeBiology</span><span class="p">,</span>
+    <span class="n">CollegeChemistry</span><span class="p">,</span>
+    <span class="n">CollegeComputerScience</span><span class="p">,</span>
+    <span class="n">CollegeMathematics</span><span class="p">,</span>
+    <span class="n">CollegeMedicine</span><span class="p">,</span>
+    <span class="n">CollegePhysics</span><span class="p">,</span>
+    <span class="n">ComputerSecurity</span><span class="p">,</span>
+    <span class="n">ConceptualPhysics</span><span class="p">,</span>
+    <span class="n">Econometrics</span><span class="p">,</span>
+    <span class="n">ElectricalEngineering</span><span class="p">,</span>
+    <span class="n">ElementaryMathematics</span><span class="p">,</span>
+    <span class="n">FormalLogic</span><span class="p">,</span>
+    <span class="n">GlobalFacts</span><span class="p">,</span>
+    <span class="n">HighSchoolBiology</span><span class="p">,</span>
+    <span class="n">HighSchoolChemistry</span><span class="p">,</span>
+    <span class="n">HighSchoolComputerScience</span><span class="p">,</span>
+    <span class="n">HighSchoolEuropeanHistory</span><span class="p">,</span>
+    <span class="n">HighSchoolGeography</span><span class="p">,</span>
+    <span class="n">HighSchoolGovernmentAndPolitics</span><span class="p">,</span>
+    <span class="n">HighSchoolMacroeconomics</span><span class="p">,</span>
+    <span class="n">HighSchoolMathematics</span><span class="p">,</span>
+    <span class="n">HighSchoolMicroeconomics</span><span class="p">,</span>
+    <span class="n">HighSchoolPhysics</span><span class="p">,</span>
+    <span class="n">HighSchoolPsychology</span><span class="p">,</span>
+    <span class="n">HighSchoolStatistics</span><span class="p">,</span>
+    <span class="n">HighSchoolUSHistory</span><span class="p">,</span>
+    <span class="n">HighSchoolWorldHistory</span><span class="p">,</span>
+    <span class="n">HumanAging</span><span class="p">,</span>
+    <span class="n">HumanSexuality</span><span class="p">,</span>
+    <span class="n">InternationalLaw</span><span class="p">,</span>
+    <span class="n">Jurisprudence</span><span class="p">,</span>
+    <span class="n">LogicalFallacies</span><span class="p">,</span>
+    <span class="n">MachineLearning</span><span class="p">,</span>
+    <span class="n">Management</span><span class="p">,</span>
+    <span class="n">Marketing</span><span class="p">,</span>
+    <span class="n">MedicalGenetics</span><span class="p">,</span>
+    <span class="n">Miscellaneous</span><span class="p">,</span>
+    <span class="n">MoralDisputes</span><span class="p">,</span>
+    <span class="n">MoralScenarios</span><span class="p">,</span>
+    <span class="n">Nutrition</span><span class="p">,</span>
+    <span class="n">Philosophy</span><span class="p">,</span>
+    <span class="n">PreHistory</span><span class="p">,</span>
+    <span class="n">ProfessionalAccounting</span><span class="p">,</span>
+    <span class="n">ProfessionalLaw</span><span class="p">,</span>
+    <span class="n">ProfessionalMedicine</span><span class="p">,</span>
+    <span class="n">ProfessionalPsychology</span><span class="p">,</span>
+    <span class="n">PublicRelations</span><span class="p">,</span>
+    <span class="n">SecurityStudies</span><span class="p">,</span>
+    <span class="n">Sociology</span><span class="p">,</span>
+    <span class="n">USForeignPolicy</span><span class="p">,</span>
+    <span class="n">Virology</span><span class="p">,</span>
+    <span class="n">WorldReligions</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.natural_questions</span><span class="w"> </span><span class="kn">import</span> <span class="n">NaturalQuestions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.openbookqa</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenBookQAAdditional</span><span class="p">,</span> <span class="n">OpenBookQAMain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.p3</span><span class="w"> </span><span class="kn">import</span> <span class="n">P3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.piqa</span><span class="w"> </span><span class="kn">import</span> <span class="n">PIQA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.race</span><span class="w"> </span><span class="kn">import</span> <span class="n">RACEHigh</span><span class="p">,</span> <span class="n">RACEMiddle</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.siqa</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIQA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.squad</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQuAD</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.super_glue</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CB</span><span class="p">,</span>
+    <span class="n">COPA</span><span class="p">,</span>
+    <span class="n">WSC</span><span class="p">,</span>
+    <span class="n">AXb</span><span class="p">,</span>
+    <span class="n">AXg</span><span class="p">,</span>
+    <span class="n">BoolQ</span><span class="p">,</span>
+    <span class="n">MultiRC</span><span class="p">,</span>
+    <span class="n">ReCoRD</span><span class="p">,</span>
+    <span class="n">WiC</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.trivia_qa</span><span class="w"> </span><span class="kn">import</span> <span class="n">TriviaQA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.winogrande</span><span class="w"> </span><span class="kn">import</span> <span class="n">WinoGrande</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.import_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_lm_eval_available</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.logging_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
+
+<span class="n">LMEvaluationHarness</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">if</span> <span class="n">is_lm_eval_available</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.eval.tasks.lm_evaluation_harness</span><span class="w"> </span><span class="kn">import</span> <span class="n">LMEvaluationHarness</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="n">TASKS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;abstract_algebra&quot;</span><span class="p">:</span> <span class="n">AbstractAlgebra</span><span class="p">,</span>
+    <span class="s2">&quot;agi_math&quot;</span><span class="p">:</span> <span class="n">AGIMATH</span><span class="p">,</span>
+    <span class="s2">&quot;anatomy&quot;</span><span class="p">:</span> <span class="n">Anatomy</span><span class="p">,</span>
+    <span class="s2">&quot;astronomy&quot;</span><span class="p">:</span> <span class="n">Astronomy</span><span class="p">,</span>
+    <span class="s2">&quot;arc_easy&quot;</span><span class="p">:</span> <span class="n">ARCEasy</span><span class="p">,</span>
+    <span class="s2">&quot;arc_challenge&quot;</span><span class="p">:</span> <span class="n">ARCChallenge</span><span class="p">,</span>
+    <span class="s2">&quot;arithmetic_1dc&quot;</span><span class="p">:</span> <span class="n">Arithmetic1DC</span><span class="p">,</span>
+    <span class="s2">&quot;arithmetic_2da&quot;</span><span class="p">:</span> <span class="n">Arithmetic2DA</span><span class="p">,</span>
+    <span class="s2">&quot;arithmetic_2dm&quot;</span><span class="p">:</span> <span class="n">Arithmetic2DM</span><span class="p">,</span>
+    <span class="s2">&quot;arithmetic_2ds&quot;</span><span class="p">:</span> <span class="n">Arithmetic2DS</span><span class="p">,</span>
+    <span class="s2">&quot;arithmetic_3da&quot;</span><span class="p">:</span> <span class="n">Arithmetic3DA</span><span class="p">,</span>
+    <span class="s2">&quot;arithmetic_3ds&quot;</span><span class="p">:</span> <span class="n">Arithmetic3DS</span><span class="p">,</span>
+    <span class="s2">&quot;arithmetic_4da&quot;</span><span class="p">:</span> <span class="n">Arithmetic4DA</span><span class="p">,</span>
+    <span class="s2">&quot;arithmetic_4ds&quot;</span><span class="p">:</span> <span class="n">Arithmetic4DS</span><span class="p">,</span>
+    <span class="s2">&quot;arithmetic_5da&quot;</span><span class="p">:</span> <span class="n">Arithmetic5DA</span><span class="p">,</span>
+    <span class="s2">&quot;arithmetic_5ds&quot;</span><span class="p">:</span> <span class="n">Arithmetic5DS</span><span class="p">,</span>
+    <span class="s2">&quot;aqua_rat&quot;</span><span class="p">:</span> <span class="n">AQuARAT</span><span class="p">,</span>
+    <span class="s2">&quot;axb&quot;</span><span class="p">:</span> <span class="n">AXb</span><span class="p">,</span>
+    <span class="s2">&quot;axg&quot;</span><span class="p">:</span> <span class="n">AXg</span><span class="p">,</span>
+    <span class="s2">&quot;boolq&quot;</span><span class="p">:</span> <span class="n">BoolQ</span><span class="p">,</span>
+    <span class="s2">&quot;business_ethics&quot;</span><span class="p">:</span> <span class="n">BusinessEthics</span><span class="p">,</span>
+    <span class="s2">&quot;cb&quot;</span><span class="p">:</span> <span class="n">CB</span><span class="p">,</span>
+    <span class="s2">&quot;clinical_knowledge&quot;</span><span class="p">:</span> <span class="n">ClinicalKnowledge</span><span class="p">,</span>
+    <span class="s2">&quot;cola&quot;</span><span class="p">:</span> <span class="n">CoLA</span><span class="p">,</span>
+    <span class="s2">&quot;college_biology&quot;</span><span class="p">:</span> <span class="n">CollegeBiology</span><span class="p">,</span>
+    <span class="s2">&quot;college_chemistry&quot;</span><span class="p">:</span> <span class="n">CollegeChemistry</span><span class="p">,</span>
+    <span class="s2">&quot;college_computer_science&quot;</span><span class="p">:</span> <span class="n">CollegeComputerScience</span><span class="p">,</span>
+    <span class="s2">&quot;college_mathematics&quot;</span><span class="p">:</span> <span class="n">CollegeMathematics</span><span class="p">,</span>
+    <span class="s2">&quot;college_medicine&quot;</span><span class="p">:</span> <span class="n">CollegeMedicine</span><span class="p">,</span>
+    <span class="s2">&quot;college_physics&quot;</span><span class="p">:</span> <span class="n">CollegePhysics</span><span class="p">,</span>
+    <span class="s2">&quot;completion&quot;</span><span class="p">:</span> <span class="n">Completion</span><span class="p">,</span>
+    <span class="s2">&quot;computer_security&quot;</span><span class="p">:</span> <span class="n">ComputerSecurity</span><span class="p">,</span>
+    <span class="s2">&quot;conceptual_physics&quot;</span><span class="p">:</span> <span class="n">ConceptualPhysics</span><span class="p">,</span>
+    <span class="s2">&quot;copa&quot;</span><span class="p">:</span> <span class="n">COPA</span><span class="p">,</span>
+    <span class="s2">&quot;econometrics&quot;</span><span class="p">:</span> <span class="n">Econometrics</span><span class="p">,</span>
+    <span class="s2">&quot;elementary_mathematics&quot;</span><span class="p">:</span> <span class="n">ElementaryMathematics</span><span class="p">,</span>
+    <span class="s2">&quot;electrical_engineering&quot;</span><span class="p">:</span> <span class="n">ElectricalEngineering</span><span class="p">,</span>
+    <span class="s2">&quot;formal_logic&quot;</span><span class="p">:</span> <span class="n">FormalLogic</span><span class="p">,</span>
+    <span class="s2">&quot;global_facts&quot;</span><span class="p">:</span> <span class="n">GlobalFacts</span><span class="p">,</span>
+    <span class="s2">&quot;gsm8k&quot;</span><span class="p">:</span> <span class="n">GSM8K</span><span class="p">,</span>
+    <span class="s2">&quot;hellaswag&quot;</span><span class="p">:</span> <span class="n">HellaSwag</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_biology&quot;</span><span class="p">:</span> <span class="n">HighSchoolBiology</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_chemistry&quot;</span><span class="p">:</span> <span class="n">HighSchoolChemistry</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_computer_science&quot;</span><span class="p">:</span> <span class="n">HighSchoolComputerScience</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_european_history&quot;</span><span class="p">:</span> <span class="n">HighSchoolEuropeanHistory</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_geography&quot;</span><span class="p">:</span> <span class="n">HighSchoolGeography</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_government_and_politics&quot;</span><span class="p">:</span> <span class="n">HighSchoolGovernmentAndPolitics</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_macroeconomics&quot;</span><span class="p">:</span> <span class="n">HighSchoolMacroeconomics</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_mathematics&quot;</span><span class="p">:</span> <span class="n">HighSchoolMathematics</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_microeconomics&quot;</span><span class="p">:</span> <span class="n">HighSchoolMicroeconomics</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_physics&quot;</span><span class="p">:</span> <span class="n">HighSchoolPhysics</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_psychology&quot;</span><span class="p">:</span> <span class="n">HighSchoolPsychology</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_statistics&quot;</span><span class="p">:</span> <span class="n">HighSchoolStatistics</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_us_history&quot;</span><span class="p">:</span> <span class="n">HighSchoolUSHistory</span><span class="p">,</span>
+    <span class="s2">&quot;high_school_world_history&quot;</span><span class="p">:</span> <span class="n">HighSchoolWorldHistory</span><span class="p">,</span>
+    <span class="s2">&quot;human_aging&quot;</span><span class="p">:</span> <span class="n">HumanAging</span><span class="p">,</span>
+    <span class="s2">&quot;human_eval&quot;</span><span class="p">:</span> <span class="n">HumanEval</span><span class="p">,</span>
+    <span class="s2">&quot;human_eval_pack_python&quot;</span><span class="p">:</span> <span class="n">HumanEvalPackPython</span><span class="p">,</span>
+    <span class="s2">&quot;human_eval_pack_js&quot;</span><span class="p">:</span> <span class="n">HumanEvalPackJS</span><span class="p">,</span>
+    <span class="s2">&quot;human_sexuality&quot;</span><span class="p">:</span> <span class="n">HumanSexuality</span><span class="p">,</span>
+    <span class="s2">&quot;international_law&quot;</span><span class="p">:</span> <span class="n">InternationalLaw</span><span class="p">,</span>
+    <span class="s2">&quot;jurisprudence&quot;</span><span class="p">:</span> <span class="n">Jurisprudence</span><span class="p">,</span>
+    <span class="s2">&quot;lambada&quot;</span><span class="p">:</span> <span class="n">LAMBADA</span><span class="p">,</span>
+    <span class="s2">&quot;lambada_openai&quot;</span><span class="p">:</span> <span class="n">LAMBADAOpenAI</span><span class="p">,</span>
+    <span class="s2">&quot;lm_eval&quot;</span><span class="p">:</span> <span class="n">LMEvaluationHarness</span><span class="p">,</span>
+    <span class="s2">&quot;logical_fallacies&quot;</span><span class="p">:</span> <span class="n">LogicalFallacies</span><span class="p">,</span>
+    <span class="s2">&quot;logiqa_en&quot;</span><span class="p">:</span> <span class="n">LogiQAEn</span><span class="p">,</span>
+    <span class="s2">&quot;loss_hf_hub&quot;</span><span class="p">:</span> <span class="n">LossHFHubDataset</span><span class="p">,</span>
+    <span class="s2">&quot;loss_numpy&quot;</span><span class="p">:</span> <span class="n">LossNumpyDataset</span><span class="p">,</span>
+    <span class="s2">&quot;lsat_ar&quot;</span><span class="p">:</span> <span class="n">LSATAR</span><span class="p">,</span>
+    <span class="s2">&quot;lsat_lr&quot;</span><span class="p">:</span> <span class="n">LSATLR</span><span class="p">,</span>
+    <span class="s2">&quot;lsat_rc&quot;</span><span class="p">:</span> <span class="n">LSATRC</span><span class="p">,</span>
+    <span class="s2">&quot;machine_learning&quot;</span><span class="p">:</span> <span class="n">MachineLearning</span><span class="p">,</span>
+    <span class="s2">&quot;management&quot;</span><span class="p">:</span> <span class="n">Management</span><span class="p">,</span>
+    <span class="s2">&quot;marketing&quot;</span><span class="p">:</span> <span class="n">Marketing</span><span class="p">,</span>
+    <span class="s2">&quot;math&quot;</span><span class="p">:</span> <span class="n">MATH</span><span class="p">,</span>
+    <span class="s2">&quot;math_qa&quot;</span><span class="p">:</span> <span class="n">MathQA</span><span class="p">,</span>
+    <span class="s2">&quot;mbpp&quot;</span><span class="p">:</span> <span class="n">MBPP</span><span class="p">,</span>
+    <span class="s2">&quot;medmcqa&quot;</span><span class="p">:</span> <span class="n">MedMCQA</span><span class="p">,</span>
+    <span class="s2">&quot;medical_genetics&quot;</span><span class="p">:</span> <span class="n">MedicalGenetics</span><span class="p">,</span>
+    <span class="s2">&quot;miscellaneous&quot;</span><span class="p">:</span> <span class="n">Miscellaneous</span><span class="p">,</span>
+    <span class="s2">&quot;mnli&quot;</span><span class="p">:</span> <span class="n">MNLI</span><span class="p">,</span>
+    <span class="s2">&quot;moral_disputes&quot;</span><span class="p">:</span> <span class="n">MoralDisputes</span><span class="p">,</span>
+    <span class="s2">&quot;moral_scenarios&quot;</span><span class="p">:</span> <span class="n">MoralScenarios</span><span class="p">,</span>
+    <span class="s2">&quot;mrpc&quot;</span><span class="p">:</span> <span class="n">MRPC</span><span class="p">,</span>
+    <span class="s2">&quot;multirc&quot;</span><span class="p">:</span> <span class="n">MultiRC</span><span class="p">,</span>
+    <span class="s2">&quot;natural_questions&quot;</span><span class="p">:</span> <span class="n">NaturalQuestions</span><span class="p">,</span>
+    <span class="s2">&quot;nutrition&quot;</span><span class="p">:</span> <span class="n">Nutrition</span><span class="p">,</span>
+    <span class="s2">&quot;openbookqaadditional&quot;</span><span class="p">:</span> <span class="n">OpenBookQAAdditional</span><span class="p">,</span>
+    <span class="s2">&quot;openbookqa&quot;</span><span class="p">:</span> <span class="n">OpenBookQAMain</span><span class="p">,</span>
+    <span class="s2">&quot;philosophy&quot;</span><span class="p">:</span> <span class="n">Philosophy</span><span class="p">,</span>
+    <span class="s2">&quot;p3&quot;</span><span class="p">:</span> <span class="n">P3</span><span class="p">,</span>
+    <span class="s2">&quot;piqa&quot;</span><span class="p">:</span> <span class="n">PIQA</span><span class="p">,</span>
+    <span class="s2">&quot;pre_history&quot;</span><span class="p">:</span> <span class="n">PreHistory</span><span class="p">,</span>
+    <span class="s2">&quot;professional_accounting&quot;</span><span class="p">:</span> <span class="n">ProfessionalAccounting</span><span class="p">,</span>
+    <span class="s2">&quot;professional_law&quot;</span><span class="p">:</span> <span class="n">ProfessionalLaw</span><span class="p">,</span>
+    <span class="s2">&quot;professional_medicine&quot;</span><span class="p">:</span> <span class="n">ProfessionalMedicine</span><span class="p">,</span>
+    <span class="s2">&quot;professional_psychology&quot;</span><span class="p">:</span> <span class="n">ProfessionalPsychology</span><span class="p">,</span>
+    <span class="s2">&quot;public_relations&quot;</span><span class="p">:</span> <span class="n">PublicRelations</span><span class="p">,</span>
+    <span class="s2">&quot;qnli&quot;</span><span class="p">:</span> <span class="n">QNLI</span><span class="p">,</span>
+    <span class="s2">&quot;qqp&quot;</span><span class="p">:</span> <span class="n">QQP</span><span class="p">,</span>
+    <span class="s2">&quot;race_high&quot;</span><span class="p">:</span> <span class="n">RACEHigh</span><span class="p">,</span>
+    <span class="s2">&quot;race_middle&quot;</span><span class="p">:</span> <span class="n">RACEMiddle</span><span class="p">,</span>
+    <span class="s2">&quot;record&quot;</span><span class="p">:</span> <span class="n">ReCoRD</span><span class="p">,</span>
+    <span class="s2">&quot;rte&quot;</span><span class="p">:</span> <span class="n">RTE</span><span class="p">,</span>
+    <span class="s2">&quot;sat_en&quot;</span><span class="p">:</span> <span class="n">SATEn</span><span class="p">,</span>
+    <span class="s2">&quot;sat_math&quot;</span><span class="p">:</span> <span class="n">SATMath</span><span class="p">,</span>
+    <span class="s2">&quot;security_studies&quot;</span><span class="p">:</span> <span class="n">SecurityStudies</span><span class="p">,</span>
+    <span class="s2">&quot;siqa&quot;</span><span class="p">:</span> <span class="n">SIQA</span><span class="p">,</span>
+    <span class="s2">&quot;sociology&quot;</span><span class="p">:</span> <span class="n">Sociology</span><span class="p">,</span>
+    <span class="s2">&quot;squad&quot;</span><span class="p">:</span> <span class="n">SQuAD</span><span class="p">,</span>
+    <span class="s2">&quot;sst2&quot;</span><span class="p">:</span> <span class="n">SST2</span><span class="p">,</span>
+    <span class="s2">&quot;trivia_qa&quot;</span><span class="p">:</span> <span class="n">TriviaQA</span><span class="p">,</span>
+    <span class="s2">&quot;us_foreign_policy&quot;</span><span class="p">:</span> <span class="n">USForeignPolicy</span><span class="p">,</span>
+    <span class="s2">&quot;virology&quot;</span><span class="p">:</span> <span class="n">Virology</span><span class="p">,</span>
+    <span class="s2">&quot;wic&quot;</span><span class="p">:</span> <span class="n">WiC</span><span class="p">,</span>
+    <span class="s2">&quot;winogrande&quot;</span><span class="p">:</span> <span class="n">WinoGrande</span><span class="p">,</span>
+    <span class="s2">&quot;world_religions&quot;</span><span class="p">:</span> <span class="n">WorldReligions</span><span class="p">,</span>
+    <span class="s2">&quot;wnli&quot;</span><span class="p">:</span> <span class="n">WNLI</span><span class="p">,</span>
+    <span class="s2">&quot;wsc&quot;</span><span class="p">:</span> <span class="n">WSC</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="run_task">
+<a class="viewcode-back" href="../../../api/eval.html#phyagi.eval.registry.run_task">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">run_task</span><span class="p">(</span>
+    <span class="n">task_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="p">:</span> <span class="n">PreTrainedTokenizerBase</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run an evaluation task.</span>
+
+<span class="sd">    This function wraps the ``run()`` method of the task class. It is a convenience function for</span>
+<span class="sd">    running a task without having to import the task class directly.</span>
+
+<span class="sd">    Since each task might have a different set of keyword arguments, this function takes keyword</span>
+<span class="sd">    arguments and passes them directly to the ``run()`` method. However, the following arguments</span>
+<span class="sd">    are required to all tasks: ``model`` and ``tokenizer``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        task_name: Name of the task.</span>
+<span class="sd">        model: Instance of a model.</span>
+<span class="sd">        tokenizer: Instance of a tokenizer.</span>
+<span class="sd">        device: Device to use for running the task.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading task: </span><span class="si">{</span><span class="n">task_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Task configuration: </span><span class="si">{</span><span class="n">kwargs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">task_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">TASKS</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`task_name` must be one of </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">TASKS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">, but got &#39;</span><span class="si">{</span><span class="n">task_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="n">task_cls</span> <span class="o">=</span> <span class="n">TASKS</span><span class="p">[</span><span class="n">task_name</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">task_cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Task &#39;</span><span class="si">{</span><span class="n">task_name</span><span class="si">}</span><span class="s2">&#39; is not available due to a missing dependency.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">task_cls</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,865 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Supervised Fine-Tuning (SFT) &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/sft';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/tutorials/sft.html" />
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Reinforcement Learning from Human Feedback (RLHF)" href="rlhf.html" />
+    <link rel="prev" title="Training" href="training.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="training.html">Training</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2Ftutorials/sft.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Supervised Fine-Tuning (SFT)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Sections </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Structure-of-the-tutorial">Structure of the tutorial</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Dataset-preparation">Dataset preparation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Dataset-preparation-for-SFT">Dataset preparation for SFT</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Script-overview">Script overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#DeepSpeed">DeepSpeed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Hugging-Face">Hugging Face</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Supervised-Fine-Tuning-(SFT)">
+<h1>Supervised Fine-Tuning (SFT)<a class="headerlink" href="#Supervised-Fine-Tuning-(SFT)" title="Link to this heading">#</a></h1>
+<p>This tutorial provides a comprehensive, step-by-step guide to fine-tuning a model using <strong>Supervised Fine-Tuning (SFT)</strong>. The explanations and examples are based on the following scripts:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/microsoft/phyagi-sdk/blob/main/scripts/train/ds_train.py">ds_train.py</a>.</p></li>
+<li><p><a class="reference external" href="https://github.com/microsoft/phyagi-sdk/blob/main/scripts/tune/hf_sft_tune.py">hf_sft_tune.py</a></p></li>
+</ul>
+<p>Although these scripts are designed for different purposes, i.e., former is for training and latter is for fine-tuning, both can fine-tune a model with SFT as long as the dataset is prepared correctly.</p>
+<section id="Structure-of-the-tutorial">
+<h2>Structure of the tutorial<a class="headerlink" href="#Structure-of-the-tutorial" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Dataset preparation</strong>: Learn how datasets are pre-defined and processed for fine-tuning.</p></li>
+<li><p><strong>Fine-tuning workflow</strong>: Understand the key steps and scripts used to perform fine-tuning.</p></li>
+</ol>
+<p><strong>Note</strong>: The code snippets provided in this guide highlight essential sections of the scripts for better understanding. For the complete implementation, refer to the linked scripts above.</p>
+</section>
+<section id="Dataset-preparation">
+<h2>Dataset preparation<a class="headerlink" href="#Dataset-preparation" title="Link to this heading">#</a></h2>
+<p>Fine-tuning requires carefully curated datasets, often formatted as <strong>JSONL</strong> files. This format is particularly suitable for preference-based tasks, where each record includes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">chosen</span></code>: The preferred response(s) for a given prompt.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rejected</span></code>: The less preferred response(s) for the same prompt.</p></li>
+</ul>
+<p>Below is an example JSONL structure illustrating this format:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;chosen&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hi&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hello! How can I assist you today?&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Please write the steps for founding a student-run venture capital fund&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Starting a student-run venture capital (VC) fund can be an exciting and educational experience...&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;rejected&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hi&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hello! How can I assist you today?&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Please write the steps for founding a student-run venture capital fund&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1. Feasibility Study: Start with a comprehensive feasibility study that includes studying similar organizations, successful models, potential funders, legal requirements, and the operational scope of your venture capital fund...&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="Dataset-preparation-for-SFT">
+<h3>Dataset preparation for SFT<a class="headerlink" href="#Dataset-preparation-for-SFT" title="Link to this heading">#</a></h3>
+<p>The goal is to train a model using explicitly labeled datasets to align its outputs with human expectations for specific inputs. The dataset processing workflow for SFT involves the following steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Extract prompts and completions</strong></p>
+<ul class="simple">
+<li><p>Identify the input context (<code class="docutils literal notranslate"><span class="pre">prompt</span></code>) and the desired output (<code class="docutils literal notranslate"><span class="pre">completion</span></code>).</p></li>
+<li><p>For preference-based datasets, the <code class="docutils literal notranslate"><span class="pre">chosen</span></code> responses are treated as the <code class="docutils literal notranslate"><span class="pre">completion</span></code>.</p></li>
+<li><p>Any <code class="docutils literal notranslate"><span class="pre">rejected</span></code> responses are discarded, ensuring that only positive examples are used for training.</p></li>
+</ul>
+</li>
+<li><p><strong>Apply chat template</strong></p>
+<ul class="simple">
+<li><p>A conversational formatting style (e.g., <code class="docutils literal notranslate"><span class="pre">chatml</span></code>) is applied to both the <code class="docutils literal notranslate"><span class="pre">prompt</span></code> and <code class="docutils literal notranslate"><span class="pre">completion</span></code> fields.</p></li>
+<li><p>This step standardizes the dataset into a consistent chat-style format, essential for fine-tuning conversational models.</p></li>
+</ul>
+</li>
+<li><p><strong>Merge fields</strong></p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">prompt</span></code> and <code class="docutils literal notranslate"><span class="pre">completion</span></code> fields are concatenated into a single <code class="docutils literal notranslate"><span class="pre">text</span></code> field.</p></li>
+<li><p>This merged structure simplifies tokenization and ensures the dataset is ready for efficient training.</p></li>
+</ul>
+</li>
+</ol>
+<p>This approach ensures that the dataset is optimized for supervised fine-tuning, enabling the model to learn from high-quality, labeled examples.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">trl</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_prompt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.datasets.rl.formatting_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">apply_chat_template</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare_dataset_sft</span><span class="p">(</span><span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dataset</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">),</span> <span class="s2">&quot;`dataset` must be an instance of datasets.Dataset.&quot;</span>
+
+    <span class="c1"># If the dataset has already been prepared, return it</span>
+    <span class="k">if</span> <span class="s2">&quot;text&quot;</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">column_names</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dataset</span>
+
+    <span class="c1"># If the dataset has an implicit prompt, extract it</span>
+    <span class="k">if</span> <span class="s2">&quot;prompt&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">column_names</span><span class="p">:</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">extract_prompt</span><span class="p">)</span>
+
+    <span class="c1"># If the dataset is a preference-based dataset, keep only the &quot;chosen&quot; examples</span>
+    <span class="c1"># Rename &quot;chosen&quot; to &quot;completion&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;chosen&quot;</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">column_names</span><span class="p">:</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">remove_columns</span><span class="p">(</span><span class="s2">&quot;rejected&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s2">&quot;chosen&quot;</span><span class="p">,</span> <span class="s2">&quot;completion&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Ensure necessary columns exist</span>
+    <span class="k">assert</span> <span class="s2">&quot;prompt&quot;</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">column_names</span><span class="p">,</span> <span class="s2">&quot;`prompt` must be available in the dataset.&quot;</span>
+    <span class="k">assert</span> <span class="s2">&quot;completion&quot;</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">column_names</span><span class="p">,</span> <span class="s2">&quot;`completion` must be available in the dataset.&quot;</span>
+
+    <span class="c1"># Apply chat template and combine prompt/completion into a single field</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+        <span class="n">apply_chat_template</span><span class="p">,</span> <span class="n">fn_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;special_token_format&quot;</span><span class="p">:</span> <span class="s2">&quot;chatml&quot;</span><span class="p">,</span> <span class="s2">&quot;shuffle&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;add_mask_tokens&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;prompt&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;completion&quot;</span><span class="p">]})</span><span class="o">.</span><span class="n">remove_columns</span><span class="p">([</span><span class="s2">&quot;prompt&quot;</span><span class="p">,</span> <span class="s2">&quot;completion&quot;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">dataset</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Script-overview">
+<h2>Script overview<a class="headerlink" href="#Script-overview" title="Link to this heading">#</a></h2>
+<p>This section provides high-level overviews of the script structure and key components involved in fine-tuning a model.</p>
+<section id="DeepSpeed">
+<h3>DeepSpeed<a class="headerlink" href="#DeepSpeed" title="Link to this heading">#</a></h3>
+<p>The script starts by parsing the configuration file and any command-line arguments. This step ensures that all necessary configuration fields are properly set, including:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">output_dir</span></code>: The directory where the model outputs will be saved.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dataset</span></code>: The dataset configuration, including its location and structure.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model</span></code>: The model configuration, including details on the pre-trained model to be fine-tuned.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">training_args</span></code>: The parameters governing the training/fine-tuning process, such as learning rate, batch size, etc.</p></li>
+</ul>
+<p>By validating the configuration file, the script ensures that all the required components are available for successful fine-tuning.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_args</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;config_file_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the YAML configuration file.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">args</span><span class="p">,</span> <span class="n">extra_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">args</span><span class="p">,</span> <span class="n">extra_args</span>
+
+
+<span class="n">args</span><span class="p">,</span> <span class="n">extra_args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+<span class="n">args</span><span class="o">.</span><span class="n">config_file_path</span> <span class="o">=</span> <span class="s2">&quot;ds_sft.yaml&quot;</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_file_path</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="s2">&quot;output_dir&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;`output_dir` must be available in configuration.&quot;</span>
+<span class="k">assert</span> <span class="s2">&quot;dataset&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;`dataset` must be available in configuration.&quot;</span>
+<span class="k">assert</span> <span class="s2">&quot;model&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;`model` must be available in configuration.&quot;</span>
+<span class="k">assert</span> <span class="s2">&quot;training_args&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;`training_args` must be available in configuration.&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>The model and tokenizer are loaded according to the configuration specified in the setup. If a tokenizer is not explicitly provided in the configuration, the script defaults to using the tokenizer associated with the pre-trained model. This ensures that both the model and tokenizer are correctly initialized and compatible, enabling smooth data processing during the fine-tuning process.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_tokenizer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">])</span>
+<span class="n">tokenizer_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tokenizer&quot;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="k">if</span> <span class="n">tokenizer_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pretrained_tokenizer_name_or_path&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">tokenizer_config</span><span class="p">[</span><span class="s2">&quot;pretrained_tokenizer_name_or_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">name_or_path</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">get_tokenizer</span><span class="p">(</span><span class="o">**</span><span class="n">tokenizer_config</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-26 13:18:43,703] [INFO] [model.py:93:get_model] Loading pre-trained model: microsoft/phi-1
+[phyagi] [2025-05-26 13:18:43,705] [INFO] [model.py:94:get_model] Model configuration: {&#39;torch_dtype&#39;: torch.float16, &#39;trust_remote_code&#39;: True}
+[phyagi] [2025-05-26 13:18:44,119] [INFO] [tokenizer.py:60:get_tokenizer] Loading pre-trained tokenizer: microsoft/phi-1
+[phyagi] [2025-05-26 13:18:44,120] [INFO] [tokenizer.py:61:get_tokenizer] Tokenizer configuration: {&#39;pad_token&#39;: &#39;&lt;|endoftext|&gt;&#39;}
+</pre></div></div>
+</div>
+<p>The training arguments are extracted from the configuration file to define key settings such as output directories and training frameworks.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.trainers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_training_args</span>
+
+<span class="n">training_args</span> <span class="o">=</span> <span class="n">get_training_args</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">],</span> <span class="n">framework</span><span class="o">=</span><span class="s2">&quot;ds&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;training_args&quot;</span><span class="p">])</span>
+<span class="n">args</span><span class="o">.</span><span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">training_args</span><span class="o">.</span><span class="n">output_dir</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">get_trainer</span></code> function is responsible for initializing the training environment. It sets up the model, tokenizer, and any optional configurations, ensuring the model is ready for the fine-tuning process with the specified arguments and dataset.</p>
+<p><strong>Note 1:</strong> <code class="docutils literal notranslate"><span class="pre">train_dataset</span></code> and <code class="docutils literal notranslate"><span class="pre">eval_dataset</span></code> are loaded using the <code class="docutils literal notranslate"><span class="pre">load_dataset</span></code> function, which reads the dataset configuration and prepares the data for training and evaluation. This has been omitted for brevity and covered in the previous section on dataset preparation.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.trainers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_trainer</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">],</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">prepare_dataset_sft</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">get_trainer</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">framework</span><span class="o">=</span><span class="s2">&quot;ds&quot;</span><span class="p">,</span>
+    <span class="n">training_args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+    <span class="n">eval_dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">processing_class</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The fine-tuning process is executed by calling the <code class="docutils literal notranslate"><span class="pre">trainer.train</span></code> method. If a checkpoint directory is specified, fine-tuning will resume from the most recent checkpoint, allowing for continuation of the fine-tuning process without starting over.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;WANDB_MODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;disabled&quot;</span>
+
+<span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+    <span class="n">resume_from_checkpoint</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">checkpoint_dir</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;checkpoint-\d+&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">checkpoint_dir</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Hugging-Face">
+<h3>Hugging Face<a class="headerlink" href="#Hugging-Face" title="Link to this heading">#</a></h3>
+<p>The script starts by parsing the configuration file and any command-line arguments. This step ensures that all necessary configuration fields are properly set, including:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">output_dir</span></code>: The directory where the model outputs will be saved.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dataset</span></code>: The dataset configuration, including its location and structure.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model</span></code>: The model configuration, including details on the pre-trained model to be fine-tuned.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tuning_args</span></code>: The parameters governing the fine-tuning process, such as learning rate, batch size, etc.</p></li>
+</ul>
+<p>By validating the configuration file, the script ensures that all the required components are available for successful fine-tuning.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.utils.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_args</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;config_file_path&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the YAML configuration file.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">args</span><span class="p">,</span> <span class="n">extra_args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">args</span><span class="p">,</span> <span class="n">extra_args</span>
+
+
+<span class="n">args</span><span class="p">,</span> <span class="n">extra_args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+<span class="n">args</span><span class="o">.</span><span class="n">config_file_path</span> <span class="o">=</span> <span class="s2">&quot;hf_sft.yaml&quot;</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_file_path</span><span class="p">,</span> <span class="n">extra_args</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="s2">&quot;output_dir&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;`output_dir` must be available in configuration.&quot;</span>
+<span class="k">assert</span> <span class="s2">&quot;dataset&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;`dataset` must be available in configuration.&quot;</span>
+<span class="k">assert</span> <span class="s2">&quot;model&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;`model` must be available in configuration.&quot;</span>
+<span class="k">assert</span> <span class="s2">&quot;tuning_args&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="s2">&quot;`tuning_args` must be available in configuration.&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>The model and tokenizer are loaded according to the configuration specified in the setup. If a tokenizer is not explicitly provided in the configuration, the script defaults to using the tokenizer associated with the pre-trained model. This ensures that both the model and tokenizer are correctly initialized and compatible, enabling smooth data processing during the fine-tuning process.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_tokenizer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">])</span>
+<span class="n">tokenizer_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tokenizer&quot;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="k">if</span> <span class="n">tokenizer_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pretrained_tokenizer_name_or_path&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">tokenizer_config</span><span class="p">[</span><span class="s2">&quot;pretrained_tokenizer_name_or_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">name_or_path</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">get_tokenizer</span><span class="p">(</span><span class="o">**</span><span class="n">tokenizer_config</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-26 13:18:52,489] [INFO] [model.py:93:get_model] Loading pre-trained model: microsoft/phi-1
+[phyagi] [2025-05-26 13:18:52,492] [INFO] [model.py:94:get_model] Model configuration: {&#39;torch_dtype&#39;: torch.float16, &#39;trust_remote_code&#39;: True}
+[phyagi] [2025-05-26 13:18:52,884] [INFO] [tokenizer.py:60:get_tokenizer] Loading pre-trained tokenizer: microsoft/phi-1
+[phyagi] [2025-05-26 13:18:52,885] [INFO] [tokenizer.py:61:get_tokenizer] Tokenizer configuration: {&#39;pad_token&#39;: &#39;&lt;|endoftext|&gt;&#39;}
+</pre></div></div>
+</div>
+<p>The tuning arguments are extracted from the configuration file to define key settings such as output directories, training frameworks, and task-specific parameters. It is important to note that the task type (e.g., SFT or DPO) is specified when retrieving the tuning arguments, allowing for task-specific configurations during the fine-tuning process.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.tuners.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_tuning_args</span>
+
+<span class="n">tuning_args</span> <span class="o">=</span> <span class="n">get_tuning_args</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">],</span> <span class="n">framework</span><span class="o">=</span><span class="s2">&quot;hf&quot;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">&quot;sft&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;tuning_args&quot;</span><span class="p">])</span>
+<span class="n">args</span><span class="o">.</span><span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">tuning_args</span><span class="o">.</span><span class="n">output_dir</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+INFO 05-26 13:18:55 [importing.py:53] Triton module has been replaced with a placeholder.
+INFO 05-26 13:18:55 [__init__.py:239] Automatically detected platform cuda.
+</pre></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">get_tuner</span></code> function is responsible for initializing the tuning environment. It sets up the model, tokenizer, and any optional Parameter-Efficient Fine-Tuning (PEFT) configurations, ensuring the model is ready for the fine-tuning process with the specified arguments and dataset.</p>
+<p><strong>Note 1:</strong> <code class="docutils literal notranslate"><span class="pre">get_tuner</span></code> function is task-agnostic and can be used for both SFT and DPO fine-tuning, providing a unified interface for initializing the fine-tuning environment.</p>
+<p><strong>Note 2:</strong> <code class="docutils literal notranslate"><span class="pre">train_dataset</span></code> and <code class="docutils literal notranslate"><span class="pre">eval_dataset</span></code> are loaded using the <code class="docutils literal notranslate"><span class="pre">load_dataset</span></code> function, which reads the dataset configuration and prepares the data for training and evaluation. This has been omitted for brevity and covered in the previous section on dataset preparation.</p>
+<p><strong>Note 3:</strong> <code class="docutils literal notranslate"><span class="pre">peft_config</span></code> is optional and can be used to enable PEFT, a technique that optimizes the fine-tuning process by adjusting the learning rate schedule and other hyperparameters.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.rl.tuners.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_tuner</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">],</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">prepare_dataset_sft</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+
+<span class="n">tuner</span> <span class="o">=</span> <span class="n">get_tuner</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">framework</span><span class="o">=</span><span class="s2">&quot;hf&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;sft&quot;</span><span class="p">,</span>
+    <span class="n">tuning_args</span><span class="o">=</span><span class="n">tuning_args</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+    <span class="n">eval_dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">processing_class</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">peft_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The training process is executed by calling the <code class="docutils literal notranslate"><span class="pre">tuner.train</span></code> method. If a checkpoint directory is specified, training will resume from the most recent checkpoint, allowing for continuation of the fine-tuning process without starting over.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;WANDB_MODE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;disabled&quot;</span>
+
+<span class="n">tuner</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+    <span class="n">resume_from_checkpoint</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">checkpoint_dir</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;checkpoint-\d+&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">checkpoint_dir</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="training.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Training</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="rlhf.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Reinforcement Learning from Human Feedback (RLHF)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Sections
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Structure-of-the-tutorial">Structure of the tutorial</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Dataset-preparation">Dataset preparation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Dataset-preparation-for-SFT">Dataset preparation for SFT</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Script-overview">Script overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#DeepSpeed">DeepSpeed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Hugging-Face">Hugging Face</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

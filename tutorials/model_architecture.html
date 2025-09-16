@@ -1,0 +1,1396 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Model architecture &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/model_architecture';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/tutorials/model_architecture.html" />
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Training" href="training.html" />
+    <link rel="prev" title="Data‑related" href="data_related.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/eval.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2Ftutorials/model_architecture.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Model architecture</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Sections </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Model architecture</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Choosing-the-architecture">Choosing the architecture</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#CodeGen">CodeGen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#LLaMA">LLaMA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#GPT">GPT</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Heterogeneous-architectures">Heterogeneous architectures</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#New-architectures">New architectures</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#MLP">MLP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Block">Block</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Model-architecture">
+<h1>Model architecture<a class="headerlink" href="#Model-architecture" title="Link to this heading">#</a></h1>
+<p>PhyAGI introduces a versatile transformer-based language model known as MixFormer, which is highly adaptable for various tasks. This model adheres to the Hugging Face API standards, making it compatible with different training frameworks such as Hugging Face, PyTorch Lightning, and DeepSpeed.</p>
+<p>In this guide, we will explore the customization options for MixFormer within the PhyAGI framework and learn how to develop new components to innovate upon the existing architecture.</p>
+<p>Let’s start by creating a basic instance of MixFormer for causal language modeling:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential</span><span class="w"> </span><span class="kn">import</span> <span class="n">MixFormerSequentialConfig</span><span class="p">,</span> <span class="n">MixFormerSequentialForCausalLM</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">MixFormerSequentialConfig</span><span class="p">(</span><span class="n">n_layer</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">MixFormerSequentialForCausalLM</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MixFormerSequentialForCausalLM(
+  (layers): Sequential(
+    (0): Embedding(
+      (wte): Embedding(50304, 1024)
+      (drop): Dropout(p=0.0, inplace=False)
+    )
+    (1): ParallelBlock(
+      (ln): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (mixer): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): FusedMLP(
+        (mlp): FusedMLP(
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        )
+      )
+      (resid_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (2): ParallelBlock(
+      (ln): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (mixer): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): FusedMLP(
+        (mlp): FusedMLP(
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        )
+      )
+      (resid_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (3): CausalLMHead(
+      (ln): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (linear): Linear(in_features=1024, out_features=50304, bias=True)
+    )
+  )
+  (loss): CausalLMLoss(
+    (loss_fct): CrossEntropyLoss()
+  )
+)
+</pre></div></div>
+</div>
+<section id="Choosing-the-architecture">
+<h2>Choosing the architecture<a class="headerlink" href="#Choosing-the-architecture" title="Link to this heading">#</a></h2>
+<p>MixFormer is composed of the following components:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">embedding</span></code>: Embeds input tokens.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">block</span></code>: Processes the embedded tokens (typically referred to as a decoder layer).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mixer</span></code>: Mixes the embedded tokens (e.g., attention mechanisms).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mlp</span></code>: Processes the mixer’s output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">norm</span></code>: Normalizes the tokens (e.g., <code class="docutils literal notranslate"><span class="pre">LayerNorm</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">head</span></code>: Processes the block’s output and may include components like a linear layer and cross-entropy loss.</p></li>
+</ul>
+<p>You can select each component from a variety of available implementations:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks</span><span class="w"> </span><span class="kn">import</span> <span class="n">BLOCKS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks.embeddings</span><span class="w"> </span><span class="kn">import</span> <span class="n">EMBEDDINGS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks.mixers</span><span class="w"> </span><span class="kn">import</span> <span class="n">MIXERS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks.mlps</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLPS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks.norms</span><span class="w"> </span><span class="kn">import</span> <span class="n">NORMS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks.heads</span><span class="w"> </span><span class="kn">import</span> <span class="n">HEADS</span><span class="p">,</span> <span class="n">LOSSES</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Embeddings: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">EMBEDDINGS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Blocks: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">BLOCKS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mixers: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">MIXERS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MLPs: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">MLPS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Norms: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">NORMS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Heads: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">HEADS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Losses: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">LOSSES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Embeddings: [&#39;default&#39;, &#39;positional&#39;]
+Blocks: [&#39;parallel&#39;, &#39;sequential&#39;, &#39;xyz&#39;]
+Mixers: [&#39;mha&#39;, &#39;conv1d&#39;]
+MLPs: [&#39;glu&#39;, &#39;fused_mlp&#39;, &#39;mlp&#39;, &#39;deep_mlp&#39;]
+Norms: [&#39;torch&#39;, &#39;low_precision&#39;, &#39;rms&#39;, &#39;flash_rms&#39;]
+Heads: [&#39;causal_lm&#39;, &#39;seq_cls&#39;]
+Losses: [&#39;causal_lm&#39;, &#39;seq_cls&#39;]
+</pre></div></div>
+</div>
+<p>To build a custom architecture, you need to define the <code class="docutils literal notranslate"><span class="pre">block_cls</span></code> (string), <code class="docutils literal notranslate"><span class="pre">mixer</span></code> (dict), <code class="docutils literal notranslate"><span class="pre">mlp</span></code> (dict), and <code class="docutils literal notranslate"><span class="pre">norm</span></code> (dict) arguments in the <code class="docutils literal notranslate"><span class="pre">architecture</span></code> dictionary when configuring <code class="docutils literal notranslate"><span class="pre">MixFormerSequentialConfig</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">MixFormerSequentialConfig</span><span class="p">(</span>
+    <span class="n">n_layer</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">architecture</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;block_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;sequential&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mixer&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mixer_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;mha&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;mlp&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mlp_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;mlp&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;norm&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;norm_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;torch&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MixFormerSequentialForCausalLM</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MixFormerSequentialForCausalLM(
+  (layers): Sequential(
+    (0): Embedding(
+      (wte): Embedding(50304, 1024)
+      (drop): Dropout(p=0.0, inplace=False)
+    )
+    (1): SequentialBlock(
+      (ln_1): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (ln_2): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (attn): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): MLP(
+        (act): NewGELUActivation()
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+      )
+      (resid_attn_dropout): Dropout(p=0.0, inplace=False)
+      (resid_mlp_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (2): SequentialBlock(
+      (ln_1): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (ln_2): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (attn): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): MLP(
+        (act): NewGELUActivation()
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+      )
+      (resid_attn_dropout): Dropout(p=0.0, inplace=False)
+      (resid_mlp_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (3): CausalLMHead(
+      (ln): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (linear): Linear(in_features=1024, out_features=50304, bias=True)
+    )
+  )
+  (loss): CausalLMLoss(
+    (loss_fct): CrossEntropyLoss()
+  )
+)
+</pre></div></div>
+</div>
+<p>It is important to note that embeddings and heads are specified differently. Embeddings are set using <code class="docutils literal notranslate"><span class="pre">embd_layer</span></code> due to legacy reasons, and the head is created directly in the task-specific class (e.g., <code class="docutils literal notranslate"><span class="pre">MixFormerSequentialForCausalLM</span></code>).</p>
+<p>The guide continues with examples of how to configure MixFormer to replicate various well-known architectures such as CodeGen, LLaMA, and GPT. Each example demonstrates how to adjust the configuration to match the respective architecture’s unique properties.</p>
+<section id="CodeGen">
+<h3>CodeGen<a class="headerlink" href="#CodeGen" title="Link to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">MixFormerSequentialConfig</span><span class="p">(</span>
+    <span class="n">n_layer</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">architecture</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;block_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;parallel&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mixer&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mixer_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;mha&quot;</span><span class="p">,</span>
+            <span class="c1"># Additional keyword arguments can be used, please check `phyagi-sdk/models/blocks/mixers/mha.py`</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;mlp&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mlp_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;mlp&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;norm&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;norm_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;torch&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MixFormerSequentialForCausalLM</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MixFormerSequentialForCausalLM(
+  (layers): Sequential(
+    (0): Embedding(
+      (wte): Embedding(50304, 1024)
+      (drop): Dropout(p=0.0, inplace=False)
+    )
+    (1): ParallelBlock(
+      (ln): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (mixer): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): MLP(
+        (act): NewGELUActivation()
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+      )
+      (resid_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (2): ParallelBlock(
+      (ln): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (mixer): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): MLP(
+        (act): NewGELUActivation()
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+      )
+      (resid_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (3): CausalLMHead(
+      (ln): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (linear): Linear(in_features=1024, out_features=50304, bias=True)
+    )
+  )
+  (loss): CausalLMLoss(
+    (loss_fct): CrossEntropyLoss()
+  )
+)
+</pre></div></div>
+</div>
+</section>
+<section id="LLaMA">
+<h3>LLaMA<a class="headerlink" href="#LLaMA" title="Link to this heading">#</a></h3>
+<p>LLaMa architecture uses a trick to initialize the head component as it needs to disable the <code class="docutils literal notranslate"><span class="pre">bias</span></code>. However, there is a fail-safe mechanism where <code class="docutils literal notranslate"><span class="pre">head_cls</span></code> needs to match the class, e.g., if <code class="docutils literal notranslate"><span class="pre">head_cls</span></code> is <code class="docutils literal notranslate"><span class="pre">causal_lm</span></code>, it will only work when initializing with <code class="docutils literal notranslate"><span class="pre">MixFormerSequentialForCausalLM</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">MixFormerSequentialConfig</span><span class="p">(</span>
+    <span class="n">n_layer</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">architecture</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;block_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;sequential&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mixer&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mixer_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;mha&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;mlp&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mlp_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;glu&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;act_fn&quot;</span><span class="p">:</span> <span class="s2">&quot;silu&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;n_inner&quot;</span><span class="p">:</span> <span class="mi">5456</span><span class="p">,</span> <span class="c1"># int(2/3 * 4 * config.n_embd)</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;norm&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;norm_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;rms&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;head&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;head_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;causal_lm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;use_bias&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MixFormerSequentialForCausalLM</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MixFormerSequentialForCausalLM(
+  (layers): Sequential(
+    (0): Embedding(
+      (wte): Embedding(50304, 1024)
+      (drop): Dropout(p=0.0, inplace=False)
+    )
+    (1): SequentialBlock(
+      (ln_1): RMSLayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (ln_2): RMSLayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (attn): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): GLU(
+        (act): SiLU()
+        (fc1): Linear(in_features=1024, out_features=10912, bias=False)
+        (fc2): Linear(in_features=5456, out_features=1024, bias=False)
+      )
+      (resid_attn_dropout): Dropout(p=0.0, inplace=False)
+      (resid_mlp_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (2): SequentialBlock(
+      (ln_1): RMSLayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (ln_2): RMSLayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (attn): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): GLU(
+        (act): SiLU()
+        (fc1): Linear(in_features=1024, out_features=10912, bias=False)
+        (fc2): Linear(in_features=5456, out_features=1024, bias=False)
+      )
+      (resid_attn_dropout): Dropout(p=0.0, inplace=False)
+      (resid_mlp_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (3): CausalLMHead(
+      (ln): RMSLayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (linear): Linear(in_features=1024, out_features=50304, bias=False)
+    )
+  )
+  (loss): CausalLMLoss(
+    (loss_fct): CrossEntropyLoss()
+  )
+)
+</pre></div></div>
+</div>
+</section>
+<section id="GPT">
+<h3>GPT<a class="headerlink" href="#GPT" title="Link to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">MixFormerSequentialConfig</span><span class="p">(</span>
+    <span class="n">n_layer</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">architecture</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;block_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;sequential&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mixer&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mixer_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;mha&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;window_size&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;mlp&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mlp_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;fused_mlp&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;n_inner&quot;</span><span class="p">:</span> <span class="mi">4096</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MixFormerSequentialForCausalLM</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MixFormerSequentialForCausalLM(
+  (layers): Sequential(
+    (0): Embedding(
+      (wte): Embedding(50304, 1024)
+      (drop): Dropout(p=0.0, inplace=False)
+    )
+    (1): SequentialBlock(
+      (ln_1): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (ln_2): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (attn): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): FusedMLP(
+        (mlp): FusedMLP(
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        )
+      )
+      (resid_attn_dropout): Dropout(p=0.0, inplace=False)
+      (resid_mlp_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (2): SequentialBlock(
+      (ln_1): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (ln_2): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (attn): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): FusedMLP(
+        (mlp): FusedMLP(
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        )
+      )
+      (resid_attn_dropout): Dropout(p=0.0, inplace=False)
+      (resid_mlp_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (3): CausalLMHead(
+      (ln): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (linear): Linear(in_features=1024, out_features=50304, bias=True)
+    )
+  )
+  (loss): CausalLMLoss(
+    (loss_fct): CrossEntropyLoss()
+  )
+)
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Heterogeneous-architectures">
+<h2>Heterogeneous architectures<a class="headerlink" href="#Heterogeneous-architectures" title="Link to this heading">#</a></h2>
+<p>MixFormer also supports heterogeneous architectures that employ different types of blocks at different layers. The following configuration illustrates this capability:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">MixFormerSequentialConfig</span><span class="p">(</span>
+    <span class="n">n_layer</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">architecture</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;block_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;sequential&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mixer&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;mixer_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;mha&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;window_size&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;mlp&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;mlp_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;fused_mlp&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;block_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;parallel&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;mixer&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;mixer_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;mha&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;mlp&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;mlp_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;glu&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MixFormerSequentialForCausalLM</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[phyagi] [2025-05-19 10:30:59,695] [WARNING] [__init__.py:34:get_block] `config.n_layer` does not match number of blocks in `block_config`. Overriding 1 with 2.
+MixFormerSequentialForCausalLM(
+  (layers): Sequential(
+    (0): Embedding(
+      (wte): Embedding(50304, 1024)
+      (drop): Dropout(p=0.0, inplace=False)
+    )
+    (1): SequentialBlock(
+      (ln_1): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (ln_2): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (attn): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): FusedMLP(
+        (mlp): FusedMLP(
+          (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+          (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        )
+      )
+      (resid_attn_dropout): Dropout(p=0.0, inplace=False)
+      (resid_mlp_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (2): ParallelBlock(
+      (ln): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (mixer): MHA(
+        (rotary_emb): RotaryEmbedding()
+        (Wqkv): FusedDense(in_features=1024, out_features=3072, bias=True)
+        (out_proj): FusedDense(in_features=1024, out_features=1024, bias=True)
+        (inner_attn): FlashCrossAttention(
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (mlp): GLU(
+        (act): NewGELUActivation()
+        (fc1): Linear(in_features=1024, out_features=8192, bias=False)
+        (fc2): Linear(in_features=4096, out_features=1024, bias=False)
+      )
+      (resid_dropout): Dropout(p=0.0, inplace=False)
+    )
+    (3): CausalLMHead(
+      (ln): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+      (linear): Linear(in_features=1024, out_features=50304, bias=True)
+    )
+  )
+  (loss): CausalLMLoss(
+    (loss_fct): CrossEntropyLoss()
+  )
+)
+</pre></div></div>
+</div>
+<p>The model will automatically adjust the <code class="docutils literal notranslate"><span class="pre">config.n_layer</span></code> to accommodate the actual number of layers specified in the configuration.</p>
+</section>
+</section>
+<section id="New-architectures">
+<h1>New architectures<a class="headerlink" href="#New-architectures" title="Link to this heading">#</a></h1>
+<p>MixFormer is designed with extensibility in mind, allowing for the straightforward addition of new blocks, mixers, MLPs, and other components.</p>
+<p>To create a new mixer, adhere to the following guidelines:</p>
+<ul class="simple">
+<li><p>The class <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method must accept a <code class="docutils literal notranslate"><span class="pre">config</span></code> argument.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">forward</span></code> method must return a tensor with the same dimensions as the input tensor.</p></li>
+</ul>
+<p>Here’s an example of implementing a <code class="docutils literal notranslate"><span class="pre">Conv1dMixer</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PretrainedConfig</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Conv1dMixer</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">PretrainedConfig</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">layer_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span>
+            <span class="n">in_channels</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span>
+            <span class="n">out_channels</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span>
+            <span class="n">kernel_size</span><span class="o">=</span><span class="n">kernel_size</span><span class="p">,</span>
+            <span class="n">padding</span><span class="o">=</span><span class="n">kernel_size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">groups</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span><span class="p">[:,</span> <span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+<p>To make the new mixer accessible within <code class="docutils literal notranslate"><span class="pre">phyagi</span></code>, you can:</p>
+<ol class="arabic simple">
+<li><p>Submit a pull request to include the mixer in the <code class="docutils literal notranslate"><span class="pre">phyagi-sdk/models/blocks/mixers/__init__.py</span></code> file, making it available to all users.</p></li>
+<li><p>Register it dynamically by adding a new key to the <code class="docutils literal notranslate"><span class="pre">MIXERS</span></code> dictionary:</p></li>
+</ol>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks.mixers</span><span class="w"> </span><span class="kn">import</span> <span class="n">MIXERS</span>
+
+<span class="n">MIXERS</span><span class="p">[</span><span class="s2">&quot;conv1d&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Conv1dMixer</span>
+</pre></div>
+</div>
+</div>
+<p>After registration, you can confirm its availability using <code class="docutils literal notranslate"><span class="pre">layers</span></code> attribute and instantiate it via the <code class="docutils literal notranslate"><span class="pre">mixer_cls</span></code> argument in the <code class="docutils literal notranslate"><span class="pre">architecture</span></code> dictionary:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential</span><span class="w"> </span><span class="kn">import</span> <span class="n">MixFormerSequentialConfig</span><span class="p">,</span> <span class="n">MixFormerSequentialForCausalLM</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks.mixers</span><span class="w"> </span><span class="kn">import</span> <span class="n">MIXERS</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">MIXERS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">MixFormerSequentialConfig</span><span class="p">(</span>
+    <span class="n">n_layer</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">architecture</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;block_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;sequential&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mixer&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mixer_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;conv1d&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MixFormerSequentialForCausalLM</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">))</span><span class="o">.</span><span class="n">logits</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;mha&#39;, &#39;conv1d&#39;]
+tensor([[[-0.3493, -0.5180,  0.3647,  ...,  0.1448,  0.1304, -0.9054],
+         [-0.5930, -0.2169,  0.6949,  ...,  0.1118,  0.0732, -0.5457],
+         [-0.6067,  0.0864,  0.8189,  ...,  0.4726, -0.0754, -0.3408],
+         ...,
+         [-0.4264,  0.4139,  0.7655,  ...,  0.2481, -0.4173, -0.3329],
+         [-0.4264,  0.4139,  0.7655,  ...,  0.2481, -0.4173, -0.3329],
+         [-0.4264,  0.4139,  0.7655,  ...,  0.2481, -0.4173, -0.3329]]],
+       grad_fn=&lt;ViewBackward0&gt;)
+</pre></div></div>
+</div>
+<p>Extra keys in the <code class="docutils literal notranslate"><span class="pre">mixer</span></code> dictionary serve as keyword arguments for the mixer class, allowing for customization, such as changing the <code class="docutils literal notranslate"><span class="pre">kernel_size</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">MixFormerSequentialConfig</span><span class="p">(</span>
+    <span class="n">n_layer</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">architecture</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;block_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;sequential&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mixer&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mixer_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;conv1d&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;kernel_size&quot;</span><span class="p">:</span> <span class="mi">11</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MixFormerSequentialForCausalLM</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">attn</span><span class="o">.</span><span class="n">conv</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">==</span> <span class="p">(</span><span class="mi">11</span><span class="p">,)</span>
+</pre></div>
+</div>
+</div>
+<section id="MLP">
+<h2>MLP<a class="headerlink" href="#MLP" title="Link to this heading">#</a></h2>
+<p>The same principles apply when creating a new MLP:</p>
+<ul class="simple">
+<li><p>The class <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method must accept a <code class="docutils literal notranslate"><span class="pre">config</span></code> argument.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">forward</span></code> method must return a tensor with the same dimensions as the input tensor.</p></li>
+</ul>
+<p>Here’s an example of a <code class="docutils literal notranslate"><span class="pre">DeepMLP</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">transformers.activations</span><span class="w"> </span><span class="kn">import</span> <span class="n">ACT2FN</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DeepMLP</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">PretrainedConfig</span><span class="p">,</span> <span class="n">n_layer</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n_inner</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_inner</span> <span class="o">=</span> <span class="n">n_inner</span> <span class="ow">or</span> <span class="n">config</span><span class="o">.</span><span class="n">n_inner</span> <span class="ow">or</span> <span class="mi">4</span><span class="o">*</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">act</span> <span class="o">=</span> <span class="n">ACT2FN</span><span class="p">[</span><span class="n">config</span><span class="o">.</span><span class="n">activation_function</span><span class="p">]</span>
+
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_inner</span><span class="p">)]</span>
+        <span class="n">layers</span> <span class="o">+=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_inner</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_inner</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_layer</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)]</span>
+        <span class="n">layers</span> <span class="o">+=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_inner</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="n">layer</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks.mlps</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLPS</span>
+
+<span class="n">MLPS</span><span class="p">[</span><span class="s2">&quot;deep_mlp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DeepMLP</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">MLPS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;glu&#39;, &#39;fused_mlp&#39;, &#39;mlp&#39;, &#39;deep_mlp&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">MixFormerSequentialConfig</span><span class="p">(</span>
+    <span class="n">n_layer</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">architecture</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;block_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;sequential&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mixer&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mixer_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;conv1d&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;mlp&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mlp_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;deep_mlp&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;n_layer&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MixFormerSequentialForCausalLM</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">))</span><span class="o">.</span><span class="n">logits</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+tensor([[[-0.1301,  0.2461,  0.1236,  ..., -0.1361, -0.0135, -0.0081],
+         [-0.2107, -0.3234,  0.3190,  ...,  0.2561, -0.5194,  0.2247],
+         [ 0.3618, -0.3681,  0.2278,  ...,  0.1237, -0.3493, -0.2407],
+         ...,
+         [ 0.1465, -0.7555,  0.0601,  ..., -0.0617, -0.2871, -0.1053],
+         [ 0.1465, -0.7555,  0.0601,  ..., -0.0617, -0.2871, -0.1053],
+         [ 0.1465, -0.7555,  0.0601,  ..., -0.0617, -0.2871, -0.1053]]],
+       grad_fn=&lt;ViewBackward0&gt;)
+</pre></div></div>
+</div>
+</section>
+<section id="Block">
+<h2>Block<a class="headerlink" href="#Block" title="Link to this heading">#</a></h2>
+<p>To create a new block component:</p>
+<ul class="simple">
+<li><p>The class <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method must include a <code class="docutils literal notranslate"><span class="pre">config</span></code> argument.</p></li>
+<li><p>Optionally, it may include a <code class="docutils literal notranslate"><span class="pre">block_idx</span></code> argument.</p></li>
+<li><p>Preferably, it should accept <code class="docutils literal notranslate"><span class="pre">mlp</span></code> and <code class="docutils literal notranslate"><span class="pre">mixer</span></code> arguments.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">forward</span></code> method must output a tensor maintaining the input’s dimensions.</p></li>
+</ul>
+<p>Example of a custom block implementation:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks.mixers</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_mixer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks.mlps</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_mlp</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">BlockXyz</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">PretrainedConfig</span><span class="p">,</span> <span class="n">mixer</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">mlp</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">block_idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mixer</span> <span class="o">=</span> <span class="n">get_mixer</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">mixer_config</span><span class="o">=</span><span class="n">mixer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mlp</span> <span class="o">=</span> <span class="n">get_mlp</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">mlp_config</span><span class="o">=</span><span class="n">mlp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_idx</span> <span class="o">=</span> <span class="n">block_idx</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">]],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">,</span>
+        <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">],</span>
+        <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">],</span>
+        <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">]],</span>
+    <span class="p">]:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mixer</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">phyagi.models.mixformer_sequential.blocks</span><span class="w"> </span><span class="kn">import</span> <span class="n">BLOCKS</span>
+
+<span class="n">BLOCKS</span><span class="p">[</span><span class="s2">&quot;xyz&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BlockXyz</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">BLOCKS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;parallel&#39;, &#39;sequential&#39;, &#39;xyz&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">MixFormerSequentialConfig</span><span class="p">(</span>
+    <span class="n">n_layer</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">architecture</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;block_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;xyz&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mixer&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mixer_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;conv1d&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;kernel_size&quot;</span><span class="p">:</span> <span class="mi">11</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;mlp&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mlp_cls&quot;</span><span class="p">:</span> <span class="s2">&quot;deep_mlp&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;n_layer&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MixFormerSequentialForCausalLM</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">))</span><span class="o">.</span><span class="n">logits</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+tensor([[[-0.3602, -0.9025,  0.0893,  ..., -0.3397, -0.6635,  0.4196],
+         [-0.3642, -0.9088,  0.0790,  ..., -0.3380, -0.6663,  0.4473],
+         [-0.3450, -0.9090,  0.1206,  ..., -0.3576, -0.6528,  0.4615],
+         ...,
+         [-0.3618, -0.9667,  0.1016,  ..., -0.2696, -0.7573,  0.4785],
+         [-0.3618, -0.9667,  0.1016,  ..., -0.2696, -0.7573,  0.4785],
+         [-0.3618, -0.9667,  0.1016,  ..., -0.2696, -0.7573,  0.4785]]],
+       grad_fn=&lt;ViewBackward0&gt;)
+</pre></div></div>
+</div>
+<p>The same customization approach can be applied to other components of MixFormer, such as embeddings, heads, and losses.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="data_related.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data‑related</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="training.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Training</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Sections
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Model architecture</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Choosing-the-architecture">Choosing the architecture</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#CodeGen">CodeGen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#LLaMA">LLaMA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#GPT">GPT</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Heterogeneous-architectures">Heterogeneous architectures</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#New-architectures">New architectures</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#MLP">MLP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Block">Block</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

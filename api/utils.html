@@ -1,0 +1,1545 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Utilities &#8212; PhyAGI</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=328381f7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/utils';</script>
+    <link rel="canonical" href="https://microsoft.github.io/phyagi/api/utils.html" />
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CLI" href="cli.html" />
+    <link rel="prev" title="Evaluation" href="eval.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 16, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt=""/>`);</script>
+  
+  
+    <p class="title logo__title">PhyAGI</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/build_docker.html">Build a Docker image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quick_start.html">Quick start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../guides/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/configuration_system.html">Configuration system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/cli.html">Command-Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/data_generation_infrastructure.html">Data generation infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/llama_cpp_and_gguf.html">Llama.cpp and GGUF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/data_related.html">Data‑related</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/model_architecture.html">Model architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/training.html">Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/sft.html">Supervised Fine-Tuning (SFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/rlhf.html">Reinforcement Learning from Human Feedback (RLHF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/evaluation.html">Evaluation</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/lr_schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/parameter_efficient.html">Parameter-Efficient Techniques (PEFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced_tutorials/batch_tracking.html">Batch tracking</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Azure</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../azure/sc_alt.html">Log-In with SC-ALT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/pim.html">Elevate permissions with Privileged Identity Management (PIM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/singularity.html">Submiting jobs with Singularity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/storage_account.html">Azure Storage Account</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/virtual_machine.html">Azure Virtual Machine (VM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/container_registry.html">Azure Container Registry (ACR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/app_service.html">Azure App Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/kubernetes_service.html">Azure Kubernetes Service (AKS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../azure/entra.html">Microsoft Entra</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../contributing/first_time_contributor.html">First time contributor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/tests.html">Tests</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimizers.html">Optimizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trainers.html">Trainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rl.html">Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eval.html">Evaluation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/microsoft/phyagi/issues/new?title=Issue%20on%20page%20%2Fapi/utils.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Utilities</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Sections </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.checkpoint">Checkpoint</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.CheckpointManager"><code class="docutils literal notranslate"><span class="pre">CheckpointManager</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.CheckpointManager.save"><code class="docutils literal notranslate"><span class="pre">CheckpointManager.save()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.CheckpointManager.load"><code class="docutils literal notranslate"><span class="pre">CheckpointManager.load()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.convert_ds_zero_checkpoint"><code class="docutils literal notranslate"><span class="pre">convert_ds_zero_checkpoint()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.convert_pl_fsdp_checkpoint"><code class="docutils literal notranslate"><span class="pre">convert_pl_fsdp_checkpoint()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.convert_ray_actor_checkpoint"><code class="docutils literal notranslate"><span class="pre">convert_ray_actor_checkpoint()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.config">Configuration System</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.for_resolver"><code class="docutils literal notranslate"><span class="pre">for_resolver()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.filter_dict"><code class="docutils literal notranslate"><span class="pre">filter_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.filter_lists"><code class="docutils literal notranslate"><span class="pre">filter_lists()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.override_nested_dict"><code class="docutils literal notranslate"><span class="pre">override_nested_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.save_config"><code class="docutils literal notranslate"><span class="pre">save_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.download_utils">Download</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.download_utils.download_dataset"><code class="docutils literal notranslate"><span class="pre">download_dataset()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.download_utils.download_tokenizer"><code class="docutils literal notranslate"><span class="pre">download_tokenizer()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.file_utils">File-Related</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.get_checkpoints_info"><code class="docutils literal notranslate"><span class="pre">get_checkpoints_info()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.get_full_path"><code class="docutils literal notranslate"><span class="pre">get_full_path()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.load_json_file"><code class="docutils literal notranslate"><span class="pre">load_json_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.save_json_file"><code class="docutils literal notranslate"><span class="pre">save_json_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.load_jsonl_file"><code class="docutils literal notranslate"><span class="pre">load_jsonl_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.save_jsonl_file"><code class="docutils literal notranslate"><span class="pre">save_jsonl_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.validate_file_extension"><code class="docutils literal notranslate"><span class="pre">validate_file_extension()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.is_file_available"><code class="docutils literal notranslate"><span class="pre">is_file_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.is_checkpoint_available"><code class="docutils literal notranslate"><span class="pre">is_checkpoint_available()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.hf_utils">Hugging Face (HF)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.hf_utils.AzureStorageRotateCheckpointMixin"><code class="docutils literal notranslate"><span class="pre">AzureStorageRotateCheckpointMixin</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.hf_utils.to_device_map"><code class="docutils literal notranslate"><span class="pre">to_device_map()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.import_utils">Import</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_flash_attn_available"><code class="docutils literal notranslate"><span class="pre">is_flash_attn_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_flash_attn_3_available"><code class="docutils literal notranslate"><span class="pre">is_flash_attn_3_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_fused_dense_lib_available"><code class="docutils literal notranslate"><span class="pre">is_fused_dense_lib_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_hopper_gpu_available"><code class="docutils literal notranslate"><span class="pre">is_hopper_gpu_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_lm_eval_available"><code class="docutils literal notranslate"><span class="pre">is_lm_eval_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_mpi_available"><code class="docutils literal notranslate"><span class="pre">is_mpi_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_torch_gpu_available"><code class="docutils literal notranslate"><span class="pre">is_torch_gpu_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_torchao_available"><code class="docutils literal notranslate"><span class="pre">is_torchao_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_vllm_available"><code class="docutils literal notranslate"><span class="pre">is_vllm_available()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.logging_table">Logging</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.TableLogger"><code class="docutils literal notranslate"><span class="pre">TableLogger</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.TableLogger.add_data"><code class="docutils literal notranslate"><span class="pre">TableLogger.add_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.LocalTableLogger"><code class="docutils literal notranslate"><span class="pre">LocalTableLogger</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.LocalTableLogger.add_data"><code class="docutils literal notranslate"><span class="pre">LocalTableLogger.add_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.WandbTableLogger"><code class="docutils literal notranslate"><span class="pre">WandbTableLogger</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.WandbTableLogger.add_data"><code class="docutils literal notranslate"><span class="pre">WandbTableLogger.add_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.StreamHandlerWithGPUMemory"><code class="docutils literal notranslate"><span class="pre">StreamHandlerWithGPUMemory</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.StreamHandlerWithGPUMemory.emit"><code class="docutils literal notranslate"><span class="pre">StreamHandlerWithGPUMemory.emit()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.MlflowHandler"><code class="docutils literal notranslate"><span class="pre">MlflowHandler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.MlflowHandler.emit"><code class="docutils literal notranslate"><span class="pre">MlflowHandler.emit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.MlflowHandler.end"><code class="docutils literal notranslate"><span class="pre">MlflowHandler.end()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.WandbHandler"><code class="docutils literal notranslate"><span class="pre">WandbHandler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.WandbHandler.emit"><code class="docutils literal notranslate"><span class="pre">WandbHandler.emit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.WandbHandler.end"><code class="docutils literal notranslate"><span class="pre">WandbHandler.end()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.TensorBoardHandler"><code class="docutils literal notranslate"><span class="pre">TensorBoardHandler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.TensorBoardHandler.emit"><code class="docutils literal notranslate"><span class="pre">TensorBoardHandler.emit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.TensorBoardHandler.end"><code class="docutils literal notranslate"><span class="pre">TensorBoardHandler.end()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.QueueHandler"><code class="docutils literal notranslate"><span class="pre">QueueHandler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.QueueHandler.emit"><code class="docutils literal notranslate"><span class="pre">QueueHandler.emit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.QueueHandler.end"><code class="docutils literal notranslate"><span class="pre">QueueHandler.end()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_utils.get_logger"><code class="docutils literal notranslate"><span class="pre">get_logger()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.timer">Timer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.timer.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.timer.Timer.start"><code class="docutils literal notranslate"><span class="pre">Timer.start()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.timer.Timer.end"><code class="docutils literal notranslate"><span class="pre">Timer.end()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.timer.Timer.metrics"><code class="docutils literal notranslate"><span class="pre">Timer.metrics()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.timer.Timer.measure"><code class="docutils literal notranslate"><span class="pre">Timer.measure()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.type_utils">Typing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.type_utils.to_torch_dtype"><code class="docutils literal notranslate"><span class="pre">to_torch_dtype()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.type_utils.xor"><code class="docutils literal notranslate"><span class="pre">xor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.type_utils.nullcontext_kwargs"><code class="docutils literal notranslate"><span class="pre">nullcontext_kwargs()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.type_utils.rgetattr"><code class="docutils literal notranslate"><span class="pre">rgetattr()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.type_utils.rsetattr"><code class="docutils literal notranslate"><span class="pre">rsetattr()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="utilities">
+<h1>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">#</a></h1>
+<section id="module-phyagi.utils.checkpoint">
+<span id="checkpoint"></span><h2>Checkpoint<a class="headerlink" href="#module-phyagi.utils.checkpoint" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phyagi.utils.checkpoint.CheckpointManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phyagi.utils.checkpoint.</span></span><span class="sig-name descname"><span class="pre">CheckpointManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sync'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/phyagi/utils/checkpoint.html#CheckpointManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.checkpoint.CheckpointManager" title="Link to this definition">#</a></dt>
+<dd><p>Checkpoint manager for saving and loading checkpoints.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.checkpoint.CheckpointManager.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LRScheduler</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_state_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_offload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/checkpoint.html#CheckpointManager.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.checkpoint.CheckpointManager.save" title="Link to this definition">#</a></dt>
+<dd><p>Save a checkpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint_id</strong> – Path to the checkpoint.</p></li>
+<li><p><strong>model</strong> – Model to save.</p></li>
+<li><p><strong>optimizer</strong> – Optimizer to save.</p></li>
+<li><p><strong>scheduler</strong> – Learning rate scheduler to save.</p></li>
+<li><p><strong>overwrite</strong> – Whether to overwrite the checkpoint if it already exists.</p></li>
+<li><p><strong>full_state_dict</strong> – Whether to save the full state dictionary.</p></li>
+<li><p><strong>cpu_offload</strong> – Whether to offload the model state to CPU.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.checkpoint.CheckpointManager.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LRScheduler</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_state_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_offload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/checkpoint.html#CheckpointManager.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.checkpoint.CheckpointManager.load" title="Link to this definition">#</a></dt>
+<dd><p>Load a distributed checkpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint_id</strong> – Path to the checkpoint.</p></li>
+<li><p><strong>model</strong> – Model to load the state into.</p></li>
+<li><p><strong>optimizer</strong> – Optimizer to load the state into.</p></li>
+<li><p><strong>scheduler</strong> – Learning rate scheduler to load the state into.</p></li>
+<li><p><strong>full_state_dict</strong> – Whether to load the full state dictionary.</p></li>
+<li><p><strong>cpu_offload</strong> – Whether to offload the model state to CPU.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.checkpoint.convert_ds_zero_checkpoint">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.checkpoint.</span></span><span class="sig-name descname"><span class="pre">convert_ds_zero_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_shard_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'5GB'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_frozen_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_universal_checkpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/checkpoint.html#convert_ds_zero_checkpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.checkpoint.convert_ds_zero_checkpoint" title="Link to this definition">#</a></dt>
+<dd><p>Convert a DeepSpeed ZeRO-2/3 checkpoint to a safe serialized checkpoint.</p>
+<p>The converted checkpoint is based on <code class="docutils literal notranslate"><span class="pre">*.safetensors</span></code> files and can be loaded
+directly with <code class="docutils literal notranslate"><span class="pre">AutoModel.from_pretrained()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint_dir</strong> – Path to the checkpoint directory.</p></li>
+<li><p><strong>output_dir</strong> – Path to the output directory.</p></li>
+<li><p><strong>max_shard_size</strong> – Maximum shard size for the converted checkpoint.</p></li>
+<li><p><strong>exclude_frozen_parameters</strong> – Whether to exclude frozen parameters from the converted checkpoint.</p></li>
+<li><p><strong>use_universal_checkpoint</strong> – Whether to use a universal-based checkpoint conversion.
+This is a hard-requirement if the checkpoint is split across multiple ranks, e.g., tensor parallelism.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.checkpoint.convert_pl_fsdp_checkpoint">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.checkpoint.</span></span><span class="sig-name descname"><span class="pre">convert_pl_fsdp_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_shard_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'5GB'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_unused_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/checkpoint.html#convert_pl_fsdp_checkpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.checkpoint.convert_pl_fsdp_checkpoint" title="Link to this definition">#</a></dt>
+<dd><p>Convert a PyTorch Lightning FSDP checkpoint to a safe serialized checkpoint.</p>
+<p>The converted checkpoint is based on <code class="docutils literal notranslate"><span class="pre">*.safetensors</span></code> files and can be loaded
+directly with <code class="docutils literal notranslate"><span class="pre">AutoModel.from_pretrained()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint_dir</strong> – Path to the checkpoint directory.</p></li>
+<li><p><strong>output_dir</strong> – Path to the output directory.</p></li>
+<li><p><strong>max_shard_size</strong> – Maximum shard size for the converted checkpoint.</p></li>
+<li><p><strong>dump_unused_keys</strong> – Whether to dump unused keys in the checkpoint.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.checkpoint.convert_ray_actor_checkpoint">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.checkpoint.</span></span><span class="sig-name descname"><span class="pre">convert_ray_actor_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_shard_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'5GB'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/checkpoint.html#convert_ray_actor_checkpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.checkpoint.convert_ray_actor_checkpoint" title="Link to this definition">#</a></dt>
+<dd><p>Convert a Ray actor checkpoint to a safe serialized checkpoint.</p>
+<p>The converted checkpoint is based on <code class="docutils literal notranslate"><span class="pre">*.safetensors</span></code> files and can be loaded
+directly with <code class="docutils literal notranslate"><span class="pre">AutoModel.from_pretrained()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint_dir</strong> – Path to the checkpoint directory.</p></li>
+<li><p><strong>output_dir</strong> – Path to the output directory.</p></li>
+<li><p><strong>max_shard_size</strong> – Maximum shard size for the converted checkpoint.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-phyagi.utils.config">
+<span id="configuration-system"></span><h2>Configuration System<a class="headerlink" href="#module-phyagi.utils.config" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.config.for_resolver">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.config.</span></span><span class="sig-name descname"><span class="pre">for_resolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace_char</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/phyagi/utils/config.html#for_resolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.config.for_resolver" title="Link to this definition">#</a></dt>
+<dd><p>Resolve a for-loop operation (for OmegaConf).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; ${for:${oc.create:{cache_dir:shard_?/train.npy,seq_len:4096}},2,?}
+&gt;&gt;&gt; [{&quot;cache_dir&quot;: &quot;shard_0/train.npy&quot;, &quot;seq_len&quot;: 4096}, {&quot;cache_dir&quot;: &quot;shard_1/train.npy&quot;, &quot;seq_len&quot;: 4096}]
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Input object.</p></li>
+<li><p><strong>n</strong> – Number of times to repeat the object.</p></li>
+<li><p><strong>replace_char</strong> – Character to replace in the object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.config.filter_dict">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.config.</span></span><span class="sig-name descname"><span class="pre">filter_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/phyagi/utils/config.html#filter_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.config.filter_dict" title="Link to this definition">#</a></dt>
+<dd><p>Filter a dictionary to remove <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_dict</strong> – Dictionary to be filtered.</p></li>
+<li><p><strong>value</strong> – Value to be removed from the dictionary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Filtered dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.config.filter_lists">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.config.</span></span><span class="sig-name descname"><span class="pre">filter_lists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/phyagi/utils/config.html#filter_lists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.config.filter_lists" title="Link to this definition">#</a></dt>
+<dd><p>Filter lists by removing <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> – Lists to be filtered.</p></li>
+<li><p><strong>value</strong> – Value to be removed from the lists.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Filtered lists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.config.override_nested_dict">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.config.</span></span><span class="sig-name descname"><span class="pre">override_nested_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/phyagi/utils/config.html#override_nested_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.config.override_nested_dict" title="Link to this definition">#</a></dt>
+<dd><p>Manually override values in <code class="docutils literal notranslate"><span class="pre">input_dict</span></code> with values from <code class="docutils literal notranslate"><span class="pre">override_dict</span></code>.</p>
+<p>This function recursively overrides values in the input dictionary with values from the override
+dictionary. If a key in the override dictionary is a nested dictionary, it will recursively
+override the corresponding key in the input dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_dict</strong> – Dictionary to override values from.</p></li>
+<li><p><strong>override_dict</strong> – Dictionary containing the new values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Overridden dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.config.load_config">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.config.</span></span><span class="sig-name descname"><span class="pre">load_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">configs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_native_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DictConfig</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/config.html#load_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.config.load_config" title="Link to this definition">#</a></dt>
+<dd><p>Load a set of arguments and merge them into a unique configuration object, resolving
+from left to right.</p>
+<p>Each object of <code class="docutils literal notranslate"><span class="pre">configs</span></code> is expected to be either:</p>
+<ul class="simple">
+<li><p>Path-like object representing the path to a YAML/json config file.</p></li>
+<li><p>Dictionary with the configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">argparse.Namespace</span></code> object.</p></li>
+<li><p>List of dot list arguments (e.g., <code class="docutils literal notranslate"><span class="pre">[&quot;--a&quot;,</span> <span class="pre">&quot;1&quot;,</span> <span class="pre">&quot;--b&quot;,</span> <span class="pre">&quot;2&quot;]</span></code>).</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>configs</strong> – Arguments to be resolved into a final configuration.</p></li>
+<li><p><strong>use_native_types</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, configuration is loaded using <code class="docutils literal notranslate"><span class="pre">OmegaConf.to_object()</span></code>
+and native types are preserved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Merged configuration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.config.save_config">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.config.</span></span><span class="sig-name descname"><span class="pre">save_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">OmegaConf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/config.html#save_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.config.save_config" title="Link to this definition">#</a></dt>
+<dd><p>Save a configuration object to a YAML file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> – Configuration object.</p></li>
+<li><p><strong>output_path</strong> – Path to save the configuration.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-phyagi.utils.download_utils">
+<span id="download"></span><h2>Download<a class="headerlink" href="#module-phyagi.utils.download_utils" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.download_utils.download_dataset">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.download_utils.</span></span><span class="sig-name descname"><span class="pre">download_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_configs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">storage_account</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">container</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/tmp/data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_data_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/tmp/data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cap_mbps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/download_utils.html#download_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.download_utils.download_dataset" title="Link to this definition">#</a></dt>
+<dd><p>Download datasets using <code class="docutils literal notranslate"><span class="pre">azcopy</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_configs</strong> – Dataset configuration.</p></li>
+<li><p><strong>storage_account</strong> – Name of the blob storage account.</p></li>
+<li><p><strong>container</strong> – Name of the blob storage container.</p></li>
+<li><p><strong>data_root</strong> – Root directory of the blob storage datasets.</p></li>
+<li><p><strong>local_data_root</strong> – Local root directory for downloading datasets.</p></li>
+<li><p><strong>cap_mbps</strong> – Maximum download speed in MBps.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.download_utils.download_tokenizer">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.download_utils.</span></span><span class="sig-name descname"><span class="pre">download_tokenizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">storage_account</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">container</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_data_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/tmp/data'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/download_utils.html#download_tokenizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.download_utils.download_tokenizer" title="Link to this definition">#</a></dt>
+<dd><p>Download a tokenizer using <code class="docutils literal notranslate"><span class="pre">azcopy</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>storage_account</strong> – Name of the blob storage account.</p></li>
+<li><p><strong>container</strong> – Name of the blob storage container.</p></li>
+<li><p><strong>tokenizer_path</strong> – Path to the tokenizer files.</p></li>
+<li><p><strong>local_data_root</strong> – Local root directory for downloading tokenizers.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-phyagi.utils.file_utils">
+<span id="file-related"></span><h2>File-Related<a class="headerlink" href="#module-phyagi.utils.file_utils" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.file_utils.get_checkpoints_info">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.file_utils.</span></span><span class="sig-name descname"><span class="pre">get_checkpoints_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_regex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Pattern</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_checkpoints</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/phyagi/utils/file_utils.html#get_checkpoints_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.file_utils.get_checkpoints_info" title="Link to this definition">#</a></dt>
+<dd><p>Get information about available checkpoints in a given directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint_dir</strong> – Path to the directory that might contain checkpoints.</p></li>
+<li><p><strong>checkpoint_regex</strong> – Regular expression to match the checkpoint folder name.</p></li>
+<li><p><strong>n_checkpoints</strong> – Number of checkpoints to return.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, all checkpoints are returned.</p></li>
+<li><p><strong>reverse</strong> – Whether to return the checkpoints in reverse order.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of dictionaries with checkpoint information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.file_utils.get_full_path">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.file_utils.</span></span><span class="sig-name descname"><span class="pre">get_full_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/file_utils.html#get_full_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.file_utils.get_full_path" title="Link to this definition">#</a></dt>
+<dd><p>Get the full path to a file or folder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Path to the file or folder.</p></li>
+<li><p><strong>create_folder</strong> – Whether to create the folder if it does not exist.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Full path to the file or folder.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.file_utils.load_json_file">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.file_utils.</span></span><span class="sig-name descname"><span class="pre">load_json_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/phyagi/utils/file_utils.html#load_json_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.file_utils.load_json_file" title="Link to this definition">#</a></dt>
+<dd><p>Load a JSON file (optionally compressed with <code class="docutils literal notranslate"><span class="pre">gzip</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> – Path to the file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary-based contents of the file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.file_utils.save_json_file">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.file_utils.</span></span><span class="sig-name descname"><span class="pre">save_json_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'w'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/file_utils.html#save_json_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.file_utils.save_json_file" title="Link to this definition">#</a></dt>
+<dd><p>Save an object to a JSON file (optionally compressed with <code class="docutils literal notranslate"><span class="pre">gzip</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Object to save.</p></li>
+<li><p><strong>file_path</strong> – Path to the file.</p></li>
+<li><p><strong>create_folder</strong> – Whether to create the folder if it does not exist.</p></li>
+<li><p><strong>mode</strong> – Mode to open the file.</p></li>
+<li><p><strong>indent</strong> – Number of spaces to indent.</p></li>
+<li><p><strong>sort_keys</strong> – Whether to sort the keys in the JSON file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.file_utils.load_jsonl_file">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.file_utils.</span></span><span class="sig-name descname"><span class="pre">load_jsonl_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/phyagi/utils/file_utils.html#load_jsonl_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.file_utils.load_jsonl_file" title="Link to this definition">#</a></dt>
+<dd><p>Load a JSONL file (optionally compressed with <code class="docutils literal notranslate"><span class="pre">gzip</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> – Path to the file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary-based contents of the file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.file_utils.save_jsonl_file">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.file_utils.</span></span><span class="sig-name descname"><span class="pre">save_jsonl_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'w'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/file_utils.html#save_jsonl_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.file_utils.save_jsonl_file" title="Link to this definition">#</a></dt>
+<dd><p>Save a list of objects to a JSONL file (optionally compressed with <code class="docutils literal notranslate"><span class="pre">gzip</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – List of objects to save.</p></li>
+<li><p><strong>file_path</strong> – Path to the file.</p></li>
+<li><p><strong>create_folder</strong> – Whether to create the folder if it does not exist.</p></li>
+<li><p><strong>mode</strong> – Mode to open the file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.file_utils.validate_file_extension">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.file_utils.</span></span><span class="sig-name descname"><span class="pre">validate_file_extension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/file_utils.html#validate_file_extension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.file_utils.validate_file_extension" title="Link to this definition">#</a></dt>
+<dd><p>Validate whether a file has a valid extension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> – Path to the file.</p></li>
+<li><p><strong>extensions</strong> – Valid extension(s).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the file has a valid extension.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.file_utils.is_file_available">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.file_utils.</span></span><span class="sig-name descname"><span class="pre">is_file_available</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_extension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/file_utils.html#is_file_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.file_utils.is_file_available" title="Link to this definition">#</a></dt>
+<dd><p>Check if <code class="docutils literal notranslate"><span class="pre">file_path</span></code> has a corresponding <code class="docutils literal notranslate"><span class="pre">file_extension</span></code> file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> – Path to the file.</p></li>
+<li><p><strong>file_extension</strong> – Extension of the corresponding file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the corresponding file if available, otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.file_utils.is_checkpoint_available">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.file_utils.</span></span><span class="sig-name descname"><span class="pre">is_checkpoint_available</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/file_utils.html#is_checkpoint_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.file_utils.is_checkpoint_available" title="Link to this definition">#</a></dt>
+<dd><p>Check if a checkpoint is available in the given directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint_dir</strong> – Path to the directory that might contain checkpoints.</p></li>
+<li><p><strong>step</strong> – Step of the checkpoint.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether a checkpoint is available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-phyagi.utils.hf_utils">
+<span id="hugging-face-hf"></span><h2>Hugging Face (HF)<a class="headerlink" href="#module-phyagi.utils.hf_utils" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phyagi.utils.hf_utils.AzureStorageRotateCheckpointMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phyagi.utils.hf_utils.</span></span><span class="sig-name descname"><span class="pre">AzureStorageRotateCheckpointMixin</span></span><a class="reference internal" href="../_modules/phyagi/utils/hf_utils.html#AzureStorageRotateCheckpointMixin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.hf_utils.AzureStorageRotateCheckpointMixin" title="Link to this definition">#</a></dt>
+<dd><p>Mixin to rotate checkpoints and cache them to Azure Storage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.hf_utils.to_device_map">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.hf_utils.</span></span><span class="sig-name descname"><span class="pre">to_device_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">device</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_memory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_split_module_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offload_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offload_buffers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dtype</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preload_module_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/hf_utils.html#to_device_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.hf_utils.to_device_map" title="Link to this definition">#</a></dt>
+<dd><p>Move a model to a given <code class="docutils literal notranslate"><span class="pre">device_map</span></code>.</p>
+<p>This function allows the layers of the model to be spread across multiple devices,
+offloaded on the CPU or even the disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – Model to move.</p></li>
+<li><p><strong>device_map</strong> – Mapping of layers to devices.
+If <code class="docutils literal notranslate"><span class="pre">auto</span></code>, the layers will be automatically assigned to devices based on the memory constraints.</p></li>
+<li><p><strong>max_memory</strong> – Maximum memory to use for each device.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the memory will be automatically assigned based on the model’s parameters.</p></li>
+<li><p><strong>no_split_module_classes</strong> – List of module classes that should not be split across devices.</p></li>
+<li><p><strong>offload_folder</strong> – Folder to use for offloading layers on the disk.</p></li>
+<li><p><strong>offload_buffers</strong> – Whether to offload the buffers of the layers on the disk.</p></li>
+<li><p><strong>dtype</strong> – Data type to use for the layers.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the data type of the model will be used.</p></li>
+<li><p><strong>skip_keys</strong> – Keys of the model state dict to skip when moving the model.</p></li>
+<li><p><strong>preload_module_classes</strong> – List of module classes to preload on the CPU.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Model with the layers moved to the appropriate devices.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-phyagi.utils.import_utils">
+<span id="import"></span><h2>Import<a class="headerlink" href="#module-phyagi.utils.import_utils" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.import_utils.is_flash_attn_available">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.import_utils.</span></span><span class="sig-name descname"><span class="pre">is_flash_attn_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/import_utils.html#is_flash_attn_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.import_utils.is_flash_attn_available" title="Link to this definition">#</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">flash_attn</span></code> is available.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.import_utils.is_flash_attn_3_available">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.import_utils.</span></span><span class="sig-name descname"><span class="pre">is_flash_attn_3_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/import_utils.html#is_flash_attn_3_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.import_utils.is_flash_attn_3_available" title="Link to this definition">#</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">flash_attn_interface</span></code> is available.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.import_utils.is_fused_dense_lib_available">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.import_utils.</span></span><span class="sig-name descname"><span class="pre">is_fused_dense_lib_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/import_utils.html#is_fused_dense_lib_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.import_utils.is_fused_dense_lib_available" title="Link to this definition">#</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">fused_dense_lib</span></code> is available.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.import_utils.is_hopper_gpu_available">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.import_utils.</span></span><span class="sig-name descname"><span class="pre">is_hopper_gpu_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/import_utils.html#is_hopper_gpu_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.import_utils.is_hopper_gpu_available" title="Link to this definition">#</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if the current GPU is a Hopper GPU (compute capability 9.x).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.import_utils.is_lm_eval_available">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.import_utils.</span></span><span class="sig-name descname"><span class="pre">is_lm_eval_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/import_utils.html#is_lm_eval_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.import_utils.is_lm_eval_available" title="Link to this definition">#</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">lm_eval</span></code> is available.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.import_utils.is_mpi_available">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.import_utils.</span></span><span class="sig-name descname"><span class="pre">is_mpi_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/import_utils.html#is_mpi_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.import_utils.is_mpi_available" title="Link to this definition">#</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">mpi4py</span></code> is available.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.import_utils.is_torch_gpu_available">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.import_utils.</span></span><span class="sig-name descname"><span class="pre">is_torch_gpu_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/import_utils.html#is_torch_gpu_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.import_utils.is_torch_gpu_available" title="Link to this definition">#</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">torch.cuda.is_available()</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.import_utils.is_torchao_available">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.import_utils.</span></span><span class="sig-name descname"><span class="pre">is_torchao_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/import_utils.html#is_torchao_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.import_utils.is_torchao_available" title="Link to this definition">#</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">torchao</span></code> is available.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.import_utils.is_vllm_available">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.import_utils.</span></span><span class="sig-name descname"><span class="pre">is_vllm_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/import_utils.html#is_vllm_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.import_utils.is_vllm_available" title="Link to this definition">#</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">vllm</span></code> is available.</p>
+</dd></dl>
+
+</section>
+<section id="module-phyagi.utils.logging_table">
+<span id="logging"></span><h2>Logging<a class="headerlink" href="#module-phyagi.utils.logging_table" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phyagi.utils.logging_table.TableLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phyagi.utils.logging_table.</span></span><span class="sig-name descname"><span class="pre">TableLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/phyagi/utils/logging_table.html#TableLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_table.TableLogger" title="Link to this definition">#</a></dt>
+<dd><p>Abstract class for table loggers.</p>
+<p>This class serves as a base for implementing different table loggers, such as
+local file loggers or cloud-based loggers like WandB. It enforces the implementation
+of the <a class="reference internal" href="#phyagi.utils.logging_table.TableLogger.add_data" title="phyagi.utils.logging_table.TableLogger.add_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_data()</span></code></a> method, which is responsible for adding data to the table.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyTableLogger</span><span class="p">(</span><span class="n">TableLogger</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">columns</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">columns</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">def</span><span class="w"> </span><span class="nf">add_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="c1"># Implement the logic to add data to the table</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="k">pass</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_table.TableLogger.add_data">
+<span class="sig-name descname"><span class="pre">add_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_table.html#TableLogger.add_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_table.TableLogger.add_data" title="Link to this definition">#</a></dt>
+<dd><p>Add data to the table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rows</strong> – List of rows to add to the table, where each row is a list of values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="phyagi.utils.logging_table.LocalTableLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phyagi.utils.logging_table.</span></span><span class="sig-name descname"><span class="pre">LocalTableLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/phyagi/utils/logging_table.html#LocalTableLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_table.LocalTableLogger" title="Link to this definition">#</a></dt>
+<dd><p>Table logger that logs data to a local <code class="docutils literal notranslate"><span class="pre">.jsonl</span></code> file.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_table.LocalTableLogger.add_data">
+<span class="sig-name descname"><span class="pre">add_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_table.html#LocalTableLogger.add_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_table.LocalTableLogger.add_data" title="Link to this definition">#</a></dt>
+<dd><p>Add data to the table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rows</strong> – List of rows to add to the table, where each row is a list of values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="phyagi.utils.logging_table.WandbTableLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phyagi.utils.logging_table.</span></span><span class="sig-name descname"><span class="pre">WandbTableLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/phyagi/utils/logging_table.html#WandbTableLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_table.WandbTableLogger" title="Link to this definition">#</a></dt>
+<dd><p>Table logger that logs data to WandB.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_table.WandbTableLogger.add_data">
+<span class="sig-name descname"><span class="pre">add_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_table.html#WandbTableLogger.add_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_table.WandbTableLogger.add_data" title="Link to this definition">#</a></dt>
+<dd><p>Add data to the table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rows</strong> – List of rows to add to the table, where each row is a list of values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-phyagi.utils.logging_handlers">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.StreamHandlerWithGPUMemory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phyagi.utils.logging_handlers.</span></span><span class="sig-name descname"><span class="pre">StreamHandlerWithGPUMemory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append_gpu_memory_stats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#StreamHandlerWithGPUMemory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.StreamHandlerWithGPUMemory" title="Link to this definition">#</a></dt>
+<dd><p>Stream handler that supports appending GPU memory stats to log messages.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.StreamHandlerWithGPUMemory.emit">
+<span class="sig-name descname"><span class="pre">emit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LogRecord</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#StreamHandlerWithGPUMemory.emit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.StreamHandlerWithGPUMemory.emit" title="Link to this definition">#</a></dt>
+<dd><p>Emit a record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> – Log record.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.MlflowHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phyagi.utils.logging_handlers.</span></span><span class="sig-name descname"><span class="pre">MlflowHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nested</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'train/step'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#MlflowHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.MlflowHandler" title="Link to this definition">#</a></dt>
+<dd><p>MLflow logging handler.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.MlflowHandler.emit">
+<span class="sig-name descname"><span class="pre">emit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LogRecord</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#MlflowHandler.emit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.MlflowHandler.emit" title="Link to this definition">#</a></dt>
+<dd><p>Emit a record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> – Log record.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.MlflowHandler.end">
+<span class="sig-name descname"><span class="pre">end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#MlflowHandler.end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.MlflowHandler.end" title="Link to this definition">#</a></dt>
+<dd><p>End the run.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.WandbHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phyagi.utils.logging_handlers.</span></span><span class="sig-name descname"><span class="pre">WandbHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'train/step'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#WandbHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.WandbHandler" title="Link to this definition">#</a></dt>
+<dd><p>Weights &amp; Biases logging handler.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.WandbHandler.emit">
+<span class="sig-name descname"><span class="pre">emit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LogRecord</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#WandbHandler.emit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.WandbHandler.emit" title="Link to this definition">#</a></dt>
+<dd><p>Emit a record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> – Log record.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.WandbHandler.end">
+<span class="sig-name descname"><span class="pre">end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#WandbHandler.end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.WandbHandler.end" title="Link to this definition">#</a></dt>
+<dd><p>End the run.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.TensorBoardHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phyagi.utils.logging_handlers.</span></span><span class="sig-name descname"><span class="pre">TensorBoardHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'runs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'train/step'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#TensorBoardHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.TensorBoardHandler" title="Link to this definition">#</a></dt>
+<dd><p>TensorBoard logging handler.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.TensorBoardHandler.emit">
+<span class="sig-name descname"><span class="pre">emit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LogRecord</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#TensorBoardHandler.emit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.TensorBoardHandler.emit" title="Link to this definition">#</a></dt>
+<dd><p>Emit a record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> – Log record.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.TensorBoardHandler.end">
+<span class="sig-name descname"><span class="pre">end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#TensorBoardHandler.end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.TensorBoardHandler.end" title="Link to this definition">#</a></dt>
+<dd><p>End the run.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.QueueHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phyagi.utils.logging_handlers.</span></span><span class="sig-name descname"><span class="pre">QueueHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Queue</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#QueueHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.QueueHandler" title="Link to this definition">#</a></dt>
+<dd><p>Queue handler for non-blocking logging.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.QueueHandler.emit">
+<span class="sig-name descname"><span class="pre">emit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LogRecord</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#QueueHandler.emit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.QueueHandler.emit" title="Link to this definition">#</a></dt>
+<dd><p>Emit a record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> – Log record.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.logging_handlers.QueueHandler.end">
+<span class="sig-name descname"><span class="pre">end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_handlers.html#QueueHandler.end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_handlers.QueueHandler.end" title="Link to this definition">#</a></dt>
+<dd><p>End the handler.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function" id="module-phyagi.utils.logging_utils">
+<dt class="sig sig-object py" id="phyagi.utils.logging_utils.get_logger">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.logging_utils.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append_gpu_memory_stats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/logging_utils.html#get_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.logging_utils.get_logger" title="Link to this definition">#</a></dt>
+<dd><p>Get a logger with the specified name and default settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger_name</strong> – Name of the logger.</p></li>
+<li><p><strong>file_path</strong> – Path to the file to which log messages will be written.</p></li>
+<li><p><strong>rank_filter</strong> – Whether to apply a filter that prints only to the GPU with <code class="docutils literal notranslate"><span class="pre">local_rank=0</span></code>.</p></li>
+<li><p><strong>append_gpu_memory_stats</strong> – Whether to append GPU memory stats to the log messages.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Logger</span></code> instance with the specified name and default settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-phyagi.utils.timer">
+<span id="timer"></span><h2>Timer<a class="headerlink" href="#module-phyagi.utils.timer" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="phyagi.utils.timer.Timer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">phyagi.utils.timer.</span></span><span class="sig-name descname"><span class="pre">Timer</span></span><a class="reference internal" href="../_modules/phyagi/utils/timer.html#Timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.timer.Timer" title="Link to this definition">#</a></dt>
+<dd><p>Timer to measure the time taken for different parts of a process.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.timer.Timer.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/timer.html#Timer.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.timer.Timer.start" title="Link to this definition">#</a></dt>
+<dd><p>Start the timer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.timer.Timer.end">
+<span class="sig-name descname"><span class="pre">end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/phyagi/utils/timer.html#Timer.end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.timer.Timer.end" title="Link to this definition">#</a></dt>
+<dd><p>End the timer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary containing the total time taken and the timings for each tag.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.timer.Timer.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'total'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/phyagi/utils/timer.html#Timer.metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.timer.Timer.metrics" title="Link to this definition">#</a></dt>
+<dd><p>Get the metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>total_key</strong> – Key for the total time taken.</p></li>
+<li><p><strong>end</strong> – Whether to end the timer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing the total time taken and the timings for each tag.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="phyagi.utils.timer.Timer.measure">
+<span class="sig-name descname"><span class="pre">measure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#phyagi.utils.timer.Timer" title="phyagi.utils.timer.Timer"><span class="pre">Timer</span></a></span></span><a class="reference internal" href="../_modules/phyagi/utils/timer.html#Timer.measure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.timer.Timer.measure" title="Link to this definition">#</a></dt>
+<dd><p>Measure the time taken for a specific tag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tag</strong> – Tag for the measurement.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#phyagi.utils.timer.Timer" title="phyagi.utils.timer.Timer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Timer</span></code></a> instance with the specified tag.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-phyagi.utils.type_utils">
+<span id="typing"></span><h2>Typing<a class="headerlink" href="#module-phyagi.utils.type_utils" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.type_utils.to_torch_dtype">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.type_utils.</span></span><span class="sig-name descname"><span class="pre">to_torch_dtype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dtype</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/type_utils.html#to_torch_dtype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.type_utils.to_torch_dtype" title="Link to this definition">#</a></dt>
+<dd><p>Convert a string dtype to a PyTorch dtype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dtype</strong> – String representation of dtype.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>PyTorch representation of dtype.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.type_utils.xor">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.type_utils.</span></span><span class="sig-name descname"><span class="pre">xor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/type_utils.html#xor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.type_utils.xor" title="Link to this definition">#</a></dt>
+<dd><p>Logical XOR operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> – First operand.</p></li>
+<li><p><strong>q</strong> – Second operand.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of the XOR operation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.type_utils.nullcontext_kwargs">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.type_utils.</span></span><span class="sig-name descname"><span class="pre">nullcontext_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AbstractContextManager</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/type_utils.html#nullcontext_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.type_utils.nullcontext_kwargs" title="Link to this definition">#</a></dt>
+<dd><p>Context manager that does nothing but accepts keyword arguments.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.type_utils.rgetattr">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.type_utils.</span></span><span class="sig-name descname"><span class="pre">rgetattr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/type_utils.html#rgetattr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.type_utils.rgetattr" title="Link to this definition">#</a></dt>
+<dd><p>Recursively get an attribute from an object.</p>
+<p>This function allows accessing nested attributes by separating each level with a dot
+(e.g., “attr1.attr2.attr3”). If any attribute along the chain does not exist, the function
+returns the default value specified in the <code class="docutils literal notranslate"><span class="pre">*args</span></code> parameter.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">MyObject</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rgetattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;attr1.attr2.attr3&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Object from which the attribute will be retrieved.</p></li>
+<li><p><strong>attr</strong> – Name of the attribute to be retrieved, with each level separated by a dot.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Attribute from the object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phyagi.utils.type_utils.rsetattr">
+<span class="sig-prename descclassname"><span class="pre">phyagi.utils.type_utils.</span></span><span class="sig-name descname"><span class="pre">rsetattr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/phyagi/utils/type_utils.html#rsetattr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#phyagi.utils.type_utils.rsetattr" title="Link to this definition">#</a></dt>
+<dd><p>Recursively set an attribute on an object.</p>
+<p>This function allows setting nested attributes by separating each level with a dot (e.g., “attr1.attr2.attr3”).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">MyObject</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rsetattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;attr1.attr2.attr3&quot;</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Object on which the attribute will be set.</p></li>
+<li><p><strong>attr</strong> – Name of the attribute to be set, with each level separated by a dot.</p></li>
+<li><p><strong>value</strong> – New value for the attribute.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="eval.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Evaluation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="cli.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">CLI</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Sections
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.checkpoint">Checkpoint</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.CheckpointManager"><code class="docutils literal notranslate"><span class="pre">CheckpointManager</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.CheckpointManager.save"><code class="docutils literal notranslate"><span class="pre">CheckpointManager.save()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.CheckpointManager.load"><code class="docutils literal notranslate"><span class="pre">CheckpointManager.load()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.convert_ds_zero_checkpoint"><code class="docutils literal notranslate"><span class="pre">convert_ds_zero_checkpoint()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.convert_pl_fsdp_checkpoint"><code class="docutils literal notranslate"><span class="pre">convert_pl_fsdp_checkpoint()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.checkpoint.convert_ray_actor_checkpoint"><code class="docutils literal notranslate"><span class="pre">convert_ray_actor_checkpoint()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.config">Configuration System</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.for_resolver"><code class="docutils literal notranslate"><span class="pre">for_resolver()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.filter_dict"><code class="docutils literal notranslate"><span class="pre">filter_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.filter_lists"><code class="docutils literal notranslate"><span class="pre">filter_lists()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.override_nested_dict"><code class="docutils literal notranslate"><span class="pre">override_nested_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.config.save_config"><code class="docutils literal notranslate"><span class="pre">save_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.download_utils">Download</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.download_utils.download_dataset"><code class="docutils literal notranslate"><span class="pre">download_dataset()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.download_utils.download_tokenizer"><code class="docutils literal notranslate"><span class="pre">download_tokenizer()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.file_utils">File-Related</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.get_checkpoints_info"><code class="docutils literal notranslate"><span class="pre">get_checkpoints_info()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.get_full_path"><code class="docutils literal notranslate"><span class="pre">get_full_path()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.load_json_file"><code class="docutils literal notranslate"><span class="pre">load_json_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.save_json_file"><code class="docutils literal notranslate"><span class="pre">save_json_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.load_jsonl_file"><code class="docutils literal notranslate"><span class="pre">load_jsonl_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.save_jsonl_file"><code class="docutils literal notranslate"><span class="pre">save_jsonl_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.validate_file_extension"><code class="docutils literal notranslate"><span class="pre">validate_file_extension()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.is_file_available"><code class="docutils literal notranslate"><span class="pre">is_file_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.file_utils.is_checkpoint_available"><code class="docutils literal notranslate"><span class="pre">is_checkpoint_available()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.hf_utils">Hugging Face (HF)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.hf_utils.AzureStorageRotateCheckpointMixin"><code class="docutils literal notranslate"><span class="pre">AzureStorageRotateCheckpointMixin</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.hf_utils.to_device_map"><code class="docutils literal notranslate"><span class="pre">to_device_map()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.import_utils">Import</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_flash_attn_available"><code class="docutils literal notranslate"><span class="pre">is_flash_attn_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_flash_attn_3_available"><code class="docutils literal notranslate"><span class="pre">is_flash_attn_3_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_fused_dense_lib_available"><code class="docutils literal notranslate"><span class="pre">is_fused_dense_lib_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_hopper_gpu_available"><code class="docutils literal notranslate"><span class="pre">is_hopper_gpu_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_lm_eval_available"><code class="docutils literal notranslate"><span class="pre">is_lm_eval_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_mpi_available"><code class="docutils literal notranslate"><span class="pre">is_mpi_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_torch_gpu_available"><code class="docutils literal notranslate"><span class="pre">is_torch_gpu_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_torchao_available"><code class="docutils literal notranslate"><span class="pre">is_torchao_available()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.import_utils.is_vllm_available"><code class="docutils literal notranslate"><span class="pre">is_vllm_available()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.logging_table">Logging</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.TableLogger"><code class="docutils literal notranslate"><span class="pre">TableLogger</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.TableLogger.add_data"><code class="docutils literal notranslate"><span class="pre">TableLogger.add_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.LocalTableLogger"><code class="docutils literal notranslate"><span class="pre">LocalTableLogger</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.LocalTableLogger.add_data"><code class="docutils literal notranslate"><span class="pre">LocalTableLogger.add_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.WandbTableLogger"><code class="docutils literal notranslate"><span class="pre">WandbTableLogger</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_table.WandbTableLogger.add_data"><code class="docutils literal notranslate"><span class="pre">WandbTableLogger.add_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.StreamHandlerWithGPUMemory"><code class="docutils literal notranslate"><span class="pre">StreamHandlerWithGPUMemory</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.StreamHandlerWithGPUMemory.emit"><code class="docutils literal notranslate"><span class="pre">StreamHandlerWithGPUMemory.emit()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.MlflowHandler"><code class="docutils literal notranslate"><span class="pre">MlflowHandler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.MlflowHandler.emit"><code class="docutils literal notranslate"><span class="pre">MlflowHandler.emit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.MlflowHandler.end"><code class="docutils literal notranslate"><span class="pre">MlflowHandler.end()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.WandbHandler"><code class="docutils literal notranslate"><span class="pre">WandbHandler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.WandbHandler.emit"><code class="docutils literal notranslate"><span class="pre">WandbHandler.emit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.WandbHandler.end"><code class="docutils literal notranslate"><span class="pre">WandbHandler.end()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.TensorBoardHandler"><code class="docutils literal notranslate"><span class="pre">TensorBoardHandler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.TensorBoardHandler.emit"><code class="docutils literal notranslate"><span class="pre">TensorBoardHandler.emit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.TensorBoardHandler.end"><code class="docutils literal notranslate"><span class="pre">TensorBoardHandler.end()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.QueueHandler"><code class="docutils literal notranslate"><span class="pre">QueueHandler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.QueueHandler.emit"><code class="docutils literal notranslate"><span class="pre">QueueHandler.emit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_handlers.QueueHandler.end"><code class="docutils literal notranslate"><span class="pre">QueueHandler.end()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.logging_utils.get_logger"><code class="docutils literal notranslate"><span class="pre">get_logger()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.timer">Timer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.timer.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.timer.Timer.start"><code class="docutils literal notranslate"><span class="pre">Timer.start()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.timer.Timer.end"><code class="docutils literal notranslate"><span class="pre">Timer.end()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.timer.Timer.metrics"><code class="docutils literal notranslate"><span class="pre">Timer.metrics()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.timer.Timer.measure"><code class="docutils literal notranslate"><span class="pre">Timer.measure()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-phyagi.utils.type_utils">Typing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.type_utils.to_torch_dtype"><code class="docutils literal notranslate"><span class="pre">to_torch_dtype()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.type_utils.xor"><code class="docutils literal notranslate"><span class="pre">xor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.type_utils.nullcontext_kwargs"><code class="docutils literal notranslate"><span class="pre">nullcontext_kwargs()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.type_utils.rgetattr"><code class="docutils literal notranslate"><span class="pre">rgetattr()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phyagi.utils.type_utils.rsetattr"><code class="docutils literal notranslate"><span class="pre">rsetattr()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 16, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
